@@ -16,6 +16,8 @@
 		ABCE4ADC2B45601800516621 /* URLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCE4ADB2B45601800516621 /* URLRequest.swift */; };
 		ABCE4ADE2B45605700516621 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCE4ADD2B45605700516621 /* NetworkError.swift */; };
 		ABCE4AE02B45607600516621 /* URLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCE4ADF2B45607600516621 /* URLSession.swift */; };
+		ABCE4AE22B46F59A00516621 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCE4AE12B46F59A00516621 /* Network.swift */; };
+		ABCE4AE42B470C7900516621 /* MangasVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCE4AE32B470C7900516621 /* MangasVM.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +31,8 @@
 		ABCE4ADB2B45601800516621 /* URLRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequest.swift; sourceTree = "<group>"; };
 		ABCE4ADD2B45605700516621 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		ABCE4ADF2B45607600516621 /* URLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSession.swift; sourceTree = "<group>"; };
+		ABCE4AE12B46F59A00516621 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		ABCE4AE32B470C7900516621 /* MangasVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangasVM.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +96,7 @@
 		ABCE4AD32B4540D600516621 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				ABCE4AE32B470C7900516621 /* MangasVM.swift */,
 			);
 			name = ViewModels;
 			sourceTree = "<group>";
@@ -99,6 +104,7 @@
 		ABCE4AD42B4540F400516621 /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
+				ABCE4AE12B46F59A00516621 /* Network.swift */,
 			);
 			name = Interactor;
 			sourceTree = "<group>";
@@ -194,6 +200,8 @@
 			files = (
 				ABCE4ADA2B45535700516621 /* DTOMangas.swift in Sources */,
 				ABCE4AE02B45607600516621 /* URLSession.swift in Sources */,
+				ABCE4AE22B46F59A00516621 /* Network.swift in Sources */,
+				ABCE4AE42B470C7900516621 /* MangasVM.swift in Sources */,
 				ABCE4AC72B4540A700516621 /* ContentView.swift in Sources */,
 				ABCE4AC52B4540A700516621 /* ProyectoFinalMangasApp.swift in Sources */,
 				ABCE4ADE2B45605700516621 /* NetworkError.swift in Sources */,

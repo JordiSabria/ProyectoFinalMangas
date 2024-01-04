@@ -14,13 +14,13 @@ struct MangasItems : Codable {
 struct DTOMangas: Codable{
     let id: Int
     let title: String
-    let titleEnglish: String
+    let titleEnglish: String?
     let titleJapanese: String
     let status: String
     let startDate: String
-    let endDate: String
-    let chapters: Int
-    let volumes: Int
+    let endDate: String?
+    let chapters: Int?
+    let volumes: Int?
     let score: Double
     let authors: [DTOAuthor]
     let genres: [DTOGenre]

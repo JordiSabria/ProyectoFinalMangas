@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(MangasVM.self) var vm
+    
     var body: some View {
         VStack {
             Image(systemName: "globe")
@@ -16,9 +18,16 @@ struct ContentView: View {
             Text("Hello, world!")
         }
         .padding()
+        .onAppear(){
+            Task{
+                await vm.getMangasItems()
+            }
+        }
     }
+    
 }
 
 #Preview {
     ContentView()
+        .environment(MangasVM())
 }

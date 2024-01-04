@@ -9,9 +9,17 @@ import SwiftUI
 
 @main
 struct ProyectoFinalMangasApp: App {
+    @State var vm: MangasVM = MangasVM()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(vm)
+                .alert("App Alert",
+                       isPresented: $vm.showAlert) {
+                } message: {
+                    Text(vm.msg)
+                }
         }
     }
 }

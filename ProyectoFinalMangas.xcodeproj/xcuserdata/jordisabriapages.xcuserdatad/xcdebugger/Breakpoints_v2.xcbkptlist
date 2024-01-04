@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "3B2DC8E4-DE74-4374-863D-4529C5654FCB"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A01C9323-B7FE-4EC8-866B-165D761E8C44"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProyectoFinalMangas/MangasVM.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
+            landmarkName = "getMangasItems()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "A01C9323-B7FE-4EC8-866B-165D761E8C44 - a155d0b3069a041b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for ProyectoFinalMangas.MangasVM.getMangasItems() async -&gt; ()"
+                  moduleName = "ProyectoFinalMangas"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jordisabriapages/Library/CloudStorage/OneDrive-Personal/Particular/Cursos%20Programacio/Apple%20Coding%20Academy/Swift%20Developer%20Program%202023/Proyecto%20Final%20-%20My%20Manga/ProyectoFinalMangas/ProyectoFinalMangas/MangasVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "33"
+                  endingLineNumber = "33"
+                  offsetFromSymbolStart = "176">
+               </Location>
+               <Location
+                  uuid = "A01C9323-B7FE-4EC8-866B-165D761E8C44 - 128dd5b00735736d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) await resume partial function for ProyectoFinalMangas.MangasVM.getMangasItems() async -&gt; ()"
+                  moduleName = "ProyectoFinalMangas"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jordisabriapages/Library/CloudStorage/OneDrive-Personal/Particular/Cursos%20Programacio/Apple%20Coding%20Academy/Swift%20Developer%20Program%202023/Proyecto%20Final%20-%20My%20Manga/ProyectoFinalMangas/ProyectoFinalMangas/MangasVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "33"
+                  endingLineNumber = "33"
+                  offsetFromSymbolStart = "36">
+               </Location>
+               <Location
+                  uuid = "A01C9323-B7FE-4EC8-866B-165D761E8C44 - 2eb0a51cf80e4811"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for ProyectoFinalMangas.MangasVM.getMangasItems() async -&gt; ()"
+                  moduleName = "ProyectoFinalMangas"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jordisabriapages/Library/CloudStorage/OneDrive-Personal/Particular/Cursos%20Programacio/Apple%20Coding%20Academy/Swift%20Developer%20Program%202023/Proyecto%20Final%20-%20My%20Manga/ProyectoFinalMangas/ProyectoFinalMangas/MangasVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "33"
+                  endingLineNumber = "33"
+                  offsetFromSymbolStart = "36">
+               </Location>
+               <Location
+                  uuid = "A01C9323-B7FE-4EC8-866B-165D761E8C44 - fcd13742dfcedf06"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor @Sendable () -&gt; () in ProyectoFinalMangas.MangasVM.getMangasItems() async -&gt; ()"
+                  moduleName = "ProyectoFinalMangas"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jordisabriapages/Library/CloudStorage/OneDrive-Personal/Particular/Cursos%20Programacio/Apple%20Coding%20Academy/Swift%20Developer%20Program%202023/Proyecto%20Final%20-%20My%20Manga/ProyectoFinalMangas/ProyectoFinalMangas/MangasVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "34"
+                  endingLineNumber = "34"
+                  offsetFromSymbolStart = "92">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "43E18559-FBDD-438E-AC78-1079840FEDF4"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProyectoFinalMangas/MangasVM.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
+            landmarkName = "getMangasItems()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "43E18559-FBDD-438E-AC78-1079840FEDF4 - 380adc291761d0c4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for ProyectoFinalMangas.MangasVM.getMangasItems() async -&gt; ()"
+                  moduleName = "ProyectoFinalMangas"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jordisabriapages/Library/CloudStorage/OneDrive-Personal/Particular/Cursos%20Programacio/Apple%20Coding%20Academy/Swift%20Developer%20Program%202023/Proyecto%20Final%20-%20My%20Manga/ProyectoFinalMangas/ProyectoFinalMangas/MangasVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32"
+                  offsetFromSymbolStart = "68">
+               </Location>
+               <Location
+                  uuid = "43E18559-FBDD-438E-AC78-1079840FEDF4 - 2fbbe078f288b54a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for ProyectoFinalMangas.MangasVM.getMangasItems() async -&gt; ()"
+                  moduleName = "ProyectoFinalMangas"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jordisabriapages/Library/CloudStorage/OneDrive-Personal/Particular/Cursos%20Programacio/Apple%20Coding%20Academy/Swift%20Developer%20Program%202023/Proyecto%20Final%20-%20My%20Manga/ProyectoFinalMangas/ProyectoFinalMangas/MangasVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32"
+                  offsetFromSymbolStart = "40">
+               </Location>
+               <Location
+                  uuid = "43E18559-FBDD-438E-AC78-1079840FEDF4 - a155d0b3069a043a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for ProyectoFinalMangas.MangasVM.getMangasItems() async -&gt; ()"
+                  moduleName = "ProyectoFinalMangas"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jordisabriapages/Library/CloudStorage/OneDrive-Personal/Particular/Cursos%20Programacio/Apple%20Coding%20Academy/Swift%20Developer%20Program%202023/Proyecto%20Final%20-%20My%20Manga/ProyectoFinalMangas/ProyectoFinalMangas/MangasVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32"
+                  offsetFromSymbolStart = "76">
+               </Location>
+               <Location
+                  uuid = "43E18559-FBDD-438E-AC78-1079840FEDF4 - ea2e2353f3445635"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(6) suspend resume partial function for ProyectoFinalMangas.MangasVM.getMangasItems() async -&gt; ()"
+                  moduleName = "ProyectoFinalMangas"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jordisabriapages/Library/CloudStorage/OneDrive-Personal/Particular/Cursos%20Programacio/Apple%20Coding%20Academy/Swift%20Developer%20Program%202023/Proyecto%20Final%20-%20My%20Manga/ProyectoFinalMangas/ProyectoFinalMangas/MangasVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32"
+                  offsetFromSymbolStart = "76">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
