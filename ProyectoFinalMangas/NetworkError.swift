@@ -14,6 +14,7 @@ enum NetworkError: Error, CustomStringConvertible {
     case json(Error)
     case unknown
     case noHTTP
+    case retryLimitReached
     
     public var description: String {
         switch self {
@@ -29,6 +30,8 @@ enum NetworkError: Error, CustomStringConvertible {
             "No es una llamada HTTP"
         case .json(let error):
             "Error en el JSON: \(error)"
+        case .retryLimitReached:
+            "Numero máximo de intentos alcanzado."
         }
     }
 }

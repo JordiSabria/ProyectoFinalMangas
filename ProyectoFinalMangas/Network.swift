@@ -16,7 +16,13 @@ struct Network: DataInteractor {
     static let shared = Network()
     
     func getJSON<JSON>(request: URLRequest, type: JSON.Type) async throws -> JSON where JSON: Codable {
-        let (data, response) = try await URLSession.shared.getData(for: request)
+        
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = 80 // Ajusta este valor según sea necesario
+        let session = URLSession(configuration: configuration)
+
+        let (data, response) = try await session.getData(for: request)
+        //let (data, response) = try await URLSession.shared.getData(for: request)
         if response.statusCode == 200 {
             do {
                 return try JSONDecoder().decode(type, from: data)
