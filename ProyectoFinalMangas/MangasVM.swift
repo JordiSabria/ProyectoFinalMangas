@@ -14,7 +14,7 @@ final class MangasVM {
     var loading = true
     
     var mangasItemsArray: [MangasItems] = []
-    var mangasArray: [DTOMangas]=[]
+    var mangasArray: [Manga] = []
     
     var showAlert = false
     var msg = ""
@@ -32,7 +32,7 @@ final class MangasVM {
         do{
             let mangasPorPagina = 1000
             // Primero recuperamos el primer "paquete" de mangas para poder saber cuantos mangas hay en total
-            let mangas = try await network.getMangas(itemsPorPagina: mangasPorPagina, pagina: 1)
+            let mangas = try await network.getMangasItems(itemsPorPagina: mangasPorPagina, pagina: 1)
             // Segundo buscamos cuantos "paquetes" salen de dividir el numero de mangas por los mangas por pagina. Y lo redondeamos al alza para no dejarnos ninguno.
             let paquetes = Int(ceil(Double(mangas.metadata.total/mangasPorPagina)))
             // Lo provamos serializado
@@ -45,19 +45,28 @@ final class MangasVM {
                 // Creamos las tascas en funcion del número de mangas en paquetes de mangasPorPagina
                 for pagina in 2...paquetes{
                     group.addTask{
-                        try await self.network.getMangas(itemsPorPagina: mangasPorPagina, pagina: pagina)
+                        try await self.network.getMangasItems(itemsPorPagina: mangasPorPagina, pagina: pagina)
                     }
                 }
                 for try await mangaItem in group.compactMap({$0}){
-                    //self.mangasArray.append(mangaItem.items)
                     self.mangasItemsArray.append(mangaItem)
+//                    await MainActor.run {
+//                        mangasArray = mangasArray + mangaItem.items.map{$0.toPresentacion}
+//                        for mangaRecuperado in mangaItem.items {
+//                            mangasArray.append(mangaRecuperado.toPresentacion)
+//                        }
+//                    }
                 }
             }
+            // Ahora hemos de añadir los mangas de la primera llamada.
             await MainActor.run {
                 self.mangasItemsArray.append(mangas)
+                //mangasArray = mangasArray + mangas.items.map{$0.toPresentacion}
+//                for mangaRecuperado in mangas.items {
+//                    mangasArray.append(mangaRecuperado.toPresentacion)
+//                }
             }
         } catch {
-            
             await MainActor.run {
                 self.msg = "\(error)"
                 self.showAlert.toggle()

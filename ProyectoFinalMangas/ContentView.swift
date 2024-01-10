@@ -11,31 +11,19 @@ struct ContentView: View {
     @Environment(MangasVM.self) var vm
     
     var body: some View {
-//        VStack {
-//            Image(systemName: "globe")
-//                .imageScale(.large)
-//                .foregroundStyle(.tint)
-//            Text("Hello, world!")
-//            if( !vm.mangasItemsArray.isEmpty ){
-//                Text(String(vm.mangasItemsArray.count))
-//            }
-//        }
         List{
             Text(String(vm.mangasItemsArray.count))
-            ForEach (vm.mangasItemsArray) { mangaItem in  
-                ForEach (mangaItem.items){ manga in
-                    if let mangaUn = manga.title {
-                        Text(mangaUn)
-                    }
+            //Text(String(vm.mangasArray.count))
+            ForEach (vm.mangasItemsArray){ mangaItems in
+                ForEach (mangaItems.items){ mangaItem in
+                    MangaView(manga: mangaItem)
                 }
             }
+//            ForEach (vm.mangasArray) { manga in
+//                MangaView(manga: manga)
+//            }
         }
         .padding()
-//        .onAppear(){
-//            Task{
-//                await vm.getMangasItems()
-//            }
-//        }
     }
     
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB19ADE42B4E9C7700CAD89D /* MangasMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB19ADE32B4E9C7700CAD89D /* MangasMain.swift */; };
 		ABCE4AC52B4540A700516621 /* ProyectoFinalMangasApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCE4AC42B4540A700516621 /* ProyectoFinalMangasApp.swift */; };
 		ABCE4AC72B4540A700516621 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCE4AC62B4540A700516621 /* ContentView.swift */; };
 		ABCE4AC92B4540A800516621 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABCE4AC82B4540A800516621 /* Assets.xcassets */; };
@@ -18,9 +19,13 @@
 		ABCE4AE02B45607600516621 /* URLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCE4ADF2B45607600516621 /* URLSession.swift */; };
 		ABCE4AE22B46F59A00516621 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCE4AE12B46F59A00516621 /* Network.swift */; };
 		ABCE4AE42B470C7900516621 /* MangasVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCE4AE32B470C7900516621 /* MangasVM.swift */; };
+		ABCE4AE62B4C0A1E00516621 /* MangaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCE4AE52B4C0A1E00516621 /* MangaView.swift */; };
+		ABCE4AE82B4C0BE300516621 /* DataTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCE4AE72B4C0BE300516621 /* DataTest.swift */; };
+		ABCE4AEA2B4C228100516621 /* Presentacion.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCE4AE92B4C228100516621 /* Presentacion.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AB19ADE32B4E9C7700CAD89D /* MangasMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangasMain.swift; sourceTree = "<group>"; };
 		ABCE4AC12B4540A700516621 /* ProyectoFinalMangas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProyectoFinalMangas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABCE4AC42B4540A700516621 /* ProyectoFinalMangasApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProyectoFinalMangasApp.swift; sourceTree = "<group>"; };
 		ABCE4AC62B4540A700516621 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -33,6 +38,9 @@
 		ABCE4ADF2B45607600516621 /* URLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSession.swift; sourceTree = "<group>"; };
 		ABCE4AE12B46F59A00516621 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		ABCE4AE32B470C7900516621 /* MangasVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangasVM.swift; sourceTree = "<group>"; };
+		ABCE4AE52B4C0A1E00516621 /* MangaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaView.swift; sourceTree = "<group>"; };
+		ABCE4AE72B4C0BE300516621 /* DataTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTest.swift; sourceTree = "<group>"; };
+		ABCE4AE92B4C228100516621 /* Presentacion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presentacion.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				ABCE4AC42B4540A700516621 /* ProyectoFinalMangasApp.swift */,
+				AB19ADE32B4E9C7700CAD89D /* MangasMain.swift */,
 				ABCE4AC62B4540A700516621 /* ContentView.swift */,
 				ABCE4AD22B4540C700516621 /* Components */,
 				ABCE4AD32B4540D600516621 /* ViewModels */,
@@ -82,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				ABCE4ACB2B4540A800516621 /* Preview Assets.xcassets */,
+				ABCE4AE72B4C0BE300516621 /* DataTest.swift */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
@@ -89,6 +99,7 @@
 		ABCE4AD22B4540C700516621 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				ABCE4AE52B4C0A1E00516621 /* MangaView.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -124,6 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				ABCE4AD92B45535700516621 /* DTOMangas.swift */,
+				ABCE4AE92B4C228100516621 /* Presentacion.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -198,6 +210,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB19ADE42B4E9C7700CAD89D /* MangasMain.swift in Sources */,
 				ABCE4ADA2B45535700516621 /* DTOMangas.swift in Sources */,
 				ABCE4AE02B45607600516621 /* URLSession.swift in Sources */,
 				ABCE4AE22B46F59A00516621 /* Network.swift in Sources */,
@@ -205,6 +218,9 @@
 				ABCE4AC72B4540A700516621 /* ContentView.swift in Sources */,
 				ABCE4AC52B4540A700516621 /* ProyectoFinalMangasApp.swift in Sources */,
 				ABCE4ADE2B45605700516621 /* NetworkError.swift in Sources */,
+				ABCE4AE62B4C0A1E00516621 /* MangaView.swift in Sources */,
+				ABCE4AEA2B4C228100516621 /* Presentacion.swift in Sources */,
+				ABCE4AE82B4C0BE300516621 /* DataTest.swift in Sources */,
 				ABCE4AD82B45415700516621 /* URL.swift in Sources */,
 				ABCE4ADC2B45601800516621 /* URLRequest.swift in Sources */,
 			);

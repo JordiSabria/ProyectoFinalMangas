@@ -36,7 +36,7 @@ extension URLSession {
 //        }
 //    }
     func getData(for url: URLRequest, delegate: (URLSessionTaskDelegate)? = nil) async throws -> (Data, HTTPURLResponse) {
-        let intentosMaximos = 1
+        let intentosMaximos = 3
         var intentos = 0
         var datos: (Data, URLResponse)
         while intentos < intentosMaximos{
