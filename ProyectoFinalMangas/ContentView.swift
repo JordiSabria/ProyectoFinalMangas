@@ -16,7 +16,7 @@ struct ContentView: View {
             //Text(String(vm.mangasArray.count))
             ForEach (vm.mangasItemsArray){ mangaItems in
                 ForEach (mangaItems.items){ mangaItem in
-                    MangaView(manga: mangaItem)
+                    MangaView(mangaURL: mangaItem.mainPicture, widthCover: 150, heightCover: 230)
                 }
             }
 //            ForEach (vm.mangasArray) { manga in

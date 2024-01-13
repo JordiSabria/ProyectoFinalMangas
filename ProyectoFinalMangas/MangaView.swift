@@ -8,40 +8,32 @@
 import SwiftUI
 
 struct MangaView: View {
-    //let manga: Manga
-    let manga: DTOMangas
-    
+    let mangaURL: String?
+    var widthCover: CGFloat
+    var heightCover: CGFloat
+
     var body: some View {
-        if let mangaUn = manga.title {
-            HStack {
-                if let urlImageManga = manga.mainPicture{
-                    let url = URL(string: urlImageManga.replacingOccurrences(of: "\"", with: ""))
-                    AsyncImage(url: url){ image in
-                        image
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 150, height: 230)
-                            .overlay(alignment: .bottom){
-                                BottomTitleView(title: mangaUn)
-                            }
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                            .shadow(color: .black.opacity(0.3), radius: 5, x: 0, y: 5)
-                    } placeholder: {
-                        Image(systemName: "book.circle.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 150, height: 230)
-                            .padding()
-                            .background {
-                                Color(white: 0.9)
-                            }
-                            .overlay(alignment: .bottom){
-                                BottomTitleView(title: mangaUn)
-                            }
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                            .shadow(color: .black.opacity(0.3), radius: 5, x: 0, y: 5)
-                    }
-                    
+        HStack {
+            if let urlImageManga = mangaURL{
+                let url = URL(string: urlImageManga.replacingOccurrences(of: "\"", with: ""))
+                AsyncImage(url: url){ image in
+                    image
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: widthCover, height: heightCover)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .shadow(color: .black.opacity(0.3), radius: 5, x: 0, y: 5)
+                } placeholder: {
+                    Image(systemName: "book.circle.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: widthCover, height: heightCover)
+                        .padding()
+                        .background {
+                            Color(white: 0.9)
+                        }
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .shadow(color: .black.opacity(0.3), radius: 5, x: 0, y: 5)
                 }
             }
         }
@@ -50,5 +42,5 @@ struct MangaView: View {
 }
 
 #Preview {
-    MangaView(manga: .test)
+    MangaView(mangaURL: "https://cdn.myanimelist.net/images/manga/1/267784l.jpg" , widthCover: 150, heightCover: 230)
 }

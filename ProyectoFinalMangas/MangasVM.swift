@@ -15,6 +15,7 @@ final class MangasVM {
     
     var mangasItemsArray: [MangasItems] = []
     //var mangasArray: [Manga] = []
+    var bestMangasItemsArray: [MangasItems] = []
     
     var showAlert = false
     var msg = ""
@@ -71,6 +72,36 @@ final class MangasVM {
                 self.msg = "\(error)"
                 self.showAlert.toggle()
             }
+        }
+    }
+    
+    func getBestMangasItems() async {
+        do {
+            let bestMangasItems = try await self.network.getBestMangasItems()
+            await MainActor.run {
+                self.bestMangasItemsArray.append(bestMangasItems)
+            }
+        } catch {
+            await MainActor.run {
+                self.msg = "\(error)"
+                self.showAlert.toggle()
+            }
+        }
+        
+    }
+    
+    func getDateFromString (dateString: String?) -> Date? {
+
+        let dateFormatter = ISO8601DateFormatter()
+
+        if let dateToConvert = dateString{
+            if let dateTransformed = dateFormatter.date(from: dateToConvert) {
+                return dateTransformed
+            } else {
+                return nil
+            }
+        } else {
+            return nil
         }
     }
     

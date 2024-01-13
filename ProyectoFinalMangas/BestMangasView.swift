@@ -1,22 +1,20 @@
 //
-//  AllMangasView.swift
+//  BestMangasView.swift
 //  ProyectoFinalMangas
 //
-//  Created by Jordi Sabrià Pagès on 10/1/24.
+//  Created by Jordi Sabrià Pagès on 13/1/24.
 //
 
 import SwiftUI
 
-struct AllMangasView: View {
+struct BestMangasView: View {
     @Environment(MangasVM.self) var vm
-    
     let item = GridItem(.adaptive(minimum: 150), alignment: .center)
     
     var body: some View {
-        Text(String(vm.mangasItemsArray.count))
-        ScrollView {
-            LazyVGrid(columns: [item]) {
-                ForEach (vm.mangasItemsArray){ mangaItems in
+        ScrollView{
+            LazyVGrid(columns: [item]){
+                ForEach (vm.bestMangasItemsArray){ mangaItems in
                     ForEach (mangaItems.items){ mangaItem in
                         if let mangaTitle = mangaItem.title {
                             NavigationLink(value: mangaItem) {
@@ -30,28 +28,27 @@ struct AllMangasView: View {
                     }
                 }
             }
-            .padding()
         }
-        .navigationTitle("Todos los Mangas")
+        .navigationTitle("Los mejores Mangas")
         .navigationDestination(for: DTOMangas.self) { manga in
             MangaDetailView(manga: manga)
         }
         .onAppear(){
-            if vm.mangasItemsArray.count == 0{
-                getMangas()
+            if vm.bestMangasItemsArray.count == 0{
+                getBestMangas()
             }
         }
     }
-    func getMangas(){
+    func getBestMangas(){
         Task {
-            await vm.getMangasItems()
+            await vm.getBestMangasItems()
         }
     }
 }
 
 #Preview {
     NavigationStack {
-        AllMangasView()
+        BestMangasView()
             .environment(MangasVM())
     }
 }
