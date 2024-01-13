@@ -14,18 +14,18 @@ final class MangasVM {
     var loading = true
     
     var mangasItemsArray: [MangasItems] = []
-    var mangasArray: [Manga] = []
+    //var mangasArray: [Manga] = []
     
     var showAlert = false
     var msg = ""
     
     init(network: DataInteractor = Network.shared) {
         self.network = network
-        Task {
-            await MainActor.run { loading = true }
-            await getMangasItems()
-            await MainActor.run { loading = false }
-        }
+//        Task {
+//            await MainActor.run { loading = true }
+//            await getMangasItems()
+//            await MainActor.run { loading = false }
+//        }
     }
     
     func getMangasItems() async {

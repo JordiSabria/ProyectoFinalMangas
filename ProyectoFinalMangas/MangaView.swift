@@ -14,34 +14,34 @@ struct MangaView: View {
     var body: some View {
         if let mangaUn = manga.title {
             HStack {
-                Text(mangaUn)
                 if let urlImageManga = manga.mainPicture{
                     let url = URL(string: urlImageManga.replacingOccurrences(of: "\"", with: ""))
-                   // Text(urlImageManga)
                     AsyncImage(url: url){ image in
                         image
                             .resizable()
-                            .scaledToFit()
-                            .symbolVariant(.fill)
-                            .symbolVariant(.circle)
-                            .frame(width: 90)
-                            .background {
-                                Color(white: 0.9)
+                            .scaledToFill()
+                            .frame(width: 150, height: 230)
+                            .overlay(alignment: .bottom){
+                                BottomTitleView(title: mangaUn)
                             }
-                            .clipShape(Circle())
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .shadow(color: .black.opacity(0.3), radius: 5, x: 0, y: 5)
                     } placeholder: {
-                        Image(systemName: "person")
+                        Image(systemName: "book.circle.fill")
                             .resizable()
                             .scaledToFit()
-                            .symbolVariant(.fill)
-                            .symbolVariant(.circle)
+                            .frame(width: 150, height: 230)
                             .padding()
-                            .frame(width: 90)
                             .background {
                                 Color(white: 0.9)
                             }
-                            .clipShape(Circle())
+                            .overlay(alignment: .bottom){
+                                BottomTitleView(title: mangaUn)
+                            }
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .shadow(color: .black.opacity(0.3), radius: 5, x: 0, y: 5)
                     }
+                    
                 }
             }
         }

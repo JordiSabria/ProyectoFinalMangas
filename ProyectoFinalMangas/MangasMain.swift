@@ -8,13 +8,20 @@
 import SwiftUI
 
 struct MangasMain: View {
-    @Environment(MangasVM().self) var vm
+    @Environment(MangasVM.self) var vm
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        TabView{
+            SearchView()
+                .environment(vm)
+                .tabItem{
+                    Label("Busqueda", systemImage: "magnifyingglass")
+                }
+        }
     }
 }
 
 #Preview {
     MangasMain()
+        .environment(MangasVM())
 }

@@ -28,3 +28,11 @@ struct Manga: Codable, Hashable, Identifiable{
     let url: String?
 }
 
+enum search {
+    case allMangas
+    case bestMangas
+    case authors
+    case demographics
+    case genres
+    case themes
+}

@@ -13,7 +13,7 @@ struct ProyectoFinalMangasApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MangasMain()
                 .environment(vm)
                 .alert("App Alert",
                        isPresented: $vm.showAlert) {
