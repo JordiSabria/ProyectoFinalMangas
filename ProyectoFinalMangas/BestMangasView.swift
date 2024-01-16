@@ -29,7 +29,7 @@ struct BestMangasView: View {
                 }
             }
         }
-        .navigationTitle("Los mejores Mangas")
+        .navigationTitle("Los 10 mejores Mangas")
         .navigationDestination(for: DTOMangas.self) { manga in
             MangaDetailView(manga: manga)
         }

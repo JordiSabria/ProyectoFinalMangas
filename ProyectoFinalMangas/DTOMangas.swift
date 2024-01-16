@@ -82,19 +82,19 @@ extension DTOMangas{
               url: url?.replacingOccurrences(of: "\"", with: ""))
     }
 }
-struct DTOGenre: Codable, Hashable {
+struct DTOGenre: Codable, Hashable, Identifiable{
     let id: UUID
     let genre: String
 }
-struct DTODemographic: Codable, Hashable {
+struct DTODemographic: Codable, Hashable, Identifiable {
     let id: UUID
     let demographic: String
 }
-struct DTOTheme: Codable, Hashable {
+struct DTOTheme: Codable, Hashable, Identifiable {
     let id: UUID
     let theme: String
 }
-struct DTOAuthor: Codable, Hashable {
+struct DTOAuthor: Codable, Hashable, Identifiable {
     let firstName: String
     let lastName: String
     let role: String

@@ -52,19 +52,19 @@ struct SearchView: View {
                     AllMangasView()
                         .environment(vm)
                 case .bestMangas:
-                    AllMangasView()
+                    BestMangasView()
                         .environment(vm)
                 case .authors:
-                    AllMangasView()
+                    AuthorsView()
                         .environment(vm)
                 case .demographics:
-                    AllMangasView()
+                    DemographicsView()
                         .environment(vm)
                 case .genres:
-                    AllMangasView()
+                    GenresView()
                         .environment(vm)
                 case .themes:
-                    AllMangasView()
+                    ThemesView()
                         .environment(vm)
                 }
             }

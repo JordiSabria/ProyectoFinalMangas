@@ -10,6 +10,10 @@ import Foundation
 protocol DataInteractor {
     func getMangasItems(itemsPorPagina: Int, pagina: Int ) async throws -> MangasItems
     func getBestMangasItems() async throws -> MangasItems
+    func getAuthors() async throws -> [DTOAuthor]
+    func getDemographics() async throws -> [String]
+    func getGenres() async throws -> [String]
+    func getThemes() async throws -> [String]
 }
 
 struct Network: DataInteractor {
@@ -48,4 +52,17 @@ struct Network: DataInteractor {
     func getBestMangasItems() async throws -> MangasItems {
         try await getJSON(request: .get(url: .getBestMangas), type: MangasItems.self)
     }
+    func getAuthors() async throws -> [DTOAuthor] {
+        try await getJSON(request: .get(url: .getAuthors), type: [DTOAuthor].self)
+    }
+    func getDemographics() async throws -> [String] {
+        try await getJSON(request: .get(url: .getDemographics), type: [String].self)
+    }
+    func getGenres() async throws -> [String] {
+        try await getJSON(request: .get(url: .getGenres), type: [String].self)
+    }
+    func getThemes() async throws -> [String] {
+        try await getJSON(request: .get(url: .getThemes), type: [String].self)
+    }
+    
 }

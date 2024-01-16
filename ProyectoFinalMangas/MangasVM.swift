@@ -16,6 +16,10 @@ final class MangasVM {
     var mangasItemsArray: [MangasItems] = []
     //var mangasArray: [Manga] = []
     var bestMangasItemsArray: [MangasItems] = []
+    var authors: [DTOAuthor] = []
+    var demographics: [String] = []
+    var genres: [String] = []
+    var themes: [String] = []
     
     var showAlert = false
     var msg = ""
@@ -88,6 +92,72 @@ final class MangasVM {
             }
         }
         
+    }
+    
+    func getAuthors() async {
+        do{
+            let authorsTemp = try await self.network.getAuthors()
+            await MainActor.run{
+                self.authors.append(contentsOf: authorsTemp)
+                authors = authors.sorted {
+                    if $0.firstName != $1.firstName {
+                        return $0.firstName < $1.firstName
+                    } else {
+                        return $0.lastName < $1.lastName
+                    }
+                }
+            }
+        } catch {
+            await MainActor.run {
+                self.msg = "\(error)"
+                self.showAlert.toggle()
+            }
+        }
+    }
+    
+    func getDemographics() async {
+        do{
+            let demographicsTemp = try await self.network.getDemographics()
+            await MainActor.run{
+                self.demographics.append(contentsOf: demographicsTemp)
+                demographics = demographics.sorted()
+            }
+        } catch {
+            await MainActor.run {
+                self.msg = "\(error)"
+                self.showAlert.toggle()
+            }
+        }
+    }
+    
+    func getGenres() async {
+        do{
+            let genresTemp = try await self.network.getGenres()
+            await MainActor.run{
+                self.genres.append(contentsOf: genresTemp)
+                genres = genres.sorted()
+            }
+        } catch {
+            await MainActor.run {
+                self.msg = "\(error)"
+                self.showAlert.toggle()
+            }
+        }
+    }
+    
+    func getThemes() async {
+        do{
+            let themesTemp = try await self.network.getThemes()
+            await MainActor.run{
+                self.themes.append(contentsOf: themesTemp)
+                themes = themes.sorted()
+            }
+        } catch {
+            await MainActor.run {
+                self.msg = "\(error)"
+                self.showAlert.toggle()
+            }
+        }
     }
     
     func getDateFromString (dateString: String?) -> Date? {
