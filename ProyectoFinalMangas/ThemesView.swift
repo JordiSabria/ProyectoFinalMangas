@@ -11,22 +11,38 @@ struct ThemesView: View {
     @Environment(MangasVM.self) var vm
     
     var body: some View {
-        Text(String(vm.themes.count))
-        List(vm.themes, id: \.self){ theme in
-            Text(theme)
+        List(vm.themes){ theme in
+            NavigationLink(value: theme){
+                Text(theme.theme)
+            }
         }
         .navigationTitle("Temáticas")
-        .onAppear(){
-            if vm.themes.count == 0 {
-                Task{
-                    await vm.getThemes()
-                }
+        .navigationDestination(for: DTOTheme.self){ theme in
+            MangasByThemesView(theme: theme)
+                .environment(vm)
+        }
+        .refreshable {
+            Task{
+                await vm.getThemes()
             }
+        }
+        .onAppear(){
+            switch vm.estadoPantalla{
+                case .search:
+                    vm.estadoPantalla = .themes
+                    Task{
+                        await vm.getThemes()
+                    }
+                default:
+                    vm.estadoPantalla = .themes
+                }
         }
     }
 }
 
 #Preview {
-    ThemesView()
-        .environment(MangasVM())
+    NavigationStack {
+        ThemesView()
+            .environment(MangasVM.test)
+    }
 }

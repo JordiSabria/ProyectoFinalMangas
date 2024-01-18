@@ -20,10 +20,19 @@ extension URL {
     static let getDemographics = api.appending(path: "/list/demographics")
     static let getGenres = api.appending(path: "/list/genres")
     static let getThemes = api.appending(path: "/list/themes")
-    static let getMangaByGenre = api.appending(path: "/list/mangaByGenre")
-    static let getMangaByDemographic = api.appending(path: "/list/mangaByDemographic")
-    static let getMangaByTheme = api.appending(path: "/list/mangaByTheme")
-    static let getMangaByAuthor = api.appending(path: "/list/mangaByAuthor")
+    static func getMangaByGenre(genre: String, itemsPorPagina: Int, pagina: Int) -> URL{
+        api.appending(path: "/list/mangaByGenre/\(genre)").appending(queryItems: [URLQueryItem(name: "per", value: String(itemsPorPagina)), URLQueryItem(name: "page", value: String(pagina))])
+    }
+    static func getMangaByDemographic(demographic: String, itemsPorPagina: Int, pagina: Int) -> URL{
+        api.appending(path: "/list/mangaByDemographic/\(demographic)").appending(queryItems: [URLQueryItem(name: "per", value: String(itemsPorPagina)), URLQueryItem(name: "page", value: String(pagina))])
+    }
+    static func getMangaByTheme(theme: String, itemsPorPagina: Int, pagina: Int) -> URL{
+        api.appending(path: "/list/mangaByTheme/\(theme)").appending(queryItems: [URLQueryItem(name: "per", value: String(itemsPorPagina)), URLQueryItem(name: "page", value: String(pagina))])
+    }
+    static func getMangaByAuthor(idAuthor: UUID, itemsPorPagina: Int, pagina: Int) -> URL{
+        api.appending(path: "/list/mangaByAuthor/\(idAuthor)").appending(queryItems: [URLQueryItem(name: "per", value: String(itemsPorPagina)), URLQueryItem(name: "page", value: String(pagina))])
+    }
+    
     // Búsquedas en endpoint (/search)
     static let getMangasBeginsWith = api.appending(path: "/search/mangasBeginsWith")
     static let getMangasContains = api.appending(path: "/search/mangasContains")

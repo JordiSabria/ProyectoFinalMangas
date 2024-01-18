@@ -1,20 +1,21 @@
 //
-//  BestMangasView.swift
+//  MangasByDemographicView.swift
 //  ProyectoFinalMangas
 //
-//  Created by Jordi Sabrià Pagès on 13/1/24.
+//  Created by Jordi Sabrià Pagès on 17/1/24.
 //
 
 import SwiftUI
 
-struct BestMangasView: View {
+struct MangasByDemographicView: View {
     @Environment(MangasVM.self) var vm
     let item = GridItem(.adaptive(minimum: 150), alignment: .center)
+    var demographic: DTODemographic
     
     var body: some View {
-        ScrollView{
-            LazyVGrid(columns: [item]){
-                ForEach (vm.bestMangasItemsArray){ mangaItems in
+        ScrollView {
+            LazyVGrid(columns: [item]) {
+                ForEach (vm.mangasItemsByDemographic){ mangaItems in
                     ForEach (mangaItems.items){ mangaItem in
                         if let mangaTitle = mangaItem.title {
                             NavigationLink(value: mangaItem) {
@@ -28,28 +29,31 @@ struct BestMangasView: View {
                     }
                 }
             }
+            .padding()
         }
-        .navigationTitle("Los 10 mejores Mangas")
+        .navigationTitle("Mangas de \(demographic.demographic)")
+        .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(for: DTOMangas.self) { manga in
             MangaDetailView(manga: manga)
                 .environment(vm)
         }
         .onAppear(){
-            if vm.bestMangasItemsArray.count == 0{
-                getBestMangas()
-            }
-        }
-    }
-    func getBestMangas(){
-        Task {
-            await vm.getBestMangasItems()
+            switch vm.estadoPantalla{
+                case .demographics:
+                    vm.estadoPantalla = .mangas
+                    Task {
+                        await vm.getMangasByDemographic(demographic: demographic.demographic)
+                    }
+                default:
+                    vm.estadoPantalla = .mangas
+                }
         }
     }
 }
 
 #Preview {
     NavigationStack {
-        BestMangasView()
-            .environment(MangasVM.test)
+        MangasByDemographicView(demographic: .test)
+            .environment(MangasVM.testByDemographic)
     }
 }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SearchView: View {
     @Environment(MangasVM.self) var vm
+    //@State var pantalla: estadoPantalla
     
     var body: some View {
         NavigationStack{
@@ -31,17 +32,17 @@ struct SearchView: View {
                 }
                 NavigationLink(value: search.demographics) {
                     HStack{
-                        Label("Demografías", systemImage: "person")
+                        Label("Demográficas", systemImage: "person.3")
                     }
                 }
                 NavigationLink(value: search.genres) {
                     HStack{
-                        Label("Géneros", systemImage: "hand.thumbsup")
+                        Label("Géneros", systemImage: "theatermasks")
                     }
                 }
                 NavigationLink(value: search.themes) {
                     HStack{
-                        Label("Temáticas", systemImage: "hand.thumbsup")
+                        Label("Temáticas", systemImage: "figure.martial.arts")
                     }
                 }
             }
@@ -69,10 +70,13 @@ struct SearchView: View {
                 }
             }
         }
+        .onAppear(){
+            vm.estadoPantalla = .search
+        }
     }
 }
 
 #Preview {
     SearchView()
-        .environment(MangasVM())
+        .environment(MangasVM.test)
 }

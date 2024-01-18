@@ -14,6 +14,11 @@ protocol DataInteractor {
     func getDemographics() async throws -> [String]
     func getGenres() async throws -> [String]
     func getThemes() async throws -> [String]
+    func getMangasItemsByAuthors(idAuthor: UUID, itemsPorPagina: Int, pagina: Int) async throws -> MangasItems
+    func getMangasItemsByDemographics(demographic: String, itemsPorPagina: Int, pagina: Int) async throws -> MangasItems
+    func getMangasItemsByGenre(genre: String, itemsPorPagina: Int, pagina: Int) async throws -> MangasItems
+    func getMangasItemsByTheme(theme: String, itemsPorPagina: Int, pagina: Int) async throws -> MangasItems
+    
 }
 
 struct Network: DataInteractor {
@@ -64,5 +69,16 @@ struct Network: DataInteractor {
     func getThemes() async throws -> [String] {
         try await getJSON(request: .get(url: .getThemes), type: [String].self)
     }
-    
+    func getMangasItemsByAuthors(idAuthor: UUID, itemsPorPagina: Int, pagina: Int) async throws -> MangasItems {
+        try await getJSON(request: .get(url: .getMangaByAuthor(idAuthor: idAuthor, itemsPorPagina: itemsPorPagina, pagina: pagina)), type: MangasItems.self)
+    }
+    func getMangasItemsByDemographics(demographic: String, itemsPorPagina: Int, pagina: Int) async throws -> MangasItems {
+        try await getJSON(request: .get(url: .getMangaByDemographic(demographic: demographic, itemsPorPagina: itemsPorPagina, pagina: pagina)), type: MangasItems.self)
+    }
+    func getMangasItemsByGenre(genre: String, itemsPorPagina: Int, pagina: Int) async throws -> MangasItems {
+        try await getJSON(request: .get(url: .getMangaByGenre(genre: genre, itemsPorPagina: itemsPorPagina, pagina: pagina)), type: MangasItems.self)
+    }
+    func getMangasItemsByTheme(theme: String, itemsPorPagina: Int, pagina: Int) async throws -> MangasItems {
+        try await getJSON(request: .get(url: .getMangaByTheme(theme: theme, itemsPorPagina: itemsPorPagina, pagina: pagina)), type: MangasItems.self)
+    }
 }

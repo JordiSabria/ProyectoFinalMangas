@@ -11,21 +11,37 @@ struct DemographicsView: View {
     @Environment(MangasVM.self) var vm
     
     var body: some View {
-        Text(String(vm.demographics.count))
-        List(vm.demographics, id: \.self){ demographic in
-            Text(demographic)
-        }
-        .navigationTitle("Autores")
-        .onAppear(){
-            if vm.demographics.count == 0 {
-                Task{
-                    await vm.getDemographics()
-                }
+        List(vm.demographics){ demographic in
+            NavigationLink(value: demographic){
+                Text(demographic.demographic)
             }
+        }
+        .navigationTitle("Demográficas")
+        .navigationDestination(for: DTODemographic.self){ demographic in
+            MangasByDemographicView(demographic: demographic)
+                .environment(vm)
+        }
+        .refreshable {
+            Task{
+                await vm.getDemographics()
+            }
+        }
+        .onAppear(){
+            switch vm.estadoPantalla{
+                case .search:
+                    vm.estadoPantalla = .demographics
+                    Task{
+                        await vm.getDemographics()
+                    }
+                default:
+                    vm.estadoPantalla = .demographics
+                }
         }
     }
 }
 #Preview {
-    DemographicsView()
-        .environment(MangasVM())
+    NavigationStack {
+        DemographicsView()
+            .environment(MangasVM.test)
+    }
 }

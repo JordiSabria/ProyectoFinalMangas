@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MangaDetailView: View {
+    @Environment(MangasVM.self) var vm
     let manga: DTOMangas
     
     var body: some View {
@@ -72,6 +73,9 @@ struct MangaDetailView: View {
             }
             .padding(.horizontal, 10.0)
         }
+        .onAppear(){
+            vm.estadoPantalla = .detailManga
+        }
     }
     
     func getDateFromString (dateString: String) -> String {
@@ -91,4 +95,5 @@ struct MangaDetailView: View {
 
 #Preview {
     MangaDetailView(manga: .test)
+        .environment(MangasVM.test)
 }

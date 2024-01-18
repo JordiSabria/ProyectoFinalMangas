@@ -36,3 +36,13 @@ enum search {
     case genres
     case themes
 }
+
+enum estadoPantalla {
+    case search
+    case authors
+    case demographics
+    case genres
+    case themes
+    case mangas
+    case detailManga
+}

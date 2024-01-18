@@ -35,6 +35,7 @@ struct AllMangasView: View {
         .navigationTitle("Todos los Mangas")
         .navigationDestination(for: DTOMangas.self) { manga in
             MangaDetailView(manga: manga)
+                .environment(vm)
         }
         .onAppear(){
             if vm.mangasItemsArray.count == 0{
@@ -52,6 +53,6 @@ struct AllMangasView: View {
 #Preview {
     NavigationStack {
         AllMangasView()
-            .environment(MangasVM())
+            .environment(MangasVM.test)
     }
 }

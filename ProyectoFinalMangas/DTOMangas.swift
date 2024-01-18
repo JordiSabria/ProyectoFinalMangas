@@ -10,7 +10,7 @@ import Foundation
 struct MangasItems : Codable, Hashable, Identifiable{
     let id: UUID
     let items: [DTOMangas]
-    let metadata: DTOMedatada
+    var metadata: DTOMedatada
 
     init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -101,7 +101,7 @@ struct DTOAuthor: Codable, Hashable, Identifiable {
     let id: UUID
 }
 struct DTOMedatada: Codable, Hashable {
-    let total: Int
+    var total: Int
     let page: Int
     let per: Int  // items por página
 }

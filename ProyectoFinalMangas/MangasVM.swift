@@ -17,9 +17,16 @@ final class MangasVM {
     //var mangasArray: [Manga] = []
     var bestMangasItemsArray: [MangasItems] = []
     var authors: [DTOAuthor] = []
-    var demographics: [String] = []
-    var genres: [String] = []
-    var themes: [String] = []
+    var demographics: [DTODemographic] = []
+    var genres: [DTOGenre] = []
+    var themes: [DTOTheme] = []
+    var mangasItemsByAuthor: [MangasItems] = []
+    var mangasItemsByDemographic: [MangasItems] = []
+    var mangasItemsByGenre: [MangasItems] = []
+    var mangasItemsByTheme: [MangasItems] = []
+    
+    var estadoPantalla: estadoPantalla = .search
+    
     
     var showAlert = false
     var msg = ""
@@ -31,6 +38,10 @@ final class MangasVM {
 //            await getMangasItems()
 //            await MainActor.run { loading = false }
 //        }
+    }
+    init(network: DataInteractor = Network.shared, estadoPantalla: estadoPantalla) {
+        self.network = network
+        self.estadoPantalla = estadoPantalla
     }
     
     func getMangasItems() async {
@@ -45,24 +56,6 @@ final class MangasVM {
 //                let mangaItemRecovered = try await self.network.getMangas(itemsPorPagina: mangasPorPagina, pagina: pagina)
 //                self.mangasItemsArray.append(mangaItemRecovered)
 //            }
-            // Tercero vamos a crear un grupo de tascas en asyncronia para cada llamada getMangas así vamos a recuperar todos los mangas de la forma más eficiente.
-            try await withThrowingTaskGroup(of: MangasItems.self){ group in
-                // Creamos las tascas en funcion del número de mangas en paquetes de mangasPorPagina
-                for pagina in 2...paquetes{
-                    group.addTask{
-                        try await self.network.getMangasItems(itemsPorPagina: mangasPorPagina, pagina: pagina)
-                    }
-                }
-                for try await mangaItem in group.compactMap({$0}){
-                    self.mangasItemsArray.append(mangaItem)
-//                    await MainActor.run {
-//                        mangasArray = mangasArray + mangaItem.items.map{$0.toPresentacion}
-//                        for mangaRecuperado in mangaItem.items {
-//                            mangasArray.append(mangaRecuperado.toPresentacion)
-//                        }
-//                    }
-                }
-            }
             // Ahora hemos de añadir los mangas de la primera llamada.
             await MainActor.run {
                 self.mangasItemsArray.append(mangas)
@@ -71,6 +64,28 @@ final class MangasVM {
 //                    mangasArray.append(mangaRecuperado.toPresentacion)
 //                }
             }
+            // Tercero, si hay más de un paquete: vamos a crear un grupo de tascas en asyncronia para cada llamada getMangas así vamos a recuperar todos los mangas de la forma más eficiente.
+            if paquetes > 1 {
+                try await withThrowingTaskGroup(of: MangasItems.self){ group in
+                    // Creamos las tascas en funcion del número de mangas en paquetes de mangasPorPagina
+                    for pagina in 2...paquetes{
+                        group.addTask{
+                            try await self.network.getMangasItems(itemsPorPagina: mangasPorPagina, pagina: pagina)
+                        }
+                    }
+                    for try await mangaItem in group.compactMap({$0}){
+                        self.mangasItemsArray.append(mangaItem)
+    //                    await MainActor.run {
+    //                        mangasArray = mangasArray + mangaItem.items.map{$0.toPresentacion}
+    //                        for mangaRecuperado in mangaItem.items {
+    //                            mangasArray.append(mangaRecuperado.toPresentacion)
+    //                        }
+    //                    }
+                    }
+                }
+            }
+            
+            
         } catch {
             await MainActor.run {
                 self.msg = "\(error)"
@@ -78,7 +93,6 @@ final class MangasVM {
             }
         }
     }
-    
     func getBestMangasItems() async {
         do {
             let bestMangasItems = try await self.network.getBestMangasItems()
@@ -93,9 +107,9 @@ final class MangasVM {
         }
         
     }
-    
     func getAuthors() async {
         do{
+            authors = []
             let authorsTemp = try await self.network.getAuthors()
             await MainActor.run{
                 self.authors.append(contentsOf: authorsTemp)
@@ -114,13 +128,16 @@ final class MangasVM {
             }
         }
     }
-    
     func getDemographics() async {
         do{
+            demographics = []
             let demographicsTemp = try await self.network.getDemographics()
             await MainActor.run{
-                self.demographics.append(contentsOf: demographicsTemp)
-                demographics = demographics.sorted()
+                let dtoDemographicArray = demographicsTemp.map { DTODemographic(id: UUID(), demographic: $0) }
+                self.demographics.append(contentsOf: dtoDemographicArray)
+                demographics = demographics.sorted{
+                    return $0.demographic < $1.demographic
+                }
             }
         } catch {
             await MainActor.run {
@@ -129,13 +146,16 @@ final class MangasVM {
             }
         }
     }
-    
     func getGenres() async {
         do{
+            genres = []
             let genresTemp = try await self.network.getGenres()
             await MainActor.run{
-                self.genres.append(contentsOf: genresTemp)
-                genres = genres.sorted()
+                let dtoGenresArray = genresTemp.map { DTOGenre(id: UUID(), genre: $0) }
+                self.genres.append(contentsOf: dtoGenresArray)
+                genres = genres.sorted{
+                    return $0.genre < $1.genre
+                }
             }
         } catch {
             await MainActor.run {
@@ -144,13 +164,16 @@ final class MangasVM {
             }
         }
     }
-    
     func getThemes() async {
         do{
+            themes = []
             let themesTemp = try await self.network.getThemes()
             await MainActor.run{
-                self.themes.append(contentsOf: themesTemp)
-                themes = themes.sorted()
+                let dtoThemesArray = themesTemp.map { DTOTheme(id: UUID(), theme: $0) }
+                self.themes.append(contentsOf: dtoThemesArray)
+                themes = themes.sorted{
+                    return $0.theme < $1.theme
+                }
             }
         } catch {
             await MainActor.run {
@@ -159,7 +182,146 @@ final class MangasVM {
             }
         }
     }
-    
+    func getMangasByAuthor(idAuthor: UUID) async {
+        do{
+            // Antes que nada vaciamos el array de mangasItemsByAuthor
+            mangasItemsByAuthor = []
+            let mangasPorPagina = 500
+            // Primero recuperamos el primer "paquete" de mangas por autor para poder saber cuantos mangas hay en total
+            let mangas = try await network.getMangasItemsByAuthors(idAuthor: idAuthor, itemsPorPagina: mangasPorPagina , pagina: 1)
+            // Segundo buscamos cuantos "paquetes" salen de dividir el numero de mangas por los mangas por pagina. Y lo redondeamos al alza para no dejarnos ninguno.
+            let paquetes = Int(ceil(Double(mangas.metadata.total/mangasPorPagina)))
+            // Tercero vamos a crear un grupo de tascas en asyncronia para cada llamada getMangas así vamos a recuperar todos los mangas de la forma más eficiente.
+            try await withThrowingTaskGroup(of: MangasItems.self){ group in
+                // Creamos las tascas en funcion del número de mangas en paquetes de mangasPorPagina
+                if paquetes > 1 {
+                    for pagina in 2...paquetes{
+                        group.addTask{
+                            try await self.network.getMangasItemsByAuthors(idAuthor: idAuthor, itemsPorPagina: mangasPorPagina, pagina: pagina)
+                        }
+                    }
+                    for try await mangaItem in group.compactMap({$0}){
+                        self.mangasItemsByAuthor.append(mangaItem)
+                    }
+                }
+            }
+            // Ahora hemos de añadir los mangas de la primera llamada.
+            await MainActor.run {
+                self.mangasItemsByAuthor.append(mangas)
+            }
+            
+        } catch {
+            await MainActor.run {
+                self.msg = "\(error)"
+                self.showAlert.toggle()
+            }
+        }
+    }
+    func getMangasByDemographic(demographic: String) async {
+        do{
+            // Antes que nada vaciamos el array de mangasItemsByAuthor
+            mangasItemsByDemographic = []
+            let mangasPorPagina = 500
+            // Primero recuperamos el primer "paquete" de mangas por autor para poder saber cuantos mangas hay en total
+            let mangas = try await network.getMangasItemsByDemographics(demographic: demographic, itemsPorPagina: mangasPorPagina , pagina: 1)
+            // Segundo buscamos cuantos "paquetes" salen de dividir el numero de mangas por los mangas por pagina. Y lo redondeamos al alza para no dejarnos ninguno.
+            let paquetes = Int(ceil(Double(mangas.metadata.total/mangasPorPagina)))
+            // Tercero vamos a crear un grupo de tascas en asyncronia para cada llamada getMangas así vamos a recuperar todos los mangas de la forma más eficiente.
+            try await withThrowingTaskGroup(of: MangasItems.self){ group in
+                // Creamos las tascas en funcion del número de mangas en paquetes de mangasPorPagina
+                if paquetes > 1 {
+                    for pagina in 2...paquetes{
+                        group.addTask{
+                            try await self.network.getMangasItemsByDemographics(demographic: demographic, itemsPorPagina: mangasPorPagina , pagina: pagina)
+                        }
+                    }
+                    for try await mangaItem in group.compactMap({$0}){
+                        self.mangasItemsByDemographic.append(mangaItem)
+                    }
+                }
+            }
+            // Ahora hemos de añadir los mangas de la primera llamada.
+            await MainActor.run {
+                self.mangasItemsByDemographic.append(mangas)
+            }
+            
+        } catch {
+            await MainActor.run {
+                self.msg = "\(error)"
+                self.showAlert.toggle()
+            }
+        }
+    }
+    func getMangasByGenre(genre: String) async {
+        do{
+            // Antes que nada vaciamos el array de mangasItemsByAuthor
+            mangasItemsByGenre = []
+            let mangasPorPagina = 500
+            // Primero recuperamos el primer "paquete" de mangas por autor para poder saber cuantos mangas hay en total
+            let mangas = try await network.getMangasItemsByGenre(genre: genre, itemsPorPagina: mangasPorPagina , pagina: 1)
+            // Segundo buscamos cuantos "paquetes" salen de dividir el numero de mangas por los mangas por pagina. Y lo redondeamos al alza para no dejarnos ninguno.
+            let paquetes = Int(ceil(Double(mangas.metadata.total/mangasPorPagina)))
+            // Tercero vamos a crear un grupo de tascas en asyncronia para cada llamada getMangas así vamos a recuperar todos los mangas de la forma más eficiente.
+            try await withThrowingTaskGroup(of: MangasItems.self){ group in
+                // Creamos las tascas en funcion del número de mangas en paquetes de mangasPorPagina
+                if paquetes > 1 {
+                    for pagina in 2...paquetes{
+                        group.addTask{
+                            try await self.network.getMangasItemsByGenre(genre: genre, itemsPorPagina: mangasPorPagina , pagina: pagina)
+                        }
+                    }
+                    for try await mangaItem in group.compactMap({$0}){
+                        self.mangasItemsByGenre.append(mangaItem)
+                    }
+                }
+            }
+            // Ahora hemos de añadir los mangas de la primera llamada.
+            await MainActor.run {
+                self.mangasItemsByGenre.append(mangas)
+            }
+            
+        } catch {
+            await MainActor.run {
+                self.msg = "\(error)"
+                self.showAlert.toggle()
+            }
+        }
+    }
+    func getMangasByTheme(theme: String) async {
+        do{
+            // Antes que nada vaciamos el array de mangasItemsByAuthor
+            mangasItemsByTheme = []
+            let mangasPorPagina = 500
+            // Primero recuperamos el primer "paquete" de mangas por autor para poder saber cuantos mangas hay en total
+            let mangas = try await network.getMangasItemsByTheme(theme: theme, itemsPorPagina: mangasPorPagina , pagina: 1)
+            // Segundo buscamos cuantos "paquetes" salen de dividir el numero de mangas por los mangas por pagina. Y lo redondeamos al alza para no dejarnos ninguno.
+            let paquetes = Int(ceil(Double(mangas.metadata.total/mangasPorPagina)))
+            // Tercero vamos a crear un grupo de tascas en asyncronia para cada llamada getMangas así vamos a recuperar todos los mangas de la forma más eficiente.
+            try await withThrowingTaskGroup(of: MangasItems.self){ group in
+                // Creamos las tascas en funcion del número de mangas en paquetes de mangasPorPagina
+                if paquetes > 1 {
+                    for pagina in 2...paquetes{
+                        group.addTask{
+                            try await self.network.getMangasItemsByTheme(theme: theme, itemsPorPagina: mangasPorPagina , pagina: pagina)
+                        }
+                    }
+                    for try await mangaItem in group.compactMap({$0}){
+                        self.mangasItemsByTheme.append(mangaItem)
+                    }
+                }
+            }
+            // Ahora hemos de añadir los mangas de la primera llamada.
+            await MainActor.run {
+                self.mangasItemsByTheme.append(mangas)
+            }
+            
+        } catch {
+            await MainActor.run {
+                self.msg = "\(error)"
+                self.showAlert.toggle()
+            }
+        }
+    }
     func getDateFromString (dateString: String?) -> Date? {
 
         let dateFormatter = ISO8601DateFormatter()
