@@ -13,6 +13,7 @@ struct AllMangasView: View {
     let item = GridItem(.adaptive(minimum: 150), alignment: .center)
     
     var body: some View {
+        
         Text(String(vm.mangasItemsArray.count))
         ScrollView {
             LazyVGrid(columns: [item]) {
@@ -38,6 +39,7 @@ struct AllMangasView: View {
                 .environment(vm)
         }
         .onAppear(){
+            //getMangas()
             if vm.mangasItemsArray.count == 0{
                 getMangas()
             }

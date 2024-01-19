@@ -24,8 +24,14 @@ final class MangasVM {
     var mangasItemsByDemographic: [MangasItems] = []
     var mangasItemsByGenre: [MangasItems] = []
     var mangasItemsByTheme: [MangasItems] = []
+    var mangasByAuthorSpecific: [UUID:[MangasItems]] = [:]
+    var mangasByDemographicSpecific: [String:[MangasItems]] = [:]
+    var mangasByGenresSpecific: [String:[MangasItems]] = [:]
+    var mangasByThemesSpecific: [String:[MangasItems]] = [:]
     
     var estadoPantalla: estadoPantalla = .search
+    
+    var search = ""
     
     
     var showAlert = false
@@ -46,6 +52,7 @@ final class MangasVM {
     
     func getMangasItems() async {
         do{
+            mangasItemsArray = []
             let mangasPorPagina = 1000
             // Primero recuperamos el primer "paquete" de mangas para poder saber cuantos mangas hay en total
             let mangas = try await network.getMangasItems(itemsPorPagina: mangasPorPagina, pagina: 1)
@@ -184,11 +191,18 @@ final class MangasVM {
     }
     func getMangasByAuthor(idAuthor: UUID) async {
         do{
-            // Antes que nada vaciamos el array de mangasItemsByAuthor
-            mangasItemsByAuthor = []
+            // Antes que nada vaciamos el array de mangasItemsByAuthor y los mangas del autor
+            //mangasItemsByAuthor = []
+            // Añadimos el autor dentro del diccionario por si no está.
+            mangasByAuthorSpecific[idAuthor] = []
             let mangasPorPagina = 500
             // Primero recuperamos el primer "paquete" de mangas por autor para poder saber cuantos mangas hay en total
             let mangas = try await network.getMangasItemsByAuthors(idAuthor: idAuthor, itemsPorPagina: mangasPorPagina , pagina: 1)
+            // Ahora hemos de añadir los mangas de la primera llamada.
+            await MainActor.run {
+                //self.mangasItemsByAuthor.append(mangas)
+                self.mangasByAuthorSpecific[idAuthor]?.append(mangas)
+            }
             // Segundo buscamos cuantos "paquetes" salen de dividir el numero de mangas por los mangas por pagina. Y lo redondeamos al alza para no dejarnos ninguno.
             let paquetes = Int(ceil(Double(mangas.metadata.total/mangasPorPagina)))
             // Tercero vamos a crear un grupo de tascas en asyncronia para cada llamada getMangas así vamos a recuperar todos los mangas de la forma más eficiente.
@@ -201,15 +215,11 @@ final class MangasVM {
                         }
                     }
                     for try await mangaItem in group.compactMap({$0}){
-                        self.mangasItemsByAuthor.append(mangaItem)
+                        //self.mangasItemsByAuthor.append(mangaItem)
+                        self.mangasByAuthorSpecific[idAuthor]?.append(mangaItem)
                     }
                 }
             }
-            // Ahora hemos de añadir los mangas de la primera llamada.
-            await MainActor.run {
-                self.mangasItemsByAuthor.append(mangas)
-            }
-            
         } catch {
             await MainActor.run {
                 self.msg = "\(error)"
@@ -220,10 +230,17 @@ final class MangasVM {
     func getMangasByDemographic(demographic: String) async {
         do{
             // Antes que nada vaciamos el array de mangasItemsByAuthor
-            mangasItemsByDemographic = []
+            //mangasItemsByDemographic = []
+            // Añadimos el demographic dentro del diccionario por si no está.
+            mangasByDemographicSpecific[demographic] = []
             let mangasPorPagina = 500
             // Primero recuperamos el primer "paquete" de mangas por autor para poder saber cuantos mangas hay en total
             let mangas = try await network.getMangasItemsByDemographics(demographic: demographic, itemsPorPagina: mangasPorPagina , pagina: 1)
+            // Ahora hemos de añadir los mangas de la primera llamada.
+            await MainActor.run {
+                //self.mangasItemsByDemographic.append(mangas)
+                self.mangasByDemographicSpecific[demographic]?.append(mangas)
+            }
             // Segundo buscamos cuantos "paquetes" salen de dividir el numero de mangas por los mangas por pagina. Y lo redondeamos al alza para no dejarnos ninguno.
             let paquetes = Int(ceil(Double(mangas.metadata.total/mangasPorPagina)))
             // Tercero vamos a crear un grupo de tascas en asyncronia para cada llamada getMangas así vamos a recuperar todos los mangas de la forma más eficiente.
@@ -236,15 +253,11 @@ final class MangasVM {
                         }
                     }
                     for try await mangaItem in group.compactMap({$0}){
-                        self.mangasItemsByDemographic.append(mangaItem)
+                        //self.mangasItemsByDemographic.append(mangaItem)
+                        self.mangasByDemographicSpecific[demographic]?.append(mangaItem)
                     }
                 }
             }
-            // Ahora hemos de añadir los mangas de la primera llamada.
-            await MainActor.run {
-                self.mangasItemsByDemographic.append(mangas)
-            }
-            
         } catch {
             await MainActor.run {
                 self.msg = "\(error)"
@@ -255,10 +268,17 @@ final class MangasVM {
     func getMangasByGenre(genre: String) async {
         do{
             // Antes que nada vaciamos el array de mangasItemsByAuthor
-            mangasItemsByGenre = []
+            //mangasItemsByGenre = []
+            // Añadimos el genre dentro del diccionario por si no está.
+            mangasByGenresSpecific[genre] = []
             let mangasPorPagina = 500
             // Primero recuperamos el primer "paquete" de mangas por autor para poder saber cuantos mangas hay en total
             let mangas = try await network.getMangasItemsByGenre(genre: genre, itemsPorPagina: mangasPorPagina , pagina: 1)
+            // Ahora hemos de añadir los mangas de la primera llamada.
+            await MainActor.run {
+                //self.mangasItemsByGenre.append(mangas)
+                self.mangasByGenresSpecific[genre]?.append(mangas)
+            }
             // Segundo buscamos cuantos "paquetes" salen de dividir el numero de mangas por los mangas por pagina. Y lo redondeamos al alza para no dejarnos ninguno.
             let paquetes = Int(ceil(Double(mangas.metadata.total/mangasPorPagina)))
             // Tercero vamos a crear un grupo de tascas en asyncronia para cada llamada getMangas así vamos a recuperar todos los mangas de la forma más eficiente.
@@ -271,15 +291,11 @@ final class MangasVM {
                         }
                     }
                     for try await mangaItem in group.compactMap({$0}){
-                        self.mangasItemsByGenre.append(mangaItem)
+                        //self.mangasItemsByGenre.append(mangaItem)
+                        self.mangasByGenresSpecific[genre]?.append(mangaItem)
                     }
                 }
             }
-            // Ahora hemos de añadir los mangas de la primera llamada.
-            await MainActor.run {
-                self.mangasItemsByGenre.append(mangas)
-            }
-            
         } catch {
             await MainActor.run {
                 self.msg = "\(error)"
@@ -291,9 +307,16 @@ final class MangasVM {
         do{
             // Antes que nada vaciamos el array de mangasItemsByAuthor
             mangasItemsByTheme = []
+            // Añadimos el theme dentro del diccionario por si no está.
+            mangasByThemesSpecific[theme] = []
             let mangasPorPagina = 500
             // Primero recuperamos el primer "paquete" de mangas por autor para poder saber cuantos mangas hay en total
             let mangas = try await network.getMangasItemsByTheme(theme: theme, itemsPorPagina: mangasPorPagina , pagina: 1)
+            // Ahora hemos de añadir los mangas de la primera llamada.
+            await MainActor.run {
+                //self.mangasItemsByTheme.append(mangas)
+                self.mangasByThemesSpecific[theme]?.append(mangas)
+            }
             // Segundo buscamos cuantos "paquetes" salen de dividir el numero de mangas por los mangas por pagina. Y lo redondeamos al alza para no dejarnos ninguno.
             let paquetes = Int(ceil(Double(mangas.metadata.total/mangasPorPagina)))
             // Tercero vamos a crear un grupo de tascas en asyncronia para cada llamada getMangas así vamos a recuperar todos los mangas de la forma más eficiente.
@@ -306,15 +329,11 @@ final class MangasVM {
                         }
                     }
                     for try await mangaItem in group.compactMap({$0}){
-                        self.mangasItemsByTheme.append(mangaItem)
+                        //self.mangasItemsByTheme.append(mangaItem)
+                        self.mangasByThemesSpecific[theme]?.append(mangaItem)
                     }
                 }
             }
-            // Ahora hemos de añadir los mangas de la primera llamada.
-            await MainActor.run {
-                self.mangasItemsByTheme.append(mangas)
-            }
-            
         } catch {
             await MainActor.run {
                 self.msg = "\(error)"

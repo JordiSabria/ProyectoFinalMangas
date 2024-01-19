@@ -15,7 +15,7 @@ struct MangasByDemographicView: View {
     var body: some View {
         ScrollView {
             LazyVGrid(columns: [item]) {
-                ForEach (vm.mangasItemsByDemographic){ mangaItems in
+                ForEach (vm.mangasByDemographicSpecific[demographic.demographic] ?? []){ mangaItems in
                     ForEach (mangaItems.items){ mangaItem in
                         if let mangaTitle = mangaItem.title {
                             NavigationLink(value: mangaItem) {
@@ -41,9 +41,12 @@ struct MangasByDemographicView: View {
             switch vm.estadoPantalla{
                 case .demographics:
                     vm.estadoPantalla = .mangas
+                guard (vm.mangasByDemographicSpecific[demographic.demographic]?.count) != nil else {
                     Task {
                         await vm.getMangasByDemographic(demographic: demographic.demographic)
                     }
+                    return
+                }
                 default:
                     vm.estadoPantalla = .mangas
                 }

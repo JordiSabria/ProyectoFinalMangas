@@ -27,15 +27,21 @@ struct ThemesView: View {
             }
         }
         .onAppear(){
-            switch vm.estadoPantalla{
-                case .search:
-                    vm.estadoPantalla = .themes
-                    Task{
-                        await vm.getThemes()
-                    }
-                default:
-                    vm.estadoPantalla = .themes
+            vm.estadoPantalla = .themes
+            if vm.themes.count == 0{
+                Task{
+                    await vm.getThemes()
                 }
+            }
+//            switch vm.estadoPantalla{
+//                case .search:
+//                    vm.estadoPantalla = .themes
+//                    Task{
+//                        await vm.getThemes()
+//                    }
+//                default:
+//                    vm.estadoPantalla = .themes
+//                }
         }
     }
 }

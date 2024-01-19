@@ -27,15 +27,21 @@ struct DemographicsView: View {
             }
         }
         .onAppear(){
-            switch vm.estadoPantalla{
-                case .search:
-                    vm.estadoPantalla = .demographics
-                    Task{
-                        await vm.getDemographics()
-                    }
-                default:
-                    vm.estadoPantalla = .demographics
+            vm.estadoPantalla = .demographics
+            if vm.demographics.count == 0{
+                Task{
+                    await vm.getDemographics()
                 }
+            }
+//            switch vm.estadoPantalla{
+//                case .search:
+//                    vm.estadoPantalla = .demographics
+//                    Task{
+//                        await vm.getDemographics()
+//                    }
+//                default:
+//                    vm.estadoPantalla = .demographics
+//                }
         }
     }
 }

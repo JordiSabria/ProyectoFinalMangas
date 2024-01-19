@@ -27,15 +27,21 @@ struct GenresView: View {
             }
         }
         .onAppear(){
-            switch vm.estadoPantalla{
-                case .search:
-                    vm.estadoPantalla = .genres
-                    Task{
-                        await vm.getGenres()
-                    }
-                default:
-                    vm.estadoPantalla = .genres
+            vm.estadoPantalla = .genres
+            if vm.genres.count == 0{
+                Task{
+                    await vm.getGenres()
                 }
+            }
+//            switch vm.estadoPantalla{
+//                case .search:
+//                    vm.estadoPantalla = .genres
+//                    Task{
+//                        await vm.getGenres()
+//                    }
+//                default:
+//                    vm.estadoPantalla = .genres
+//                }
         }
     }
 }

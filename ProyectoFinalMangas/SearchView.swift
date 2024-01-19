@@ -9,10 +9,10 @@ import SwiftUI
 
 struct SearchView: View {
     @Environment(MangasVM.self) var vm
-    //@State var pantalla: estadoPantalla
+    @State private var path = NavigationPath()
     
     var body: some View {
-        NavigationStack{
+        NavigationStack(path: $path){
             Text(String(vm.mangasItemsArray.count))
             List{
                 NavigationLink(value: search.allMangas) {

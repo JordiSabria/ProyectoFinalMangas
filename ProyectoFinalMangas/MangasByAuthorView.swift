@@ -15,7 +15,8 @@ struct MangasByAuthorView: View {
     var body: some View {
         ScrollView {
             LazyVGrid(columns: [item]) {
-                ForEach (vm.mangasItemsByAuthor){ mangaItems in
+                //ForEach (vm.mangasItemsByAuthor){ mangaItems in
+                ForEach (vm.mangasByAuthorSpecific[author.id] ?? []){ mangaItems in
                     ForEach (mangaItems.items){ mangaItem in
                         if let mangaTitle = mangaItem.title {
                             NavigationLink(value: mangaItem) {
@@ -41,9 +42,12 @@ struct MangasByAuthorView: View {
             switch vm.estadoPantalla{
                 case .authors:
                     vm.estadoPantalla = .mangas
+                guard (vm.mangasByAuthorSpecific[author.id]?.count) != nil else {
                     Task {
                         await vm.getMangasByAuthor(idAuthor:author.id)
                     }
+                    return
+                }
                 default:
                     vm.estadoPantalla = .mangas
                 }

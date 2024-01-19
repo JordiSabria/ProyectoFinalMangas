@@ -17,6 +17,7 @@ struct AuthorsView: View {
             }
         }
         .navigationTitle("Autores")
+        //.searchable(text: $vm.search, prompt: "Buscar un autor")
         .navigationDestination(for: DTOAuthor.self){ author in
             MangasByAuthorView(author: author)
                 .environment(vm)
@@ -27,15 +28,21 @@ struct AuthorsView: View {
             }
         }
         .onAppear(){
-            switch vm.estadoPantalla{
-                case .search:
-                    vm.estadoPantalla = .authors
-                    Task{
-                        await vm.getAuthors()
-                    }
-                default:
-                    vm.estadoPantalla = .authors
+            vm.estadoPantalla = .authors
+            if vm.authors.count == 0{
+                Task{
+                    await vm.getAuthors()
+                }
             }
+//            switch vm.estadoPantalla{
+//                case .search:
+//                    vm.estadoPantalla = .authors
+//                    Task{
+//                        await vm.getAuthors()
+//                    }
+//                default:
+//                    vm.estadoPantalla = .authors
+//            }
         }
     }
 }
