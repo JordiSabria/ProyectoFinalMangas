@@ -20,10 +20,10 @@ final class MangasVM {
     var demographics: [DTODemographic] = []
     var genres: [DTOGenre] = []
     var themes: [DTOTheme] = []
-    var mangasItemsByAuthor: [MangasItems] = []
-    var mangasItemsByDemographic: [MangasItems] = []
-    var mangasItemsByGenre: [MangasItems] = []
-    var mangasItemsByTheme: [MangasItems] = []
+//    var mangasItemsByAuthor: [MangasItems] = []
+//    var mangasItemsByDemographic: [MangasItems] = []
+//    var mangasItemsByGenre: [MangasItems] = []
+//    var mangasItemsByTheme: [MangasItems] = []
     var mangasByAuthorSpecific: [UUID:[MangasItems]] = [:]
     var mangasByDemographicSpecific: [String:[MangasItems]] = [:]
     var mangasByGenresSpecific: [String:[MangasItems]] = [:]
@@ -31,8 +31,8 @@ final class MangasVM {
     
     var estadoPantalla: estadoPantalla = .search
     
-    var search = ""
-    
+    var searchAllMangas = ""
+    var searchAuthors = ""
     
     var showAlert = false
     var msg = ""
@@ -90,14 +90,33 @@ final class MangasVM {
     //                    }
                     }
                 }
-            }
-            
-            
+            } 
         } catch {
             await MainActor.run {
                 self.msg = "\(error)"
                 self.showAlert.toggle()
             }
+        }
+    }
+    func getMangasItemsSearchAllMangash() -> [DTOMangas]{
+        let arrayTempMangas = mangasItemsArray.map{ $0.items.map{$0} }.flatMap{$0}
+        if searchAllMangas.isEmpty{
+            return arrayTempMangas
+                .sorted{
+                    if let titulo1 = $0.title, let titulo2 = $1.title {
+                        titulo1 < titulo2
+                    }else { true }
+                }
+        } else {
+            return arrayTempMangas
+                .filter{
+                    $0.title?.range(of: searchAllMangas, options:[.caseInsensitive,.diacriticInsensitive]) != nil
+                }
+                .sorted{
+                    if let titulo1 = $0.title, let titulo2 = $1.title {
+                        titulo1 < titulo2
+                    }else { true }
+                }
         }
     }
     func getBestMangasItems() async {
@@ -134,6 +153,16 @@ final class MangasVM {
                 self.showAlert.toggle()
             }
         }
+    }
+    func getAuthorsSearch() -> [DTOAuthor]{
+        return  authors
+            .filter{
+                if searchAuthors.isEmpty{
+                    true
+                }else {
+                    ($0.firstName+$0.lastName).range(of: searchAuthors, options:[.caseInsensitive,.diacriticInsensitive]) != nil
+                }
+            }
     }
     func getDemographics() async {
         do{
@@ -306,7 +335,7 @@ final class MangasVM {
     func getMangasByTheme(theme: String) async {
         do{
             // Antes que nada vaciamos el array de mangasItemsByAuthor
-            mangasItemsByTheme = []
+            //mangasItemsByTheme = []
             // Añadimos el theme dentro del diccionario por si no está.
             mangasByThemesSpecific[theme] = []
             let mangasPorPagina = 500

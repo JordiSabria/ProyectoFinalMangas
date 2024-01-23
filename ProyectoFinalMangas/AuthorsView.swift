@@ -11,17 +11,24 @@ struct AuthorsView: View {
     @Environment(MangasVM.self) var vm
     
     var body: some View {
-        List(vm.authors){ author in
+        @Bindable var bVM = vm
+        List(vm.getAuthorsSearch()){ author in
             NavigationLink(value: author){
                 Text("\(author.firstName) \(author.lastName)")
             }
         }
+//        List(vm.authors){ author in
+//            NavigationLink(value: author){
+//                Text("\(author.firstName) \(author.lastName)")
+//            }
+//        }
         .navigationTitle("Autores")
         //.searchable(text: $vm.search, prompt: "Buscar un autor")
         .navigationDestination(for: DTOAuthor.self){ author in
             MangasByAuthorView(author: author)
                 .environment(vm)
         }
+        .searchable(text: $bVM.searchAuthors, prompt: "Buscar un autor")
         .refreshable {
             Task{
                 await vm.getAuthors()
@@ -34,15 +41,6 @@ struct AuthorsView: View {
                     await vm.getAuthors()
                 }
             }
-//            switch vm.estadoPantalla{
-//                case .search:
-//                    vm.estadoPantalla = .authors
-//                    Task{
-//                        await vm.getAuthors()
-//                    }
-//                default:
-//                    vm.estadoPantalla = .authors
-//            }
         }
     }
 }

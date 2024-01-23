@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct ProyectoFinalMangasApp: App {
@@ -21,5 +22,6 @@ struct ProyectoFinalMangasApp: App {
                     Text(vm.msg)
                 }
         }
+        .modelContainer(for: Manga.self)
     }
 }

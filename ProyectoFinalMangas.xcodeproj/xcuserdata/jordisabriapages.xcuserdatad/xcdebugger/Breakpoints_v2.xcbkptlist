@@ -30,8 +30,8 @@
             filePath = "ProyectoFinalMangas/MangasVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "97"
-            endingLineNumber = "97"
+            startingLineNumber = "95"
+            endingLineNumber = "95"
             landmarkName = "getMangasItems()"
             landmarkType = "7">
             <Locations>
@@ -153,8 +153,8 @@
             filePath = "ProyectoFinalMangas/MangasVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
+            startingLineNumber = "97"
+            endingLineNumber = "97"
             landmarkName = "getMangasItems()"
             landmarkType = "7">
             <Locations>
@@ -294,8 +294,8 @@
             filePath = "ProyectoFinalMangas/SearchView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "74"
-            endingLineNumber = "74"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -406,8 +406,8 @@
             filePath = "ProyectoFinalMangas/MangasVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "204"
-            endingLineNumber = "204"
+            startingLineNumber = "233"
+            endingLineNumber = "233"
             landmarkName = "getMangasByAuthor(idAuthor:)"
             landmarkType = "7">
             <Locations>

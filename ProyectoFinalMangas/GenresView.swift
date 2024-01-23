@@ -47,6 +47,8 @@ struct GenresView: View {
 }
 
 #Preview {
-    GenresView()
-        .environment(MangasVM.test)
+    NavigationStack {
+        GenresView()
+            .environment(MangasVM.test)
+    }
 }

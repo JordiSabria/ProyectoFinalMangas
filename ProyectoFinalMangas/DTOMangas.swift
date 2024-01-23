@@ -60,28 +60,28 @@ struct DTOMangas: Codable, Hashable, Identifiable{
     }
     
 }
-extension DTOMangas{
-    var toPresentacion: Manga{
-        Manga(id: id,
-              title: title,
-              titleEnglish: titleEnglish,
-              titleJapanese: titleJapanese,
-              status: status,
-              startDate: getDateFromString(dateString: startDate),
-              endDate: getDateFromString(dateString: endDate),
-              chapters: chapters,
-              volumes: volumes,
-              score: score,
-              authors: authors,
-              genres: genres,
-              themes: themes,
-              demographics: demographics,
-              sypnosis: sypnosis,
-              background: background,
-              mainPicture: mainPicture?.replacingOccurrences(of: "\"", with: ""),
-              url: url?.replacingOccurrences(of: "\"", with: ""))
-    }
-}
+//extension DTOMangas{
+//    var toPresentacion: Manga{
+//        Manga(id: id,
+//              title: title,
+//              titleEnglish: titleEnglish,
+//              titleJapanese: titleJapanese,
+//              status: status,
+//              startDate: getDateFromString(dateString: startDate),
+//              endDate: getDateFromString(dateString: endDate),
+//              chapters: chapters,
+//              volumes: volumes,
+//              score: score,
+//              authors: authors,
+//              genres: genres,
+//              themes: themes,
+//              demographics: demographics,
+//              sypnosis: sypnosis,
+//              background: background,
+//              mainPicture: mainPicture?.replacingOccurrences(of: "\"", with: ""),
+//              url: url?.replacingOccurrences(of: "\"", with: ""))
+//    }
+//}
 struct DTOGenre: Codable, Hashable, Identifiable{
     let id: UUID
     let genre: String
@@ -104,4 +104,13 @@ struct DTOMedatada: Codable, Hashable {
     var total: Int
     let page: Int
     let per: Int  // items por página
+}
+struct CustomSearch: Codable {
+    var searchTitle: String?
+    var searchAuthorFirstName: String?
+    var searchAuthorLastName: String?
+    var searchGenres: [String]?
+    var searchThemes: [String]?
+    var searchDemographics: [String]?
+    var searchContains: Bool
 }

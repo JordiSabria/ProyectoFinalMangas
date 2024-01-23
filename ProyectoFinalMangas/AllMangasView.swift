@@ -10,33 +10,51 @@ import SwiftUI
 struct AllMangasView: View {
     @Environment(MangasVM.self) var vm
     
+    @State var searchManga: String = ""
+    
     let item = GridItem(.adaptive(minimum: 150), alignment: .center)
     
     var body: some View {
-        
+        @Bindable var bVM = vm
         Text(String(vm.mangasItemsArray.count))
         ScrollView {
             LazyVGrid(columns: [item]) {
-                ForEach (vm.mangasItemsArray){ mangaItems in
-                    ForEach (mangaItems.items){ mangaItem in
-                        if let mangaTitle = mangaItem.title {
-                            NavigationLink(value: mangaItem) {
-                                MangaView(mangaURL: mangaItem.mainPicture, widthCover: 150, heightCover: 230)
-                                    .overlay(alignment: .bottom){
-                                        BottomTitleView(title: mangaTitle)
-                                    }
-                                  .padding()
-                            }
+                ForEach(vm.getMangasItemsSearchAllMangash()){ mangaItem in
+                    if let mangaTitle = mangaItem.title {
+                        NavigationLink(value: mangaItem) {
+                            MangaView(mangaURL: mangaItem.mainPicture, widthCover: 150, heightCover: 230)
+                                .overlay(alignment: .bottom){
+                                    BottomTitleView(title: mangaTitle)
+                                }
+                              .padding()
                         }
                     }
                 }
+//    Esta versión era sin el campo de busqueda.
+//                ForEach (vm.mangasItemsArray){ mangaItems in
+//                    ForEach (mangaItems.items){ mangaItem in
+//                        if let mangaTitle = mangaItem.title {
+//                            NavigationLink(value: mangaItem) {
+//                                MangaView(mangaURL: mangaItem.mainPicture, widthCover: 150, heightCover: 230)
+//                                    .overlay(alignment: .bottom){
+//                                        BottomTitleView(title: mangaTitle)
+//                                    }
+//                                  .padding()
+//                            }
+//                        }
+//                    }
+//                }
             }
             .padding()
         }
+        .searchable(text: $bVM.searchAllMangas, prompt: "Buscar un manga")
         .navigationTitle("Todos los Mangas")
         .navigationDestination(for: DTOMangas.self) { manga in
             MangaDetailView(manga: manga)
                 .environment(vm)
+        }
+        .refreshable {
+            getMangas()
         }
         .onAppear(){
             //getMangas()
@@ -44,6 +62,9 @@ struct AllMangasView: View {
                 getMangas()
             }
         }
+//        .onChange(of: bVM.searchAllMangas, initial: false){
+//            print(bVM.searchAllMangas)
+//        }
     }
     func getMangas(){
         Task {

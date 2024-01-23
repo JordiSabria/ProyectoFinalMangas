@@ -9,11 +9,11 @@ import SwiftUI
 
 struct SearchView: View {
     @Environment(MangasVM.self) var vm
-    @State private var path = NavigationPath()
+    //@State private var path = NavigationPath()
     
     var body: some View {
-        NavigationStack(path: $path){
-            Text(String(vm.mangasItemsArray.count))
+        NavigationStack{
+            //Text(String(vm.mangasItemsArray.count))
             List{
                 NavigationLink(value: search.allMangas) {
                     HStack{
@@ -45,6 +45,11 @@ struct SearchView: View {
                         Label("Temáticas", systemImage: "figure.martial.arts")
                     }
                 }
+                NavigationLink(value: search.superSearch){
+                    HStack{
+                        Label("Búsqueda avançada", systemImage: "magnifyingglass")
+                    }
+                }
             }
             .navigationTitle("Búsqueda")
             .navigationDestination(for: search.self) { search in
@@ -66,6 +71,9 @@ struct SearchView: View {
                         .environment(vm)
                 case .themes:
                     ThemesView()
+                        .environment(vm)
+                case .superSearch:
+                    AdvancedSearchView()
                         .environment(vm)
                 }
             }
