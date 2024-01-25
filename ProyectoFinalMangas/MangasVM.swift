@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @Observable
 final class MangasVM {
@@ -383,6 +384,10 @@ final class MangasVM {
         } else {
             return nil
         }
+    }
+    func guardarMangaEnMiLibreria(manga: DTOMangas, context: ModelContext){
+        let mangaData: Manga = manga.toData
+        context.insert(mangaData)
     }
     
 }

@@ -6,9 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct AllMangasView: View {
     @Environment(MangasVM.self) var vm
+    @Environment(\.modelContext) private var context
+    @Query var mangasCollection: [Manga]
     
     @State var searchManga: String = ""
     
@@ -26,24 +29,15 @@ struct AllMangasView: View {
                                 .overlay(alignment: .bottom){
                                     BottomTitleView(title: mangaTitle)
                                 }
+                                .overlay(alignment: .topTrailing){
+                                    if mangasCollection.contains(where: {$0.id == mangaItem.id}){
+                                        CheckCollectionView()
+                                    }
+                                }
                               .padding()
                         }
                     }
                 }
-//    Esta versión era sin el campo de busqueda.
-//                ForEach (vm.mangasItemsArray){ mangaItems in
-//                    ForEach (mangaItems.items){ mangaItem in
-//                        if let mangaTitle = mangaItem.title {
-//                            NavigationLink(value: mangaItem) {
-//                                MangaView(mangaURL: mangaItem.mainPicture, widthCover: 150, heightCover: 230)
-//                                    .overlay(alignment: .bottom){
-//                                        BottomTitleView(title: mangaTitle)
-//                                    }
-//                                  .padding()
-//                            }
-//                        }
-//                    }
-//                }
             }
             .padding()
         }
@@ -77,5 +71,6 @@ struct AllMangasView: View {
     NavigationStack {
         AllMangasView()
             .environment(MangasVM.test)
+            //.modelContainer(testModelContainer)
     }
 }

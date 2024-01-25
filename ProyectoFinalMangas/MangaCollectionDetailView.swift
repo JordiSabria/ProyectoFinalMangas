@@ -1,17 +1,18 @@
 //
-//  MangaDetailView.swift
+//  MangaCollectionDetailView.swift
 //  ProyectoFinalMangas
 //
-//  Created by Jordi Sabrià Pagès on 10/1/24.
+//  Created by Jordi Sabrià Pagès on 25/1/24.
 //
 
 import SwiftUI
 import SwiftData
 
-struct MangaDetailView: View {
+struct MangaCollectionDetailView: View {
     @Environment(MangasVM.self) var vm
     @Environment(\.modelContext) private var context
-    let manga: DTOMangas
+    let manga: Manga
+    let dataHoy: Date = Date()
     @State var mangaRepetido: Bool = false
     @Query(sort: \Manga.id) var mangasCollection: [Manga]
     
@@ -46,7 +47,8 @@ struct MangaDetailView: View {
                         if let startDate = manga.startDate{
                             Text("Fecha de Inicio: ")
                                 .bold()
-                            Text(getDateFromString(dateString: startDate))
+                            //Text(getDateFromString(dateString: startDate))
+                            Text(startDate.description)
                         }
                         Spacer()
                     }
@@ -54,7 +56,8 @@ struct MangaDetailView: View {
                         if let endDate = manga.endDate{
                             Text("Fecha de Fin: ")
                                 .bold()
-                            Text(getDateFromString(dateString: endDate))
+                            //Text(getDateFromString(dateString: endDate))
+                            Text(endDate.description)
                         }
                         Spacer()
                     }
@@ -81,21 +84,9 @@ struct MangaDetailView: View {
                         Spacer()
                     }
                 }
-                if mangasCollection.isEmpty || mangasCollection.contains(where: { $0.id != manga.id }){
-                    Button{
-                        vm.guardarMangaEnMiLibreria(manga: manga, context: context)
-                    }label: {
-                        Label("Guardarlo en mi libreria", systemImage: "books.vertical")
-                    }
-                    .buttonStyle(.bordered)
-                    .controlSize(.large)
-                }
+                .padding(.horizontal, 10.0)
             }
-            .padding(.horizontal, 10.0)
-        }
-        .onAppear(){
-            vm.estadoPantalla = .detailManga
-        }
+       }
     }
     
     func getDateFromString (dateString: String) -> String {
@@ -114,7 +105,7 @@ struct MangaDetailView: View {
 }
 
 #Preview {
-    MangaDetailView(manga: .test)
+    MangaCollectionDetailView(manga: .test)
         .environment(MangasVM.test)
         //.modelContainer(testModelContainer)
 }

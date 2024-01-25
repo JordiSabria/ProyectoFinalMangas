@@ -6,9 +6,13 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct MangasByThemesView: View {
     @Environment(MangasVM.self) var vm
+    @Environment(\.modelContext) private var context
+    @Query var mangasCollection: [Manga]
+
     let item = GridItem(.adaptive(minimum: 150), alignment: .center)
     let theme: DTOTheme
     
@@ -22,6 +26,11 @@ struct MangasByThemesView: View {
                                 MangaView(mangaURL: mangaItem.mainPicture, widthCover: 150, heightCover: 230)
                                     .overlay(alignment: .bottom){
                                         BottomTitleView(title: mangaTitle)
+                                    }
+                                    .overlay(alignment: .topTrailing){
+                                        if mangasCollection.contains(where: {$0.id == mangaItem.id}){
+                                            CheckCollectionView()
+                                        }
                                     }
                                   .padding()
                             }

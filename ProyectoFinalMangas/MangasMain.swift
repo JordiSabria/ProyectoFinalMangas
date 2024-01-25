@@ -17,6 +17,11 @@ struct MangasMain: View {
                 .tabItem{
                     Label("Busqueda", systemImage: "magnifyingglass")
                 }
+            OwnCollectionView()
+                .environment(vm)
+                .tabItem{
+                    Label("Col-lección", systemImage: "books.vertical")
+                }
         }
     }
 }

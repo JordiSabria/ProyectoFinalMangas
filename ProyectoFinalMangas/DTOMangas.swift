@@ -60,45 +60,68 @@ struct DTOMangas: Codable, Hashable, Identifiable{
     }
     
 }
-//extension DTOMangas{
-//    var toPresentacion: Manga{
-//        Manga(id: id,
-//              title: title,
-//              titleEnglish: titleEnglish,
-//              titleJapanese: titleJapanese,
-//              status: status,
-//              startDate: getDateFromString(dateString: startDate),
-//              endDate: getDateFromString(dateString: endDate),
-//              chapters: chapters,
-//              volumes: volumes,
-//              score: score,
-//              authors: authors,
-//              genres: genres,
-//              themes: themes,
-//              demographics: demographics,
-//              sypnosis: sypnosis,
-//              background: background,
-//              mainPicture: mainPicture?.replacingOccurrences(of: "\"", with: ""),
-//              url: url?.replacingOccurrences(of: "\"", with: ""))
-//    }
-//}
+extension DTOMangas{
+    var toData: Manga{
+        Manga(id: id,
+              title: title,
+              titleEnglish: titleEnglish,
+              titleJapanese: titleJapanese,
+              status: status,
+              startDate: getDateFromString(dateString: startDate),
+              endDate: getDateFromString(dateString: endDate),
+              chapters: chapters,
+              volumes: volumes,
+              score: score,
+              authors: authors.map{$0.toData},
+              genres: genres.map{$0.toData},
+              themes: themes.map{$0.toData},
+              demographics: demographics.map{$0.toData},
+              sypnosis: sypnosis,
+              background: background,
+              mainPicture: mainPicture?.replacingOccurrences(of: "\"", with: ""),
+              url: url?.replacingOccurrences(of: "\"", with: ""),
+              volumesBuyed: 0,
+              volumeReading: 0,
+              completCollection: false)
+    }
+}
 struct DTOGenre: Codable, Hashable, Identifiable{
     let id: UUID
     let genre: String
+}
+extension DTOGenre{
+    var toData: ZGenre{
+        ZGenre(id: id, genre: genre, mangas: [])
+    }
 }
 struct DTODemographic: Codable, Hashable, Identifiable {
     let id: UUID
     let demographic: String
 }
+extension DTODemographic{
+    var toData: ZDemographic{
+        ZDemographic(id: id, demographic: demographic, mangas: [])
+    }
+}
 struct DTOTheme: Codable, Hashable, Identifiable {
     let id: UUID
     let theme: String
+}
+extension DTOTheme{
+    var toData: ZTheme{
+        ZTheme(id: id, theme: theme, mangas: [])
+    }
 }
 struct DTOAuthor: Codable, Hashable, Identifiable {
     let firstName: String
     let lastName: String
     let role: String
     let id: UUID
+}
+extension DTOAuthor{
+    var toData: ZAuthor{
+        ZAuthor(id: id, firstName: firstName, lastName: lastName, role: role, mangas: [])
+    }
 }
 struct DTOMedatada: Codable, Hashable {
     var total: Int

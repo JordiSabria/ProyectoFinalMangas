@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AdvSearchGenresView: View {
-//    @Environment var vm: MangasVM
+    @Environment(MangasVM.self) var vm: MangasVM
     //@Binding var vmASM: AdvancedSearchMangasVM
     
     var body: some View {
@@ -17,5 +17,6 @@ struct AdvSearchGenresView: View {
 }
 
 #Preview {
-    AdvSearchGenresView()//(vmASM: AdvancedSearchMangasVM())
+    AdvSearchGenresView()
+        .environment(MangasVM())
 }

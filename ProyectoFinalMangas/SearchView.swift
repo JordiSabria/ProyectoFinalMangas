@@ -10,6 +10,7 @@ import SwiftUI
 struct SearchView: View {
     @Environment(MangasVM.self) var vm
     //@State private var path = NavigationPath()
+    @Environment(\.modelContext) private var context
     
     var body: some View {
         NavigationStack{
@@ -80,6 +81,7 @@ struct SearchView: View {
         }
         .onAppear(){
             vm.estadoPantalla = .search
+            print (URL.documentsDirectory)
         }
     }
 }

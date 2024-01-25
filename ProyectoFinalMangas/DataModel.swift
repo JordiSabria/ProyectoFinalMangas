@@ -10,7 +10,8 @@ import SwiftData
 
 @Model
 final class Manga {
-    @Attribute(.unique) let id: Int
+    //@Attribute(.unique) let id: Int
+    let id: Int
     let title: String?
     let titleEnglish: String?
     let titleJapanese: String?
@@ -18,18 +19,21 @@ final class Manga {
     let startDate: Date? // Haig de passar-ho a Date
     let endDate: Date? // Haig de passar-ho a Date
     let chapters: Int?
-    let volumes: Int?
+    let volumes: Int? // número de "libros"
     let score: Double
-    @Relationship(inverse: \MangaAuthor.author) var authors: [Author]?
-    @Relationship(inverse: \MangaGenre.genre) var genres: [Genre]?
-    @Relationship(inverse: \MangaTheme.theme) var themes: [Theme]?
-    @Relationship(inverse: \MangaDemographic.demographic) var demographics: [Demographic]?
+    var authors: [ZAuthor]?
+    var genres: [ZGenre]?
+    var themes: [ZTheme]?
+    var demographics: [ZDemographic]?
     let sypnosis: String?
     let background: String?
     let mainPicture: String?
     let url: String?
+    var volumesBuyed: Int
+    var volumeReading: Int
+    var completCollection: Bool
     
-    init(id: Int, title: String?, titleEnglish: String?, titleJapanese: String?, status: String?, startDate: Date?, endDate: Date?, chapters: Int?, volumes: Int?, score: Double, authors: [Author], genres: [Genre], themes: [Theme], demographics: [Demographic], sypnosis: String?, background: String?, mainPicture: String?, url: String?) {
+    init(id: Int, title: String?, titleEnglish: String?, titleJapanese: String?, status: String?, startDate: Date?, endDate: Date?, chapters: Int?, volumes: Int?, score: Double, authors: [ZAuthor]?, genres: [ZGenre]?, themes: [ZTheme]?, demographics: [ZDemographic]?, sypnosis: String?, background: String?, mainPicture: String?, url: String?, volumesBuyed: Int, volumeReading: Int, completCollection:Bool) {
         self.id = id
         self.title = title
         self.titleEnglish = titleEnglish
@@ -48,93 +52,175 @@ final class Manga {
         self.background = background
         self.mainPicture = mainPicture
         self.url = url
+        self.volumesBuyed = volumesBuyed
+        self.volumeReading = volumeReading
+        self.completCollection = completCollection
     }
 }
+//@Model
+//final class MangaAuthor {
+//    @Relationship(deleteRule: .nullify) var manga: Manga
+//    @Relationship(deleteRule: .nullify) var author: Author
+//    
+//    init(manga: Manga, author: Author) {
+//        self.manga = manga
+//        self.author = author
+//    }
+//}
 @Model
-final class MangaAuthor {
-    @Relationship(deleteRule: .nullify) let manga: Manga
-    @Relationship(deleteRule: .nullify) let author: Author
-    
-    init(manga: Manga, author: Author) {
-        self.manga = manga
-        self.author = author
-    }
-}
-@Model
-final class Author {
-    @Attribute(.unique) let id: UUID
+final class ZAuthor {
+    //@Attribute(.unique) let id: UUID
+    let id: UUID
     let firstName: String
     let lastName: String
     let role: String
-    @Relationship(inverse: \MangaAuthor.manga) var mangas: [Manga]?
+    @Relationship(inverse: \Manga.authors) var mangas: [Manga]?
+    //var mangas: [Manga]
     
-    init(id: UUID, firstName: String, lastName: String, role: String) {
+    init(id: UUID, firstName: String, lastName: String, role: String, mangas: [Manga]) {
         self.id = id
         self.firstName = firstName
         self.lastName = lastName
         self.role = role
+        self.mangas = mangas
     }
 }
+//@Model
+//final class MangaGenre {
+//    @Relationship(deleteRule: .nullify) var manga: Manga
+//    @Relationship(deleteRule: .nullify) var genre: Genre
+//    
+//    init(manga: Manga, genre: Genre) {
+//        self.manga = manga
+//        self.genre = genre
+//    }
+//}
 @Model
-final class MangaGenre {
-    @Relationship(deleteRule: .nullify) let manga: Manga
-    @Relationship(deleteRule: .nullify) let genre: Genre
-    
-    init(manga: Manga, genre: Genre) {
-        self.manga = manga
-        self.genre = genre
-    }
-}
-@Model
-final class Genre {
-    @Attribute(.unique) let id: UUID
+final class ZGenre {
+    //@Attribute(.unique) let id: UUID
+    let id: UUID
     let genre: String
-    @Relationship(inverse: \MangaGenre.manga) var mangas: [Manga]?
+    @Relationship(deleteRule: .nullify, inverse: \Manga.genres) var mangas: [Manga]
+    //var mangas: [Manga]?
     
-    init(id: UUID, genre: String) {
+    init(id: UUID, genre: String, mangas: [Manga]) {
         self.id = id
         self.genre = genre
+        self.mangas = mangas
     }
 }
+//@Model
+//final class MangaTheme {
+//    @Relationship(deleteRule: .nullify) var manga: Manga
+//    @Relationship(deleteRule: .nullify) var theme: Theme
+//    
+//    init(manga: Manga, theme: Theme) {
+//        self.manga = manga
+//        self.theme = theme
+//    }
+//}
 @Model
-final class MangaTheme {
-    @Relationship(deleteRule: .nullify) let manga: Manga
-    @Relationship(deleteRule: .nullify) let theme: Theme
-    
-    init(manga: Manga, theme: Theme) {
-        self.manga = manga
-        self.theme = theme
-    }
-}
-@Model
-final class Theme {
-    @Attribute(.unique) let id: UUID
+final class ZTheme {
+    //@Attribute(.unique) let id: UUID
+    let id: UUID
     let theme: String
-    @Relationship(inverse: \MangaTheme.manga) var mangas: [Manga]?
+    @Relationship(inverse: \Manga.themes) var mangas: [Manga]?
+    //var mangas: [Manga]?
     
-    init(id: UUID, theme: String) {
+    init(id: UUID, theme: String, mangas: [Manga]?) {
         self.id = id
         self.theme = theme
+        self.mangas = mangas
     }
 }
+//@Model
+//final class MangaDemographic {
+//    @Relationship(deleteRule: .nullify) var manga: Manga
+//    @Relationship(deleteRule: .nullify) var demographic: Demographic
+//    
+//    init(manga: Manga, demographic: Demographic) {
+//        self.manga = manga
+//        self.demographic = demographic
+//    }
+//}
 @Model
-final class MangaDemographic {
-    @Relationship(deleteRule: .nullify) let manga: Manga
-    @Relationship(deleteRule: .nullify) let demographic: Demographic
-    
-    init(manga: Manga, demographic: Demographic) {
-        self.manga = manga
-        self.demographic = demographic
-    }
-}
-@Model
-final class Demographic {
-    @Attribute(.unique) let id: UUID
+final class ZDemographic {
+    //@Attribute(.unique) let id: UUID
+    let id: UUID
     let demographic: String
-    @Relationship(inverse: \MangaDemographic.manga) var mangas: [Manga]?
+    @Relationship(deleteRule: .nullify, inverse: \Manga.demographics) var mangas: [Manga]
+    //var mangas: [Manga]?
     
-    init(id: UUID, demographic: String) {
+    init(id: UUID, demographic: String, mangas: [Manga]) {
         self.id = id
         self.demographic = demographic
+        self.mangas = mangas
     }
 }
+
+
+//@Model
+//final class Libro {
+//    @Attribute(.unique) let id: Int
+//    let name: String
+//    @Relationship(inverse: \LibrosAutores.autor) var autores: [LibrosAutores]?
+//    
+//    init(id: Int, name: String) {
+//        self.id = id
+//        self.name = name
+//    }
+//}
+//
+//@Model
+//final class LibrosAutores {
+//    @Relationship(deleteRule: .deny) let libro: Libro
+//    @Relationship(deleteRule: .deny) let autor: Autor
+//    
+//    init(libro: Libro, autor: Autor) {
+//        self.libro = libro
+//        self.autor = autor
+//    }
+//}
+//
+//@Model
+//final class Autor {
+//    @Attribute(.unique) let id: Int
+//    let name: String
+//    @Relationship(inverse: \LibrosAutores.libro) var libros: [LibrosAutores]?
+//    
+//    init(id: Int, name: String) {
+//        self.id = id
+//        self.name = name
+//    }
+//}
+
+@Model
+class Movie {
+    @Attribute(.unique) let id: Int
+    var name: String
+    var releaseYear: Int
+    @Relationship(inverse: \Actor.movies) var cast: [Actor]?
+    //var cast: [Actor]
+    
+    init(id: Int, name: String, releaseYear: Int, cast: [Actor]) {
+        self.id = id
+        self.name = name
+        self.releaseYear = releaseYear
+        self.cast = cast
+    }
+}
+
+@Model
+class Actor {
+    @Attribute(.unique) let id: Int
+    var name: String
+    var movies: [Movie]?
+    //@Relationship(inverse: \Movie.cast) var movies: [Movie]
+    init(id: Int, name: String, movies: [Movie]) {
+        self.id = id
+        self.name = name
+        self.movies = movies
+    }
+}
+
+

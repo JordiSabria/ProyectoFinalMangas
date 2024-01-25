@@ -22,6 +22,10 @@ extension DTOGenre{
 extension DTOTheme{
     static let test = DTOTheme(id: UUID(), theme: "Detective")
 }
+extension Manga{
+    static let test = Manga(id: 33, title: "Pita-Ten", titleEnglish: "Pita-Ten", titleJapanese: "ぴたテン", status: "finished", startDate: Date(), endDate: Date(),
+                            chapters: 47, volumes: 8, score: 7.37, authors: [], genres: [], themes: [], demographics: [], sypnosis: "On", background: "Di.", mainPicture: "https://cdn.myanimelist.net/images/manga/1/267784l.jpg", url: "https://myanimelist.net/manga/33/Pita-Ten", volumesBuyed: 2, volumeReading: 2, completCollection: false)
+}
 
 extension MangasVM {
     static let test = MangasVM(network: DataTestNetwork())

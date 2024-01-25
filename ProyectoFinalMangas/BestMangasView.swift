@@ -6,9 +6,13 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct BestMangasView: View {
     @Environment(MangasVM.self) var vm
+    @Environment(\.modelContext) private var context
+    @Query var mangasCollection: [Manga]
+    
     let item = GridItem(.adaptive(minimum: 150), alignment: .center)
     
     var body: some View {
@@ -21,6 +25,11 @@ struct BestMangasView: View {
                                 MangaView(mangaURL: mangaItem.mainPicture, widthCover: 150, heightCover: 230)
                                     .overlay(alignment: .bottom){
                                         BottomTitleView(title: mangaTitle)
+                                    }
+                                    .overlay(alignment: .topTrailing){
+                                        if mangasCollection.contains(where: {$0.id == mangaItem.id}){
+                                            CheckCollectionView()
+                                        }
                                     }
                                   .padding()
                             }
@@ -43,6 +52,14 @@ struct BestMangasView: View {
     func getBestMangas(){
         Task {
             await vm.getBestMangasItems()
+            //insertMangas()
+        }
+    }
+    func insertMangas(){
+        for mangaItem in vm.bestMangasItemsArray {
+            for DTOManga in mangaItem.items{
+                vm.guardarMangaEnMiLibreria(manga: DTOManga, context: context)
+            }
         }
     }
 }
