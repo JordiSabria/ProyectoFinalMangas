@@ -18,12 +18,35 @@ struct MangaDetailView: View {
     var body: some View {
         ScrollView {
             VStack{
-                MangaView(mangaURL: manga.mainPicture, widthCover: 250, heightCover: 350)
-                    .overlay(alignment: .topTrailing){
-                        if mangasCollection.contains(where: {$0.id == manga.id}){
-                            CheckCollectionView()
+                HStack(alignment: .top) {
+                    Spacer()
+                    MangaView(mangaURL: manga.mainPicture, widthCover: 250, heightCover: 350)
+                    Button{
+                        if mangasCollection.contains(where: { $0.id == manga.id }){
+                            try? vm.eliminarMangaEnMiLibreria(mangaID: manga.id, context: context)
+                        } else {
+                            vm.guardarMangaEnMiLibreria(manga: manga, context: context)
+                            
                         }
+                    }label: {
+                        if mangasCollection.contains(where: { $0.id == manga.id }){
+                            Image(systemName: "books.vertical")
+                                .font(.largeTitle)
+                                .symbolVariant(.circle)
+                                .symbolVariant(.fill)
+                                .foregroundStyle(.white, .blue)
+                                .padding(7)
+                        }else{
+                            Image(systemName: "books.vertical")
+                                .font(.largeTitle)
+                                .symbolVariant(.circle)
+                                .symbolVariant(.fill)
+                                .foregroundStyle(.white, .black)
+                                .padding(7)
+                        }
+                        
                     }
+                }
                 if let titleManga = manga.title {
                     Text(titleManga)
                         .lineLimit(2)
@@ -81,15 +104,15 @@ struct MangaDetailView: View {
                         Spacer()
                     }
                 }
-                if mangasCollection.isEmpty || mangasCollection.contains(where: { $0.id != manga.id }){
-                    Button{
-                        vm.guardarMangaEnMiLibreria(manga: manga, context: context)
-                    }label: {
-                        Label("Guardarlo en mi libreria", systemImage: "books.vertical")
-                    }
-                    .buttonStyle(.bordered)
-                    .controlSize(.large)
-                }
+//                if mangasCollection.isEmpty || mangasCollection.contains(where: { $0.id != manga.id }){
+//                    Button{
+//                        vm.guardarMangaEnMiLibreria(manga: manga, context: context)
+//                    }label: {
+//                        Label("Guardarlo en mi libreria", systemImage: "books.vertical")
+//                    }
+//                    .buttonStyle(.bordered)
+//                    .controlSize(.large)
+//                }
             }
             .padding(.horizontal, 10.0)
         }
@@ -116,5 +139,5 @@ struct MangaDetailView: View {
 #Preview {
     MangaDetailView(manga: .test)
         .environment(MangasVM.test)
-        //.modelContainer(testModelContainer)
+        .modelContainer(testModelContainer)
 }

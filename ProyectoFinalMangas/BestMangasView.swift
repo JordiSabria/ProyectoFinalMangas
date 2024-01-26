@@ -68,5 +68,6 @@ struct BestMangasView: View {
     NavigationStack {
         BestMangasView()
             .environment(MangasVM.test)
+            .modelContainer(testModelContainer) 
     }
 }

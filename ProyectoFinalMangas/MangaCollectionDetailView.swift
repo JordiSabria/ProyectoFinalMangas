@@ -12,19 +12,42 @@ struct MangaCollectionDetailView: View {
     @Environment(MangasVM.self) var vm
     @Environment(\.modelContext) private var context
     let manga: Manga
-    let dataHoy: Date = Date()
     @State var mangaRepetido: Bool = false
     @Query(sort: \Manga.id) var mangasCollection: [Manga]
     
     var body: some View {
         ScrollView {
             VStack{
-                MangaView(mangaURL: manga.mainPicture, widthCover: 250, heightCover: 350)
-                    .overlay(alignment: .topTrailing){
-                        if mangasCollection.contains(where: {$0.id == manga.id}){
-                            CheckCollectionView()
+                HStack(alignment: .top) {
+                    Spacer()
+                    MangaView(mangaURL: manga.mainPicture, widthCover: 250, heightCover: 350)
+                    Button{
+                        if mangasCollection.contains(where: { $0.id == manga.id }){
+                            try? vm.eliminarMangaEnMiLibreria(mangaID: manga.id, context: context)
+                        }else{
+                            try? vm.guardarMangaFromMangaEnMiLibreria(manga: manga, context: context, mangaID: manga.id)
                         }
+                    }label: {
+                        if mangasCollection.contains(where: { $0.id == manga.id }){
+                            Image(systemName: "books.vertical")
+                                .font(.largeTitle)
+                                .symbolVariant(.circle)
+                                .symbolVariant(.fill)
+                                .foregroundStyle(.white, .blue)
+                                .padding(7)
+                        }else{
+                            Image(systemName: "books.vertical")
+                                .font(.largeTitle)
+                                .symbolVariant(.circle)
+                                .symbolVariant(.fill)
+                                .foregroundStyle(.white, .black)
+                                .padding(7)
+                        }
+                        
                     }
+                }
+
+                
                 if let titleManga = manga.title {
                     Text(titleManga)
                         .lineLimit(2)
@@ -105,7 +128,7 @@ struct MangaCollectionDetailView: View {
 }
 
 #Preview {
-    MangaCollectionDetailView(manga: .test)
+    MangaCollectionDetailView(manga: Manga.test)
         .environment(MangasVM.test)
-        //.modelContainer(testModelContainer)
+        .modelContainer(testModelContainer)
 }

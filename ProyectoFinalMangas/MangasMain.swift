@@ -29,4 +29,5 @@ struct MangasMain: View {
 #Preview {
     MangasMain()
         .environment(MangasVM())
+        .modelContainer(testModelContainer)
 }

@@ -71,6 +71,6 @@ struct AllMangasView: View {
     NavigationStack {
         AllMangasView()
             .environment(MangasVM.test)
-            //.modelContainer(testModelContainer)
+            .modelContainer(testModelContainer)
     }
 }

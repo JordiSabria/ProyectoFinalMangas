@@ -12,6 +12,7 @@ struct OwnCollectionView: View {
     @Environment(MangasVM.self) var vm
     @Environment(\.modelContext) private var context
     @Query var mangasCollection: [Manga]
+    @State private var path = NavigationPath()
     
     let item = GridItem(.adaptive(minimum: 150), alignment: .center)
     
@@ -37,6 +38,7 @@ struct OwnCollectionView: View {
                     }
                 }
             }
+            .navigationTitle("Mi Col-lección")
             .navigationDestination(for: Manga.self) { manga in
                 MangaCollectionDetailView(manga: manga)
                     .environment(vm)
@@ -77,5 +79,5 @@ struct OwnCollectionView: View {
 #Preview {
     OwnCollectionView()
         .environment(MangasVM.test)
-        //.modelContainer(testModelContainer)
+        .modelContainer(testModelContainer)
 }

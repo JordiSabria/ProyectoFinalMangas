@@ -37,6 +37,7 @@ final class MangasVM {
     
     var showAlert = false
     var msg = ""
+    var provaToogle = false
     
     init(network: DataInteractor = Network.shared) {
         self.network = network
@@ -388,6 +389,23 @@ final class MangasVM {
     func guardarMangaEnMiLibreria(manga: DTOMangas, context: ModelContext){
         let mangaData: Manga = manga.toData
         context.insert(mangaData)
+        //provaToogle.toggle()
     }
-    
+    func guardarMangaFromMangaEnMiLibreria(manga: Manga, context: ModelContext, mangaID: Int) throws{
+        var query = FetchDescriptor<Manga>()
+        query.predicate = #Predicate { $0.id == mangaID }
+        if let _ = try context.fetch(query).first{
+        } else {
+            let newManga = Manga(id: manga.id, title: manga.title, titleEnglish: manga.titleEnglish, titleJapanese: manga.titleJapanese, status: manga.status, startDate: manga.startDate, endDate: manga.endDate, chapters: manga.chapters, volumes: manga.volumes, score: manga.score, authors: manga.authors, genres: manga.genres, themes: manga.themes, demographics: manga.demographics, sypnosis: manga.sypnosis, background: manga.background, mainPicture: manga.mainPicture, url: manga.url, volumesBuyed: manga.volumesBuyed, volumeReading: manga.volumeReading, completCollection: manga.completCollection)
+            context.insert(newManga)
+        }
+    }
+    func eliminarMangaEnMiLibreria(mangaID: Int, context: ModelContext) throws{
+        var query = FetchDescriptor<Manga>()
+        query.predicate = #Predicate { $0.id == mangaID }
+        if let mangaEncontrado = try context.fetch(query).first {
+            context.delete(mangaEncontrado)
+        }
+        //provaToogle.toggle()
+    }
 }
