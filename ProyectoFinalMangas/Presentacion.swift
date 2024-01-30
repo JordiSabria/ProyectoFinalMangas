@@ -26,4 +26,5 @@ enum estadoPantalla {
     case themes
     case mangas
     case detailManga
+    case advSearch
 }

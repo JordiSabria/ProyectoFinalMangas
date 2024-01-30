@@ -12,8 +12,11 @@ struct MangasByAuthorView: View {
     @Environment(MangasVM.self) var vm
     @Environment(\.modelContext) private var context
     @Query var mangasCollection: [Manga]
+    
     let item = GridItem(.adaptive(minimum: 150), alignment: .center)
     let author: DTOAuthor
+    
+    @Binding var path: NavigationPath
     
     var body: some View {
         ScrollView {
@@ -43,7 +46,7 @@ struct MangasByAuthorView: View {
         .navigationTitle("Mangas de \(author.firstName) \(author.lastName)")
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(for: DTOMangas.self) { manga in
-            MangaDetailView(manga: manga)
+            MangaDetailView(manga: manga, path: $path)
                 .environment(vm)
         }
         .onAppear(){
@@ -59,14 +62,22 @@ struct MangasByAuthorView: View {
                 default:
                     vm.estadoPantalla = .mangas
                 }
-            
+        }
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button {
+                    path.removeLast()
+                } label: {
+                    Image(systemName: "eraser.line.dashed")
+                }
+            }
         }
     }
 }
 
 #Preview {
     NavigationStack {
-        MangasByAuthorView(author: .test)
+        MangasByAuthorView(author: .test, path: .constant(NavigationPath()))
             .environment(MangasVM.testByAuthor)
     }
 }

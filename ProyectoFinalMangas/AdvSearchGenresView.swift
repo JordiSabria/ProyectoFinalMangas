@@ -8,15 +8,78 @@
 import SwiftUI
 
 struct AdvSearchGenresView: View {
-    @Environment(MangasVM.self) var vm: MangasVM
-    //@Binding var vmASM: AdvancedSearchMangasVM
+    @Environment(AdvancedSearchMangasVM.self) var vm2
+    @Environment(MangasVM.self) var vm
+    @State private var navigateToThemesView = false
+    @Binding var path: NavigationPath
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        @Bindable var vmASM = vm2
+        
+        VStack {
+            List(vm.genres, selection: $vmASM.searchSetGenres){
+                Text("\($0.genre)")
+                
+            }
+            .environment(\.editMode, .constant(EditMode.active))
+            HStack {
+                Spacer()
+                Button("Pulse aquí para continuar") {
+                    navigateToThemesView = true // Establece la navegación a true
+                }
+                .padding()
+                .background(Color.blue)//.opacity(0.3))
+                .foregroundColor(.white)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                Spacer()
+            }
+            .navigationDestination(isPresented: $navigateToThemesView){
+                AdvSearchThemesView(path: $path)
+                    .environment(vm)
+                    .environment(vm2)
+            }
+        }
+        .navigationTitle("Generos")
+        .onAppear(){
+            if vm.genres.count == 0{
+                getGenres()
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button {
+                    path.removeLast()
+                    vm2.cleanAdvSearchMangas()
+                } label: {
+                    Image(systemName: "eraser.line.dashed")
+                }
+            }
+        }
     }
+    func getGenres(){
+        Task{
+            await vm.getGenres()
+        }
+    }
+    //          NO BORRAR - ES IMPORTANT
+                
+    //
+    //            .environment(\.editMode, .constant(EditMode.active))
+    //            List(vm.themes.map{$0.theme}, id: \.self, selection: $vmASM.searchSetThemes){
+    //                Text("\($0)")
+    //            }
+    //            .environment(\.editMode, .constant(EditMode.active))
+    //            List(vm.demographics.map{$0.demographic}, id: \.self, selection: $vmASM.searchSetDemographics){
+    //                Text("\($0)")
+    //            }
+    //            .environment(\.editMode, .constant(EditMode.active))
 }
 
 #Preview {
-    AdvSearchGenresView()
-        .environment(MangasVM())
+    NavigationStack{
+        AdvSearchGenresView(path: .constant(NavigationPath()))
+            .environment(MangasVM.test)
+            .environment(AdvancedSearchMangasVM())
+            .modelContainer(testModelContainer)
+    }
 }

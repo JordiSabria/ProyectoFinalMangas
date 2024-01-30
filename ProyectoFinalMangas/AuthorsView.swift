@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AuthorsView: View {
     @Environment(MangasVM.self) var vm
+    @Binding var path: NavigationPath
     
     var body: some View {
         @Bindable var bVM = vm
@@ -25,7 +26,7 @@ struct AuthorsView: View {
         .navigationTitle("Autores")
         //.searchable(text: $vm.search, prompt: "Buscar un autor")
         .navigationDestination(for: DTOAuthor.self){ author in
-            MangasByAuthorView(author: author)
+            MangasByAuthorView(author: author, path: $path)
                 .environment(vm)
         }
         .searchable(text: $bVM.searchAuthors, prompt: "Buscar un autor")
@@ -47,7 +48,7 @@ struct AuthorsView: View {
 
 #Preview {
     NavigationStack {
-        AuthorsView()
+        AuthorsView(path: .constant(NavigationPath()))
             .environment(MangasVM.test)
     }
 }

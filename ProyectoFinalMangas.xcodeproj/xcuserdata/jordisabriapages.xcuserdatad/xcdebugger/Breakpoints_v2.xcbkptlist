@@ -14,8 +14,8 @@
             filePath = "ProyectoFinalMangas/MangasVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
             landmarkName = "getMangasItems()"
             landmarkType = "7">
          </BreakpointContent>
@@ -30,8 +30,8 @@
             filePath = "ProyectoFinalMangas/MangasVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "97"
-            endingLineNumber = "97"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
             landmarkName = "getMangasItems()"
             landmarkType = "7">
             <Locations>
@@ -153,8 +153,8 @@
             filePath = "ProyectoFinalMangas/MangasVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
             landmarkName = "getMangasItems()"
             landmarkType = "7">
             <Locations>
@@ -216,8 +216,8 @@
             filePath = "ProyectoFinalMangas/MangasVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "58"
-            endingLineNumber = "58"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
             landmarkName = "getMangasItems()"
             landmarkType = "7">
             <Locations>
@@ -294,8 +294,8 @@
             filePath = "ProyectoFinalMangas/SearchView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -342,8 +342,8 @@
             filePath = "ProyectoFinalMangas/DemographicsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -390,8 +390,8 @@
             filePath = "ProyectoFinalMangas/DemographicsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "36"
-            endingLineNumber = "36"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -406,8 +406,8 @@
             filePath = "ProyectoFinalMangas/MangasVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "235"
-            endingLineNumber = "235"
+            startingLineNumber = "221"
+            endingLineNumber = "221"
             landmarkName = "getMangasByAuthor(idAuthor:)"
             landmarkType = "7">
             <Locations>
@@ -484,8 +484,8 @@
             filePath = "ProyectoFinalMangas/MangasByAuthorView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -547,8 +547,8 @@
             filePath = "ProyectoFinalMangas/MangasByAuthorView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -595,8 +595,8 @@
             filePath = "ProyectoFinalMangas/MangasByGenresView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -611,8 +611,8 @@
             filePath = "ProyectoFinalMangas/MangaDetailView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "19"
-            endingLineNumber = "19"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -722,8 +722,8 @@
             filePath = "ProyectoFinalMangas/MangasVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "391"
-            endingLineNumber = "391"
+            startingLineNumber = "377"
+            endingLineNumber = "377"
             landmarkName = "guardarMangaEnMiLibreria(manga:context:)"
             landmarkType = "7">
             <Locations>
@@ -856,147 +856,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "A3478812-9777-4241-A340-999D80E12D12"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ProyectoFinalMangas/MangaDetailView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "107"
-            endingLineNumber = "107"
-            landmarkName = "body"
-            landmarkType = "24">
-            <Locations>
-               <Location
-                  uuid = "A3478812-9777-4241-A340-999D80E12D12 - 541c2cd203fb864b"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(ProyectoFinalMangas.MangaView, Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.multilineTextAlignment(SwiftUI.TextAlignment) -&gt; some&gt;&gt;.0&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.TupleView&lt;(SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text)&gt;&gt;, SwiftUI.Spacer)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text)&gt;&gt;, SwiftUI.Spacer)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text)&gt;&gt;, SwiftUI.Spacer)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text)&gt;&gt;, SwiftUI.Spacer)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text)&gt;&gt;, SwiftUI.Spacer)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text, SwiftUI.Spacer)&gt;&gt;)&gt;, SwiftUI.EmptyView&gt;, Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.controlSize(SwiftUI.ControlSize) -&gt; some&gt;&gt;.0&gt;)&gt; in closure #1 () -&gt; &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0 in ProyectoFinalMangas.MangaDetailView.body.getter : some"
-                  moduleName = "ProyectoFinalMangas"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jordisabriapages/Library/CloudStorage/OneDrive-Personal/Particular/Cursos%20Programacio/Apple%20Coding%20Academy/Swift%20Developer%20Program%202023/Proyecto%20Final%20-%20My%20Manga/ProyectoFinalMangas/ProyectoFinalMangas/MangaDetailView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "79"
-                  endingLineNumber = "79"
-                  offsetFromSymbolStart = "2520">
-               </Location>
-               <Location
-                  uuid = "A3478812-9777-4241-A340-999D80E12D12 - cd10a08503fca747"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 (ProyectoFinalMangas.Manga) -&gt; Swift.Bool in closure #1 () -&gt; SwiftUI.TupleView&lt;(ProyectoFinalMangas.MangaView, Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.multilineTextAlignment(SwiftUI.TextAlignment) -&gt; some&gt;&gt;.0&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.TupleView&lt;(SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text)&gt;&gt;, SwiftUI.Spacer)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text)&gt;&gt;, SwiftUI.Spacer)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text)&gt;&gt;, SwiftUI.Spacer)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text)&gt;&gt;, SwiftUI.Spacer)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text)&gt;&gt;, SwiftUI.Spacer)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text, SwiftUI.Spacer)&gt;&gt;)&gt;, SwiftUI.EmptyView&gt;, Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.controlSize(SwiftUI.ControlSize) -&gt; some&gt;&gt;.0&gt;)&gt; in closure #1 () -&gt; &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0 in ProyectoFinalMangas.MangaDetailView.body.getter : some"
-                  moduleName = "ProyectoFinalMangas"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jordisabriapages/Library/CloudStorage/OneDrive-Personal/Particular/Cursos%20Programacio/Apple%20Coding%20Academy/Swift%20Developer%20Program%202023/Proyecto%20Final%20-%20My%20Manga/ProyectoFinalMangas/ProyectoFinalMangas/MangaDetailView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "79"
-                  endingLineNumber = "79"
-                  offsetFromSymbolStart = "44">
-               </Location>
-               <Location
-                  uuid = "A3478812-9777-4241-A340-999D80E12D12 - b244c28b3605a6d4"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(ProyectoFinalMangas.MangaView, Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.multilineTextAlignment(SwiftUI.TextAlignment) -&gt; some&gt;&gt;.0&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.TupleView&lt;(SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text)&gt;&gt;, SwiftUI.Spacer)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text)&gt;&gt;, SwiftUI.Spacer)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text)&gt;&gt;, SwiftUI.Spacer)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text)&gt;&gt;, SwiftUI.Spacer)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text)&gt;&gt;, SwiftUI.Spacer)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text, SwiftUI.Spacer)&gt;&gt;)&gt;, SwiftUI.EmptyView&gt;, &lt;&lt;opaque return type of SwiftUI.View.controlSize(SwiftUI.ControlSize) -&gt; some&gt;&gt;.0)&gt; in closure #1 () -&gt; &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0 in ProyectoFinalMangas.MangaDetailView.body.getter : some"
-                  moduleName = "ProyectoFinalMangas"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jordisabriapages/Library/CloudStorage/OneDrive-Personal/Particular/Cursos%20Programacio/Apple%20Coding%20Academy/Swift%20Developer%20Program%202023/Proyecto%20Final%20-%20My%20Manga/ProyectoFinalMangas/ProyectoFinalMangas/MangaDetailView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "80"
-                  endingLineNumber = "80"
-                  offsetFromSymbolStart = "2260">
-               </Location>
-               <Location
-                  uuid = "A3478812-9777-4241-A340-999D80E12D12 - 4089ab0703b837fb"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 () -&gt; () in closure #1 () -&gt; SwiftUI.TupleView&lt;(ProyectoFinalMangas.MangaView, Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.multilineTextAlignment(SwiftUI.TextAlignment) -&gt; some&gt;&gt;.0&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.TupleView&lt;(SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text)&gt;&gt;, SwiftUI.Spacer)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text)&gt;&gt;, SwiftUI.Spacer)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text)&gt;&gt;, SwiftUI.Spacer)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text)&gt;&gt;, SwiftUI.Spacer)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text)&gt;&gt;, SwiftUI.Spacer)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text, SwiftUI.Spacer)&gt;&gt;)&gt;, SwiftUI.EmptyView&gt;, &lt;&lt;opaque return type of SwiftUI.View.controlSize(SwiftUI.ControlSize) -&gt; some&gt;&gt;.0)&gt; in closure #1 () -&gt; &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0 in ProyectoFinalMangas.MangaDetailView.body.getter : some"
-                  moduleName = "ProyectoFinalMangas"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jordisabriapages/Library/CloudStorage/OneDrive-Personal/Particular/Cursos%20Programacio/Apple%20Coding%20Academy/Swift%20Developer%20Program%202023/Proyecto%20Final%20-%20My%20Manga/ProyectoFinalMangas/ProyectoFinalMangas/MangaDetailView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "81"
-                  endingLineNumber = "81"
-                  offsetFromSymbolStart = "116">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "E9D5A245-EB3D-48AF-8921-4BE8B44C78B8"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ProyectoFinalMangas/Preview Content/DataTest.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "26"
-            endingLineNumber = "26"
-            landmarkName = "test"
-            landmarkType = "24">
-            <Locations>
-               <Location
-                  uuid = "E9D5A245-EB3D-48AF-8921-4BE8B44C78B8 - cd9be837c1836625"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "one-time initialization function for test"
-                  moduleName = "ProyectoFinalMangas"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jordisabriapages/Library/CloudStorage/OneDrive-Personal/Particular/Cursos%20Programacio/Apple%20Coding%20Academy/Swift%20Developer%20Program%202023/Proyecto%20Final%20-%20My%20Manga/ProyectoFinalMangas/ProyectoFinalMangas/Preview%20Content/DataTest.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "26"
-                  endingLineNumber = "26"
-                  offsetFromSymbolStart = "108">
-               </Location>
-               <Location
-                  uuid = "E9D5A245-EB3D-48AF-8921-4BE8B44C78B8 - f14222ce94b1f713"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ProyectoFinalMangas.Manga.test.unsafeMutableAddressor : ProyectoFinalMangas.Manga"
-                  moduleName = "ProyectoFinalMangas"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jordisabriapages/Library/CloudStorage/OneDrive-Personal/Particular/Cursos%20Programacio/Apple%20Coding%20Academy/Swift%20Developer%20Program%202023/Proyecto%20Final%20-%20My%20Manga/ProyectoFinalMangas/ProyectoFinalMangas/Preview%20Content/DataTest.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "26"
-                  endingLineNumber = "26"
-                  offsetFromSymbolStart = "16">
-               </Location>
-               <Location
-                  uuid = "E9D5A245-EB3D-48AF-8921-4BE8B44C78B8 - cd9be837c1836625"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "one-time initialization function for test"
-                  moduleName = "ProyectoFinalMangas"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jordisabriapages/Library/CloudStorage/OneDrive-Personal/Particular/Cursos%20Programacio/Apple%20Coding%20Academy/Swift%20Developer%20Program%202023/Proyecto%20Final%20-%20My%20Manga/ProyectoFinalMangas/ProyectoFinalMangas/Preview%20Content/DataTest.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "26"
-                  endingLineNumber = "26"
-                  offsetFromSymbolStart = "156">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "C367C952-20C1-40F9-82CF-5EED52A2CF65"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -1004,8 +863,8 @@
             filePath = "ProyectoFinalMangas/MangasVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "406"
-            endingLineNumber = "406"
+            startingLineNumber = "392"
+            endingLineNumber = "392"
             landmarkName = "eliminarMangaEnMiLibreria(mangaID:context:)"
             landmarkType = "7">
             <Locations>
@@ -1067,8 +926,8 @@
             filePath = "ProyectoFinalMangas/MangaDetailView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -1083,8 +942,8 @@
             filePath = "ProyectoFinalMangas/MangaDetailView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "26"
-            endingLineNumber = "26"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -1115,8 +974,8 @@
             filePath = "ProyectoFinalMangas/MangasVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "397"
-            endingLineNumber = "397"
+            startingLineNumber = "383"
+            endingLineNumber = "383"
             landmarkName = "guardarMangaFromMangaEnMiLibreria(manga:context:mangaID:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1231,6 +1090,259 @@
             endingLineNumber = "27"
             landmarkName = "body"
             landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F7FDF9F2-0329-4648-88EC-65B20EA88934"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProyectoFinalMangas/MangaDetailView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "214"
+            endingLineNumber = "214"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "590ADCC1-A1FA-44A9-B1C9-142693A46504"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProyectoFinalMangas/AdvSearchGenresView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "590ADCC1-A1FA-44A9-B1C9-142693A46504 - c99e0906d60f1a1d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; &lt;&lt;opaque return type of SwiftUI.View.environment&lt;&#x3c4;_0_0&gt;(Swift.WritableKeyPath&lt;SwiftUI.EnvironmentValues, &#x3c4;_1_0&gt;, &#x3c4;_1_0) -&gt; some&gt;&gt;.0 in ProyectoFinalMangas.AdvSearchGenresView.body.getter : some"
+                  moduleName = "ProyectoFinalMangas"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jordisabriapages/Library/CloudStorage/OneDrive-Personal/Particular/Cursos%20Programacio/Apple%20Coding%20Academy/Swift%20Developer%20Program%202023/Proyecto%20Final%20-%20My%20Manga/ProyectoFinalMangas/ProyectoFinalMangas/AdvSearchGenresView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "22"
+                  endingLineNumber = "22"
+                  offsetFromSymbolStart = "860">
+               </Location>
+               <Location
+                  uuid = "590ADCC1-A1FA-44A9-B1C9-142693A46504 - a8f0b6fc0c4e4f41"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ProyectoFinalMangas.AdvSearchGenresView.body.getter : some"
+                  moduleName = "ProyectoFinalMangas"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jordisabriapages/Library/CloudStorage/OneDrive-Personal/Particular/Cursos%20Programacio/Apple%20Coding%20Academy/Swift%20Developer%20Program%202023/Proyecto%20Final%20-%20My%20Manga/ProyectoFinalMangas/ProyectoFinalMangas/AdvSearchGenresView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "22"
+                  endingLineNumber = "22"
+                  offsetFromSymbolStart = "1048">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "662C858A-2027-45B0-9A92-ACB54DD5DB09"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProyectoFinalMangas/AdvancedSearchMangasVM.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
+            landmarkName = "getAdvSearchMangas(mangasVM:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "662C858A-2027-45B0-9A92-ACB54DD5DB09 - 631040d75efe69e3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ProyectoFinalMangas.AdvancedSearchMangasVM.getAdvSearchMangas(genres: Swift.Array&lt;ProyectoFinalMangas.DTOGenre&gt;, themes: Swift.Array&lt;ProyectoFinalMangas.DTOTheme&gt;, demographics: Swift.Array&lt;ProyectoFinalMangas.DTODemographic&gt;) -&gt; ()"
+                  moduleName = "ProyectoFinalMangas"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jordisabriapages/Library/CloudStorage/OneDrive-Personal/Particular/Cursos%20Programacio/Apple%20Coding%20Academy/Swift%20Developer%20Program%202023/Proyecto%20Final%20-%20My%20Manga/ProyectoFinalMangas/ProyectoFinalMangas/AdvancedSearchMangasVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "50"
+                  endingLineNumber = "50"
+                  offsetFromSymbolStart = "1132">
+               </Location>
+               <Location
+                  uuid = "662C858A-2027-45B0-9A92-ACB54DD5DB09 - 631040d75efe69e3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ProyectoFinalMangas.AdvancedSearchMangasVM.getAdvSearchMangas(genres: Swift.Array&lt;ProyectoFinalMangas.DTOGenre&gt;, themes: Swift.Array&lt;ProyectoFinalMangas.DTOTheme&gt;, demographics: Swift.Array&lt;ProyectoFinalMangas.DTODemographic&gt;) -&gt; ()"
+                  moduleName = "ProyectoFinalMangas"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jordisabriapages/Library/CloudStorage/OneDrive-Personal/Particular/Cursos%20Programacio/Apple%20Coding%20Academy/Swift%20Developer%20Program%202023/Proyecto%20Final%20-%20My%20Manga/ProyectoFinalMangas/ProyectoFinalMangas/AdvancedSearchMangasVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "50"
+                  endingLineNumber = "50"
+                  offsetFromSymbolStart = "1248">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7ABC7A95-83C9-4308-8E20-7215A3E7EDB1"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProyectoFinalMangas/AdvancedSearchMangasVM.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "getAdvSearchMangas(mangasVM:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EFF03536-012A-4CCE-A729-0FE9D7A5087F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProyectoFinalMangas/AdvancedSearchMangasVM.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
+            landmarkName = "getAdvSearchMangas(mangasVM:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "80535BD6-7606-465E-AD8C-634D55EDFF6C"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProyectoFinalMangas/AdvancedSearchMangasVM.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
+            landmarkName = "getAdvSearchMangas(mangasVM:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "80535BD6-7606-465E-AD8C-634D55EDFF6C - 31a4818832aed85b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for ProyectoFinalMangas.AdvancedSearchMangasVM.getAdvSearchMangas(mangasVM: ProyectoFinalMangas.MangasVM) async -&gt; ()"
+                  moduleName = "ProyectoFinalMangas"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jordisabriapages/Library/CloudStorage/OneDrive-Personal/Particular/Cursos%20Programacio/Apple%20Coding%20Academy/Swift%20Developer%20Program%202023/Proyecto%20Final%20-%20My%20Manga/ProyectoFinalMangas/ProyectoFinalMangas/AdvancedSearchMangasVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "78"
+                  endingLineNumber = "78"
+                  offsetFromSymbolStart = "892">
+               </Location>
+               <Location
+                  uuid = "80535BD6-7606-465E-AD8C-634D55EDFF6C - 696a41ba10eb7877"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) await resume partial function for ProyectoFinalMangas.AdvancedSearchMangasVM.getAdvSearchMangas(mangasVM: ProyectoFinalMangas.MangasVM) async -&gt; ()"
+                  moduleName = "ProyectoFinalMangas"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jordisabriapages/Library/CloudStorage/OneDrive-Personal/Particular/Cursos%20Programacio/Apple%20Coding%20Academy/Swift%20Developer%20Program%202023/Proyecto%20Final%20-%20My%20Manga/ProyectoFinalMangas/ProyectoFinalMangas/AdvancedSearchMangasVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "78"
+                  endingLineNumber = "78"
+                  offsetFromSymbolStart = "68">
+               </Location>
+               <Location
+                  uuid = "80535BD6-7606-465E-AD8C-634D55EDFF6C - a0a2363594c76793"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for ProyectoFinalMangas.AdvancedSearchMangasVM.getAdvSearchMangas(mangasVM: ProyectoFinalMangas.MangasVM) async -&gt; ()"
+                  moduleName = "ProyectoFinalMangas"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jordisabriapages/Library/CloudStorage/OneDrive-Personal/Particular/Cursos%20Programacio/Apple%20Coding%20Academy/Swift%20Developer%20Program%202023/Proyecto%20Final%20-%20My%20Manga/ProyectoFinalMangas/ProyectoFinalMangas/AdvancedSearchMangasVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "76"
+                  endingLineNumber = "76"
+                  offsetFromSymbolStart = "80">
+               </Location>
+               <Location
+                  uuid = "80535BD6-7606-465E-AD8C-634D55EDFF6C - a0a2363594c7645d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for ProyectoFinalMangas.AdvancedSearchMangasVM.getAdvSearchMangas(mangasVM: ProyectoFinalMangas.MangasVM) async -&gt; ()"
+                  moduleName = "ProyectoFinalMangas"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jordisabriapages/Library/CloudStorage/OneDrive-Personal/Particular/Cursos%20Programacio/Apple%20Coding%20Academy/Swift%20Developer%20Program%202023/Proyecto%20Final%20-%20My%20Manga/ProyectoFinalMangas/ProyectoFinalMangas/AdvancedSearchMangasVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "78"
+                  endingLineNumber = "78"
+                  offsetFromSymbolStart = "116">
+               </Location>
+               <Location
+                  uuid = "80535BD6-7606-465E-AD8C-634D55EDFF6C - 56ef618790dfc3be"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor @Sendable () -&gt; () in ProyectoFinalMangas.AdvancedSearchMangasVM.getAdvSearchMangas(mangasVM: ProyectoFinalMangas.MangasVM) async -&gt; ()"
+                  moduleName = "ProyectoFinalMangas"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jordisabriapages/Library/CloudStorage/OneDrive-Personal/Particular/Cursos%20Programacio/Apple%20Coding%20Academy/Swift%20Developer%20Program%202023/Proyecto%20Final%20-%20My%20Manga/ProyectoFinalMangas/ProyectoFinalMangas/AdvancedSearchMangasVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "79"
+                  endingLineNumber = "79"
+                  offsetFromSymbolStart = "108">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "397A6914-2358-4B43-8584-AB8329BEE169"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProyectoFinalMangas/Preview Content/DataModelPreview.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "17"
+            endingLineNumber = "17"
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

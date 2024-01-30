@@ -9,12 +9,11 @@ import SwiftUI
 
 struct SearchView: View {
     @Environment(MangasVM.self) var vm
-    //@State private var path = NavigationPath()
+    @State private var path = NavigationPath()
     @Environment(\.modelContext) private var context
     
     var body: some View {
-        NavigationStack{
-            //Text(String(vm.mangasItemsArray.count))
+        NavigationStack(path: $path){
             List{
                 NavigationLink(value: search.allMangas) {
                     HStack{
@@ -56,25 +55,25 @@ struct SearchView: View {
             .navigationDestination(for: search.self) { search in
                 switch search {
                 case .allMangas:
-                    AllMangasView()
+                    AllMangasView(path: $path)
                         .environment(vm)
                 case .bestMangas:
-                    BestMangasView()
+                    BestMangasView(path: $path)
                         .environment(vm)
                 case .authors:
-                    AuthorsView()
+                    AuthorsView(path: $path)
                         .environment(vm)
                 case .demographics:
-                    DemographicsView()
+                    DemographicsView(path: $path)
                         .environment(vm)
                 case .genres:
-                    GenresView()
+                    GenresView(path: $path)
                         .environment(vm)
                 case .themes:
-                    ThemesView()
+                    ThemesView(path: $path)
                         .environment(vm)
                 case .superSearch:
-                    AdvancedSearchView()
+                    AdvancedSearchView(path: $path)
                         .environment(vm)
                 }
             }
@@ -89,4 +88,6 @@ struct SearchView: View {
 #Preview {
     SearchView()
         .environment(MangasVM.test)
+        .modelContainer(testModelContainer)
+    
 }

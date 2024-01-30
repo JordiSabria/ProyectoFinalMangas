@@ -8,11 +8,14 @@
 import SwiftUI
 
 struct AdvancedSearchView: View {
-    @State var vmASM = AdvancedSearchMangasVM()
+    @State var vm2 = AdvancedSearchMangasVM()
+    //@Environment(AdvancedSearchMangasVM.self) var vm2
     @Environment(MangasVM.self) var vm
+    @State private var navigateToGenresView = false
+    @Binding var path: NavigationPath
     
     var body: some View {
-        //@Bindable var vm2 = vmASM
+        @Bindable var vmASM = vm2
     
         List {
             Section("Manga"){
@@ -28,45 +31,27 @@ struct AdvancedSearchView: View {
                     .textContentType(.name)
                     .textInputAutocapitalization(.words)
             }
-            Section{
-                HStack{
+            Section {
+                HStack {
                     Spacer()
-                    NavigationLink(value:vmASM.searchAuthorFirstName){
-                        Text("Pulse aquí para continuar")
-                            .padding()
-                            .background {
-                                Color.blue.opacity(0.3)
-                            }
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-//                            .shadow(color: .primary.opacity(0.3),
-//                                    radius: 10, x: 5, y: 5)
+                    Button("Pulse aquí para continuar") {
+                        navigateToGenresView = true // Establece la navegación a true
                     }
+                    .padding()
+                    .background(Color.blue)//.opacity(0.3))
+                    .foregroundColor(.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
                     Spacer()
-                        
                 }
             }
             .listRowBackground(Color.clear)
+            .navigationDestination(isPresented: $navigateToGenresView){
+                AdvSearchGenresView(path: $path)
+                    .environment(vm)
+                    .environment(vm2)
+            }
         }
         .navigationTitle("Busqueda Avançada")
-        .navigationDestination(for: String.self){ nombre in 
-            //AdvSearchGenresView(vmASM: $vmASM)
-            AdvSearchGenresView()
-                .environment(vm)
-        }
-        
-//            List(vm.genres.map{$0.genre}, id: \.self, selection: $vmASM.searchSetGenres){
-//                Text("\($0)")
-//            }
-//            
-//            .environment(\.editMode, .constant(EditMode.active))
-//            List(vm.themes.map{$0.theme}, id: \.self, selection: $vmASM.searchSetThemes){
-//                Text("\($0)")
-//            }
-//            .environment(\.editMode, .constant(EditMode.active))
-//            List(vm.demographics.map{$0.demographic}, id: \.self, selection: $vmASM.searchSetDemographics){
-//                Text("\($0)")
-//            }
-//            .environment(\.editMode, .constant(EditMode.active))
         .onAppear(){
             Task{
                 await vm.getGenres()
@@ -74,12 +59,24 @@ struct AdvancedSearchView: View {
                 await vm.getDemographics()
             }
         }
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button {
+                    path.removeLast()
+                    vm2.cleanAdvSearchMangas()
+                } label: {
+                    Image(systemName: "eraser.line.dashed")
+                }
+            }
+        }
     }
 }
 
 #Preview {
     NavigationStack {
-        AdvancedSearchView()
+        AdvancedSearchView(path: .constant(NavigationPath()))
             .environment(MangasVM.test)
+            .environment(AdvancedSearchMangasVM())
+            .modelContainer(testModelContainer)
     }
 }

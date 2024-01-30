@@ -9,6 +9,7 @@ import SwiftUI
 
 struct GenresView: View {
     @Environment(MangasVM.self) var vm
+    @Binding var path: NavigationPath
     
     var body: some View {
         List(vm.genres){ genre in
@@ -18,7 +19,7 @@ struct GenresView: View {
         }
         .navigationTitle("Género")
         .navigationDestination(for: DTOGenre.self){ genre in
-            MangasByGenresView(genre: genre)
+            MangasByGenresView(genre: genre, path: $path)
                 .environment(vm)
         }
         .refreshable {
@@ -48,7 +49,7 @@ struct GenresView: View {
 
 #Preview {
     NavigationStack {
-        GenresView()
+        GenresView(path: .constant(NavigationPath()))
             .environment(MangasVM.test)
     }
 }

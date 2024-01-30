@@ -18,6 +18,7 @@ protocol DataInteractor {
     func getMangasItemsByDemographics(demographic: String, itemsPorPagina: Int, pagina: Int) async throws -> MangasItems
     func getMangasItemsByGenre(genre: String, itemsPorPagina: Int, pagina: Int) async throws -> MangasItems
     func getMangasItemsByTheme(theme: String, itemsPorPagina: Int, pagina: Int) async throws -> MangasItems
+    func getMangasAdvSearch(advSearch: CustomSearch) async throws -> MangasItems
     
 }
 
@@ -80,5 +81,8 @@ struct Network: DataInteractor {
     }
     func getMangasItemsByTheme(theme: String, itemsPorPagina: Int, pagina: Int) async throws -> MangasItems {
         try await getJSON(request: .get(url: .getMangaByTheme(theme: theme, itemsPorPagina: itemsPorPagina, pagina: pagina)), type: MangasItems.self)
+    }
+    func getMangasAdvSearch(advSearch: CustomSearch) async throws -> MangasItems {
+        try await getJSON(request: .post(url: .getManga, data: advSearch), type: MangasItems.self)
     }
 }

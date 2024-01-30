@@ -12,6 +12,7 @@ struct AllMangasView: View {
     @Environment(MangasVM.self) var vm
     @Environment(\.modelContext) private var context
     @Query var mangasCollection: [Manga]
+    @Binding var path: NavigationPath
     
     @State var searchManga: String = ""
     
@@ -19,10 +20,10 @@ struct AllMangasView: View {
     
     var body: some View {
         @Bindable var bVM = vm
-        Text(String(vm.mangasItemsArray.count))
+        //Text(String(vm.mangasItemsArray.count))
         ScrollView {
             LazyVGrid(columns: [item]) {
-                ForEach(vm.getMangasItemsSearchAllMangash()){ mangaItem in
+                ForEach(vm.getMangasItemsSearchAllMangas()){ mangaItem in
                     if let mangaTitle = mangaItem.title {
                         NavigationLink(value: mangaItem) {
                             MangaView(mangaURL: mangaItem.mainPicture, widthCover: 150, heightCover: 230)
@@ -44,18 +45,18 @@ struct AllMangasView: View {
         .searchable(text: $bVM.searchAllMangas, prompt: "Buscar un manga")
         .navigationTitle("Todos los Mangas")
         .navigationDestination(for: DTOMangas.self) { manga in
-            MangaDetailView(manga: manga)
+            MangaDetailView(manga: manga, path: $path)
                 .environment(vm)
         }
         .refreshable {
             getMangas()
         }
         .onAppear(){
-            //getMangas()
             if vm.mangasItemsArray.count == 0{
                 getMangas()
             }
         }
+        
 //        .onChange(of: bVM.searchAllMangas, initial: false){
 //            print(bVM.searchAllMangas)
 //        }
@@ -69,7 +70,7 @@ struct AllMangasView: View {
 
 #Preview {
     NavigationStack {
-        AllMangasView()
+        AllMangasView(path: .constant(NavigationPath()))
             .environment(MangasVM.test)
             .modelContainer(testModelContainer)
     }

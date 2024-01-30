@@ -12,6 +12,7 @@ struct BestMangasView: View {
     @Environment(MangasVM.self) var vm
     @Environment(\.modelContext) private var context
     @Query var mangasCollection: [Manga]
+    @Binding var path: NavigationPath
     
     let item = GridItem(.adaptive(minimum: 150), alignment: .center)
     
@@ -40,7 +41,7 @@ struct BestMangasView: View {
         }
         .navigationTitle("Los 10 mejores Mangas")
         .navigationDestination(for: DTOMangas.self) { manga in
-            MangaDetailView(manga: manga)
+            MangaDetailView(manga: manga, path: $path)
                 .environment(vm)
         }
         .onAppear(){
@@ -52,21 +53,13 @@ struct BestMangasView: View {
     func getBestMangas(){
         Task {
             await vm.getBestMangasItems()
-            //insertMangas()
-        }
-    }
-    func insertMangas(){
-        for mangaItem in vm.bestMangasItemsArray {
-            for DTOManga in mangaItem.items{
-                vm.guardarMangaEnMiLibreria(manga: DTOManga, context: context)
-            }
         }
     }
 }
 
 #Preview {
     NavigationStack {
-        BestMangasView()
+        BestMangasView(path: .constant(NavigationPath()))
             .environment(MangasVM.test)
             .modelContainer(testModelContainer) 
     }

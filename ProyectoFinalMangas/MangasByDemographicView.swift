@@ -14,6 +14,7 @@ struct MangasByDemographicView: View {
     @Query var mangasCollection: [Manga]
     let item = GridItem(.adaptive(minimum: 150), alignment: .center)
     var demographic: DTODemographic
+    @Binding var path: NavigationPath
     
     var body: some View {
         ScrollView {
@@ -42,29 +43,38 @@ struct MangasByDemographicView: View {
         .navigationTitle("Mangas de \(demographic.demographic)")
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(for: DTOMangas.self) { manga in
-            MangaDetailView(manga: manga)
+            MangaDetailView(manga: manga, path: $path)
                 .environment(vm)
         }
         .onAppear(){
             switch vm.estadoPantalla{
                 case .demographics:
                     vm.estadoPantalla = .mangas
-                guard (vm.mangasByDemographicSpecific[demographic.demographic]?.count) != nil else {
-                    Task {
-                        await vm.getMangasByDemographic(demographic: demographic.demographic)
+                    guard (vm.mangasByDemographicSpecific[demographic.demographic]?.count) != nil else {
+                        Task {
+                            await vm.getMangasByDemographic(demographic: demographic.demographic)
+                        }
+                        return
                     }
-                    return
-                }
                 default:
                     vm.estadoPantalla = .mangas
                 }
+        }
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button {
+                    path.removeLast()
+                } label: {
+                    Image(systemName: "eraser.line.dashed")
+                }
+            }
         }
     }
 }
 
 #Preview {
     NavigationStack {
-        MangasByDemographicView(demographic: .test)
+        MangasByDemographicView(demographic: .test, path: .constant(NavigationPath()))
             .environment(MangasVM.testByDemographic)
     }
 }

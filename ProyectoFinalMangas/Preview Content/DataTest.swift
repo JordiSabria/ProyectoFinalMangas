@@ -8,7 +8,7 @@
 import Foundation
 
 extension DTOMangas{
-    static let test = DTOMangas(id: 33, title: "Pita-Ten", titleEnglish: "Pita-Ten", titleJapanese: "ぴたテン", status: "finished", startDate: "1999-08-27T00:00:00Z", endDate: "2003-06-27T00:00:00Z", chapters: 47, volumes: 8, score: 7.37, authors: [], genres: [], themes: [], demographics: [], sypnosis: "On planet Di Gi Charat, little Digiko was a pampered princess. Now living on Earth, the green-haired moppet is working for minimum wage at a hobby shop in Japan. Who ever said it was easy being cute? Based on the popular anime series, Di Gi Charat also features bratty Usada, shy boy Minagawa, and Digiko's wacky companions Puchiko and Gemo! \n\n(Source: VIZ Media)", background: "Di Gi Charat: Koushiki Comic Anthology was published in English as Di Gi Charatf by VIZ Media from December 24, 2003 to April 28, 2004.", mainPicture: "https://cdn.myanimelist.net/images/manga/1/267784l.jpg", url: "https://myanimelist.net/manga/33/Pita-Ten")
+    static let test = DTOMangas(id: 33, title: "Pita-Ten", titleEnglish: "Pita-Ten", titleJapanese: "ぴたテン", status: "finished", startDate: "1999-08-27T00:00:00Z", endDate: "2003-06-27T00:00:00Z", chapters: 47, volumes: 8, score: 7.37, authors: [DTOAuthor(firstName: "Jordi", lastName: "Sabria", role: "Puto Amo", id: UUID()),DTOAuthor(firstName: "Antonio", lastName: "Sanchez", role: "Becario", id: UUID())], genres: [DTOGenre(id: UUID(), genre: "Género 1"), DTOGenre(id: UUID(), genre: "Género 2"), DTOGenre(id: UUID(), genre: "Género 3")], themes: [DTOTheme(id: UUID(), theme: "Tema 1"), DTOTheme(id: UUID(), theme: "Tema 2"), DTOTheme(id: UUID(), theme: "Tema 3")], demographics: [DTODemographic(id: UUID(), demographic: "Demografic 1"), DTODemographic(id: UUID(), demographic: "Demografic 2"),DTODemographic(id: UUID(), demographic: "Demografic 3")], sypnosis: "On planet Di Gi Charat, little Digiko was a pampered princess. Now living on Earth, the green-haired moppet is working for minimum wage at a hobby shop in Japan. Who ever said it was easy being cute? Based on the popular anime series, Di Gi Charat also features bratty Usada, shy boy Minagawa, and Digiko's wacky companions Puchiko and Gemo! \n\n(Source: VIZ Media)", background: "Di Gi Charat: Koushiki Comic Anthology was published in English as Di Gi Charatf by VIZ Media from December 24, 2003 to April 28, 2004.", mainPicture: "https://cdn.myanimelist.net/images/manga/1/267784l.jpg", url: "https://myanimelist.net/manga/33/Pita-Ten")
 }
 extension DTOAuthor{
     static let test = DTOAuthor(firstName: "Akira", lastName: "Toriyama", role: "Story & Art", id: UUID(uuidString: "998C1B16-E3DB-47D1-8157-8389B5345D03")!)
@@ -33,6 +33,7 @@ extension MangasVM {
     static let testByDemographic = MangasVM(network: DataTestNetwork(), estadoPantalla: .demographics)
     static let testByGenre = MangasVM(network: DataTestNetwork(), estadoPantalla: .genres)
     static let testByThemes = MangasVM(network: DataTestNetwork(), estadoPantalla: .themes)
+    static let testAdvSearch = MangasVM(network: DataTestNetwork(), estadoPantalla: .advSearch)
 }
 
 struct DataTestNetwork: DataInteractor {
@@ -102,5 +103,8 @@ struct DataTestNetwork: DataInteractor {
         var mangasObtenidos = try await getJSON(request: .get(url: .getMangaByTheme(theme: theme, itemsPorPagina: 50, pagina: pagina)), type: MangasItems.self)
         mangasObtenidos.metadata.total = 20
         return mangasObtenidos
+    }
+    func getMangasAdvSearch(advSearch: CustomSearch) async throws -> MangasItems {
+        try await getJSON(request: .post(url: .getManga, data: advSearch), type: MangasItems.self)
     }
 }

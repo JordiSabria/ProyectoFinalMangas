@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ThemesView: View {
     @Environment(MangasVM.self) var vm
+    @Binding var path: NavigationPath
     
     var body: some View {
         List(vm.themes){ theme in
@@ -18,7 +19,7 @@ struct ThemesView: View {
         }
         .navigationTitle("Temáticas")
         .navigationDestination(for: DTOTheme.self){ theme in
-            MangasByThemesView(theme: theme)
+            MangasByThemesView(theme: theme, path: $path)
                 .environment(vm)
         }
         .refreshable {
@@ -48,7 +49,7 @@ struct ThemesView: View {
 
 #Preview {
     NavigationStack {
-        ThemesView()
+        ThemesView(path: .constant(NavigationPath()))
             .environment(MangasVM.test)
     }
 }

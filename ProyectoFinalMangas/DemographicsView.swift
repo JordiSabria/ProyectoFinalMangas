@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DemographicsView: View {
     @Environment(MangasVM.self) var vm
+    @Binding var path: NavigationPath
     
     var body: some View {
         List(vm.demographics){ demographic in
@@ -18,7 +19,7 @@ struct DemographicsView: View {
         }
         .navigationTitle("Demográficas")
         .navigationDestination(for: DTODemographic.self){ demographic in
-            MangasByDemographicView(demographic: demographic)
+            MangasByDemographicView(demographic: demographic, path: $path)
                 .environment(vm)
         }
         .refreshable {
@@ -47,7 +48,7 @@ struct DemographicsView: View {
 }
 #Preview {
     NavigationStack {
-        DemographicsView()
+        DemographicsView(path: .constant(NavigationPath()))
             .environment(MangasVM.test)
     }
 }

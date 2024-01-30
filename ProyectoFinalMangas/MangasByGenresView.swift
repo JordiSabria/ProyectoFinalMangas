@@ -16,6 +16,8 @@ struct MangasByGenresView: View {
     let item = GridItem(.adaptive(minimum: 150), alignment: .center)
     let genre: DTOGenre
     
+    @Binding var path: NavigationPath
+    
     var body: some View {
         ScrollView {
             LazyVGrid(columns: [item]) {
@@ -43,7 +45,7 @@ struct MangasByGenresView: View {
         .navigationTitle("Mangas de \(genre.genre)")
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(for: DTOMangas.self) { manga in
-            MangaDetailView(manga: manga)
+            MangaDetailView(manga: manga, path: $path)
                 .environment(vm)
         }
         .onAppear(){
@@ -60,12 +62,21 @@ struct MangasByGenresView: View {
                     vm.estadoPantalla = .mangas
                 }
         }
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button {
+                    path.removeLast()
+                } label: {
+                    Image(systemName: "eraser.line.dashed")
+                }
+            }
+        }
     }
 }
 
 #Preview {
     NavigationStack {
-        MangasByGenresView(genre: .test)
+        MangasByGenresView(genre: .test, path: .constant(NavigationPath()))
             .environment(MangasVM.testByGenre)
     }
 }

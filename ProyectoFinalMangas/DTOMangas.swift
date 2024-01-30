@@ -79,7 +79,7 @@ extension DTOMangas{
               sypnosis: sypnosis,
               background: background,
               mainPicture: mainPicture?.replacingOccurrences(of: "\"", with: ""),
-              url: url?.replacingOccurrences(of: "\"", with: ""),
+              url: url?.trimmingCharacters(in: CharacterSet(charactersIn: "\"")),
               volumesBuyed: 0,
               volumeReading: 0,
               completCollection: false)

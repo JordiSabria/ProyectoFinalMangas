@@ -14,6 +14,7 @@ struct MangaDetailView: View {
     let manga: DTOMangas
     @State var mangaRepetido: Bool = false
     @Query(sort: \Manga.id) var mangasCollection: [Manga]
+    @Binding var path: NavigationPath
     
     var body: some View {
         ScrollView {
@@ -43,81 +44,194 @@ struct MangaDetailView: View {
                                 .symbolVariant(.fill)
                                 .foregroundStyle(.white, .black)
                                 .padding(7)
+                                .overlay{
+                                    Circle()
+                                        .fill(.white.opacity(0.8))
+                                        .frame(width: 35)
+                                }
                         }
                         
                     }
                 }
-                if let titleManga = manga.title {
-                    Text(titleManga)
-                        .lineLimit(2)
-                        .font(.title)
-                        .bold()
-                        .foregroundStyle(.black)
-                        .minimumScaleFactor(0.7)
-                        .multilineTextAlignment(.center)
-                }
-                Section {
-                    HStack{
-                        if let statusManga = manga.status{
-                            Text("Status: ")
+                VStack{
+                    if let titleManga = manga.title {
+                        Text(titleManga)
+                            .lineLimit(2)
+                            .font(.title)
+                            .bold()
+                            .minimumScaleFactor(0.7)
+                            .multilineTextAlignment(.center)
+                            .padding(.bottom, 10)
+                    }
+                    if let statusManga = manga.status{
+                        HStack{
+                            Text("Status")
                                 .bold()
+                            Spacer()
                             Text(statusManga)
                         }
-                        Spacer()
+                        Divider()
                     }
-                    HStack{
-                        if let startDate = manga.startDate{
-                            Text("Fecha de Inicio: ")
+                    if let startDate = manga.startDate{
+                        HStack{
+                            Text("Fecha de Inicio")
                                 .bold()
+                            Spacer()
                             Text(getDateFromString(dateString: startDate))
                         }
-                        Spacer()
+                        Divider()
                     }
-                    HStack{
-                        if let endDate = manga.endDate{
-                            Text("Fecha de Fin: ")
+                    if let endDate = manga.endDate{
+                        HStack{
+                            Text("Fecha de Fin")
                                 .bold()
+                            Spacer()
                             Text(getDateFromString(dateString: endDate))
                         }
-                        Spacer()
+                        Divider()
                     }
-                    HStack{
-                        if let capitulos = manga.chapters{
-                            Text("Capítulos: ")
+                    if let capitulos = manga.chapters{
+                        HStack{
+                            Text("Capítulos")
                                 .bold()
+                            Spacer()
                             Text(String(capitulos))
                         }
-                        Spacer()
+                        Divider()
+                    }
+                    if let volumenes = manga.volumes{
+                        HStack{
+                            Text("Volúmenes")
+                                .bold()
+                            Spacer()
+                            Text(String(volumenes))
+                        }
+                        Divider()
                     }
                     HStack{
-                        if let volumenes = manga.volumes{
-                            Text("Volúmenes: ")
-                                .bold()
-                            Text(String(volumenes))
+                        Text("Puntuación")
+                            .bold()
+                        Spacer()
+                        Text(String(manga.score))
+                    }
+                    Divider()
+                    if manga.authors.count > 0{
+                        HStack(alignment:.top){
+                            if manga.authors.count == 1{
+                                Text("Autor")
+                                    .bold()
+                            } else {
+                                Text("Autores")
+                                    .bold()
+                            }
+                            Spacer()
+                            VStack(alignment: .trailing) {
+                                ForEach(manga.authors){ author in
+                                    Text("\(author.firstName) "+"\(author.lastName)")
+                                }
+                            }
+                        }
+                        Divider()
+                    }
+                    if manga.genres.count > 0{
+                        HStack(alignment: .top){
+                            if manga.genres.count == 1 {
+                                Text("Genero")
+                                    .bold()
+                            } else {
+                                Text("Generos")
+                                    .bold()
+                            }
+                            Spacer()
+                            VStack(alignment: .trailing){
+                                ForEach(manga.genres){ genre in
+                                    Text(genre.genre)
+                                }
+                            }
+                        }
+                        Divider()
+                    }
+                    if manga.themes.count > 0{
+                        HStack(alignment: .top){
+                            if manga.themes.count == 1 {
+                                Text("Tema")
+                                    .bold()
+                            } else {
+                                Text("Temas")
+                                    .bold()
+                            }
+                            Spacer()
+                            VStack(alignment: .trailing){
+                                ForEach(manga.themes){theme in
+                                    Text(theme.theme)
+                                }
+                            }
+                        }
+                        Divider()
+                    }
+                    if manga.demographics.count > 0{
+                        HStack(alignment: .top){
+                            if manga.demographics.count == 1 {
+                                Text("Demográfic")
+                                    .bold()
+                            } else {
+                                Text("Demográficas")
+                                    .bold()
+                            }
+                            Spacer()
+                            VStack(alignment: .trailing){
+                                ForEach(manga.demographics){ demographic in
+                                    Text(demographic.demographic)
+                                }
+                            }
                         }
                         Spacer()
                     }
-                    HStack{
-                        Text("Puntuación: ")
-                            .bold()
-                        Text(String(manga.score))
-                        Spacer()
+                    if let synopsis = manga.sypnosis{
+                        HStack(alignment: .top){
+                            Text("Sinopsis ")
+                                .bold()
+                            Spacer()
+                            Text(synopsis)
+                                .multilineTextAlignment(.trailing)
+                        }
+                        Divider()
+                    }
+                    if let background = manga.background{
+                        HStack(alignment: .top){
+                            Text("Background ")
+                                .bold()
+                            Spacer()
+                            Text(background)
+                                .multilineTextAlignment(.trailing)
+                        }
+                        Divider()
+                    }
+                    if let url = manga.url{
+                        let urlRetocada = url.trimmingCharacters(in: CharacterSet(charactersIn: "\""))
+                        HStack(alignment: .top){
+                            Text("Link")
+                                .bold()
+                            Spacer()
+                            Link(urlRetocada, destination: URL(string: urlRetocada) ?? URL(string: "https://myanimelist.net")!)
+                        }
+                        Divider()
                     }
                 }
-//                if mangasCollection.isEmpty || mangasCollection.contains(where: { $0.id != manga.id }){
-//                    Button{
-//                        vm.guardarMangaEnMiLibreria(manga: manga, context: context)
-//                    }label: {
-//                        Label("Guardarlo en mi libreria", systemImage: "books.vertical")
-//                    }
-//                    .buttonStyle(.bordered)
-//                    .controlSize(.large)
-//                }
+                .padding(.horizontal, 20.0)
             }
-            .padding(.horizontal, 10.0)
         }
         .onAppear(){
             vm.estadoPantalla = .detailManga
+        }
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button {
+                    path.removeLast()
+                } label: {
+                    Image(systemName: "eraser.line.dashed")
+                }
+            }
         }
     }
     
@@ -137,7 +251,7 @@ struct MangaDetailView: View {
 }
 
 #Preview {
-    MangaDetailView(manga: .test)
+    MangaDetailView(manga: .test, path: .constant(NavigationPath()))
         .environment(MangasVM.test)
         .modelContainer(testModelContainer)
 }

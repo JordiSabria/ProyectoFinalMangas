@@ -15,16 +15,11 @@ final class MangasVM {
     var loading = true
     
     var mangasItemsArray: [MangasItems] = []
-    //var mangasArray: [Manga] = []
     var bestMangasItemsArray: [MangasItems] = []
     var authors: [DTOAuthor] = []
     var demographics: [DTODemographic] = []
     var genres: [DTOGenre] = []
     var themes: [DTOTheme] = []
-//    var mangasItemsByAuthor: [MangasItems] = []
-//    var mangasItemsByDemographic: [MangasItems] = []
-//    var mangasItemsByGenre: [MangasItems] = []
-//    var mangasItemsByTheme: [MangasItems] = []
     var mangasByAuthorSpecific: [UUID:[MangasItems]] = [:]
     var mangasByDemographicSpecific: [String:[MangasItems]] = [:]
     var mangasByGenresSpecific: [String:[MangasItems]] = [:]
@@ -60,7 +55,7 @@ final class MangasVM {
             let mangas = try await network.getMangasItems(itemsPorPagina: mangasPorPagina, pagina: 1)
             // Segundo buscamos cuantos "paquetes" salen de dividir el numero de mangas por los mangas por pagina. Y lo redondeamos al alza para no dejarnos ninguno.
             let paquetes = Int(ceil(Double(mangas.metadata.total/mangasPorPagina)))
-            // Lo provamos serializado
+            // Lo provamos serializado (pero va muy lento)
 //            for pagina in 2...paquetes{
 //                let mangaItemRecovered = try await self.network.getMangas(itemsPorPagina: mangasPorPagina, pagina: pagina)
 //                self.mangasItemsArray.append(mangaItemRecovered)
@@ -68,10 +63,6 @@ final class MangasVM {
             // Ahora hemos de añadir los mangas de la primera llamada.
             await MainActor.run {
                 self.mangasItemsArray.append(mangas)
-                //mangasArray = mangasArray + mangas.items.map{$0.toPresentacion}
-//                for mangaRecuperado in mangas.items {
-//                    mangasArray.append(mangaRecuperado.toPresentacion)
-//                }
             }
             // Tercero, si hay más de un paquete: vamos a crear un grupo de tascas en asyncronia para cada llamada getMangas así vamos a recuperar todos los mangas de la forma más eficiente.
             if paquetes > 1 {
@@ -84,12 +75,6 @@ final class MangasVM {
                     }
                     for try await mangaItem in group.compactMap({$0}){
                         self.mangasItemsArray.append(mangaItem)
-    //                    await MainActor.run {
-    //                        mangasArray = mangasArray + mangaItem.items.map{$0.toPresentacion}
-    //                        for mangaRecuperado in mangaItem.items {
-    //                            mangasArray.append(mangaRecuperado.toPresentacion)
-    //                        }
-    //                    }
                     }
                 }
             } 
@@ -100,7 +85,8 @@ final class MangasVM {
             }
         }
     }
-    func getMangasItemsSearchAllMangash() -> [DTOMangas]{
+    func getMangasItemsSearchAllMangas() -> [DTOMangas]{
+        
         let arrayTempMangas = mangasItemsArray.map{ $0.items.map{$0} }.flatMap{$0}
         if searchAllMangas.isEmpty{
             return arrayTempMangas
