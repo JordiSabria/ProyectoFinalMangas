@@ -49,6 +49,7 @@
 		ABE4BF892B6666AC005D0BC7 /* AdvSearchThemesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE4BF882B6666AC005D0BC7 /* AdvSearchThemesView.swift */; };
 		ABE4BF8B2B666828005D0BC7 /* AdvSearchDemographicsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE4BF8A2B666828005D0BC7 /* AdvSearchDemographicsView.swift */; };
 		ABE4BF8D2B666E98005D0BC7 /* AdvSearchMangasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE4BF8C2B666E98005D0BC7 /* AdvSearchMangasView.swift */; };
+		ABE4BF8F2B6945B1005D0BC7 /* PruebaMangaCollectionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE4BF8E2B6945B1005D0BC7 /* PruebaMangaCollectionDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -95,6 +96,7 @@
 		ABE4BF882B6666AC005D0BC7 /* AdvSearchThemesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvSearchThemesView.swift; sourceTree = "<group>"; };
 		ABE4BF8A2B666828005D0BC7 /* AdvSearchDemographicsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvSearchDemographicsView.swift; sourceTree = "<group>"; };
 		ABE4BF8C2B666E98005D0BC7 /* AdvSearchMangasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvSearchMangasView.swift; sourceTree = "<group>"; };
+		ABE4BF8E2B6945B1005D0BC7 /* PruebaMangaCollectionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PruebaMangaCollectionDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +168,7 @@
 				ABCE4AD62B45412F00516621 /* Model */,
 				ABCE4AC82B4540A800516621 /* Assets.xcassets */,
 				ABCE4ACA2B4540A800516621 /* Preview Content */,
+				ABE4BF8E2B6945B1005D0BC7 /* PruebaMangaCollectionDetailView.swift */,
 			);
 			path = ProyectoFinalMangas;
 			sourceTree = "<group>";
@@ -316,6 +319,7 @@
 				AB8CA7302B62868700DECE97 /* DataModelPreview.swift in Sources */,
 				ABE4BF8B2B666828005D0BC7 /* AdvSearchDemographicsView.swift in Sources */,
 				AB3735482B59940100FFB825 /* MangasByGenresView.swift in Sources */,
+				ABE4BF8F2B6945B1005D0BC7 /* PruebaMangaCollectionDetailView.swift in Sources */,
 				AB19ADF32B51B78200CAD89D /* Modifiers.swift in Sources */,
 				ABCE4AC72B4540A700516621 /* ContentView.swift in Sources */,
 				ABCE4AC52B4540A700516621 /* ProyectoFinalMangasApp.swift in Sources */,

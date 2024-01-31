@@ -27,7 +27,6 @@ struct MangaDetailView: View {
                             try? vm.eliminarMangaEnMiLibreria(mangaID: manga.id, context: context)
                         } else {
                             vm.guardarMangaEnMiLibreria(manga: manga, context: context)
-                            
                         }
                     }label: {
                         if mangasCollection.contains(where: { $0.id == manga.id }){
@@ -50,7 +49,6 @@ struct MangaDetailView: View {
                                         .frame(width: 35)
                                 }
                         }
-                        
                     }
                 }
                 VStack{
@@ -59,6 +57,13 @@ struct MangaDetailView: View {
                             .lineLimit(2)
                             .font(.title)
                             .bold()
+                            .minimumScaleFactor(0.7)
+                            .multilineTextAlignment(.center)
+                    }
+                    if let titleManga = manga.titleJapanese {
+                        Text(titleManga)
+                            .lineLimit(2)
+                            .font(.caption)
                             .minimumScaleFactor(0.7)
                             .multilineTextAlignment(.center)
                             .padding(.bottom, 10)
@@ -136,10 +141,10 @@ struct MangaDetailView: View {
                     if manga.genres.count > 0{
                         HStack(alignment: .top){
                             if manga.genres.count == 1 {
-                                Text("Genero")
+                                Text("Género")
                                     .bold()
                             } else {
-                                Text("Generos")
+                                Text("Géneros")
                                     .bold()
                             }
                             Spacer()
@@ -185,11 +190,11 @@ struct MangaDetailView: View {
                                 }
                             }
                         }
-                        Spacer()
+                        Divider()
                     }
                     if let synopsis = manga.sypnosis{
                         HStack(alignment: .top){
-                            Text("Sinopsis ")
+                            Text("Sinopsis")
                                 .bold()
                             Spacer()
                             Text(synopsis)
@@ -199,7 +204,7 @@ struct MangaDetailView: View {
                     }
                     if let background = manga.background{
                         HStack(alignment: .top){
-                            Text("Background ")
+                            Text("Background")
                                 .bold()
                             Spacer()
                             Text(background)
@@ -240,7 +245,7 @@ struct MangaDetailView: View {
         let inputDate = inputdateFormatter.date(from: dateString)
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yyyy"
+        dateFormatter.dateFormat = "dd-MM-yyyy"
 
         if let inputDateUnrawped = inputDate {
             return dateFormatter.string(from: inputDateUnrawped)

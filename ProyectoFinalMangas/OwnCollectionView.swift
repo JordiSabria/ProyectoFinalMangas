@@ -38,43 +38,14 @@ struct OwnCollectionView: View {
                     }
                 }
             }
-            .navigationTitle("Mi Col-lección")
+            .navigationTitle("Mi Colección")
             .navigationDestination(for: Manga.self) { manga in
-                MangaCollectionDetailView(manga: manga)
+                MangaCollectionDetailView(mangaR: manga)
                     .environment(vm)
             }
         }
     }
 }
-//        List(mangas){ manga in
-//            VStack(alignment: .leading){
-//                Text(manga.title ?? "")
-//                    .font(.headline)
-//                ForEach(manga.authors ?? []){ author in
-//                    Text("Autor: \(author.firstName) \(author.lastName)")
-//                        .font(.caption)
-//                        .foregroundStyle(.secondary)
-//                }
-//                ForEach(manga.themes ?? []){ theme in
-//                    Text("Tema: \(theme.theme)")
-//                        .font(.caption)
-//                        .foregroundStyle(.secondary)
-//                }
-//            }
-//            
-//        }
-//        List(actorsMovies){ actor in
-//            VStack(alignment: .leading){
-//                Text(actor.name)
-//                    .font(.headline)
-//                ForEach(actor.movies ?? []){ movie in
-//                    Text(movie.name)
-//                        .font(.caption)
-//                        .foregroundStyle(.secondary)
-//                }
-//            }
-//        }
-
 
 #Preview {
     OwnCollectionView()

@@ -11,9 +11,17 @@ import SwiftData
 struct MangaCollectionDetailView: View {
     @Environment(MangasVM.self) var vm
     @Environment(\.modelContext) private var context
-    let manga: Manga
+    @Bindable var manga: Manga
     @State var mangaRepetido: Bool = false
     @Query(sort: \Manga.id) var mangasCollection: [Manga]
+    
+    @State private var showAlert = false
+    
+    init(mangaR: Manga){
+        UIStepper.appearance().setDecrementImage(UIImage(systemName: "minus"), for: .normal)
+        UIStepper.appearance().setIncrementImage(UIImage(systemName: "plus"), for: .normal)
+        manga = mangaR
+    }
     
     var body: some View {
         ScrollView {
@@ -43,7 +51,6 @@ struct MangaCollectionDetailView: View {
                                 .foregroundStyle(.white, .black)
                                 .padding(7)
                         }
-                        
                     }
                 }
                 VStack{
@@ -54,34 +61,14 @@ struct MangaCollectionDetailView: View {
                             .bold()
                             .minimumScaleFactor(0.7)
                             .multilineTextAlignment(.center)
+                    }
+                    if let titleManga = manga.titleJapanese {
+                        Text(titleManga)
+                            .lineLimit(2)
+                            .font(.caption)
+                            .minimumScaleFactor(0.7)
+                            .multilineTextAlignment(.center)
                             .padding(.bottom, 10)
-                    }
-                    if let statusManga = manga.status{
-                        HStack{
-                            Text("Status")
-                                .bold()
-                            Spacer()
-                            Text(statusManga)
-                        }
-                        Divider()
-                    }
-                    if let startDate = manga.startDate{
-                        HStack{
-                            Text("Fecha de Inicio")
-                                .bold()
-                            Spacer()
-                            Text(startDate.description)
-                        }
-                        Divider()
-                    }
-                    if let endDate = manga.endDate{
-                        HStack{
-                            Text("Fecha de Fin")
-                                .bold()
-                            Spacer()
-                            Text(endDate.description)
-                        }
-                        Divider()
                     }
                     if let capitulos = manga.chapters{
                         HStack{
@@ -101,6 +88,35 @@ struct MangaCollectionDetailView: View {
                         }
                         Divider()
                     }
+                    if let _ = manga.volumes{
+                        Stepper(value: $manga.volumesBuyed, in: 0...(manga.volumes ?? 0)){
+                            Text("Volúmenes Comprados:   \(manga.volumesBuyed)")
+                        }
+                        .foregroundStyle(Color.blue)
+                    }else{
+                        Stepper(value: $manga.volumesBuyed, in: 0...100){
+                            Text("Volúmenes Comprados:   \(manga.volumesBuyed)")
+                        }
+                        .foregroundStyle(Color.blue)
+                    }
+                    Divider()
+                    if let _ = manga.volumes{
+                        Stepper(value: $manga.volumeReading, in: 0...(manga.volumes ?? 0)){
+                            Text("Volúmen actual de lectura:   \(manga.volumeReading)")
+                        }
+                        .foregroundStyle(Color.blue)
+                    }else{
+                        Stepper(value: $manga.volumeReading, in: 0...100){
+                            Text("Volúmen actual de lectura:   \(manga.volumeReading)")
+                        }
+                        .foregroundStyle(Color.blue)
+                    }
+                    Divider()
+                    Toggle(isOn: $manga.completCollection) {
+                        Text("Colección Completa")
+                    }
+                    .foregroundStyle(.blue)
+                    Divider()
                     HStack{
                         Text("Puntuación")
                             .bold()
@@ -108,6 +124,33 @@ struct MangaCollectionDetailView: View {
                         Text(String(manga.score))
                     }
                     Divider()
+                    if let statusManga = manga.status{
+                        HStack{
+                            Text("Status")
+                                .bold()
+                            Spacer()
+                            Text(statusManga)
+                        }
+                        Divider()
+                    }
+                    if let startDate = manga.startDate{
+                        HStack{
+                            Text("Fecha de Inicio")
+                                .bold()
+                            Spacer()
+                            Text(getDateFormatted(startDate))
+                        }
+                        Divider()
+                    }
+                    if let endDate = manga.endDate{
+                        HStack{
+                            Text("Fecha de Fin")
+                                .bold()
+                            Spacer()
+                            Text(getDateFormatted(endDate))
+                        }
+                        Divider()
+                    }
                     if let authors = manga.authors {
                         if authors.count > 0{
                             HStack(alignment:.top){
@@ -185,7 +228,7 @@ struct MangaCollectionDetailView: View {
                                     }
                                 }
                             }
-                            Spacer()
+                            Divider()
                         }
                     }
                     if let synopsis = manga.sypnosis{
@@ -221,26 +264,24 @@ struct MangaCollectionDetailView: View {
                 }
                 .padding(.horizontal, 20.0)
             }
+            .onChange(of: manga.volumeReading){
+                if manga.volumeReading > manga.volumesBuyed {showAlert = true}
+            }
+            .alert("Veo que algún amigo te ha dejado un volumen que no tenías, eh! 😉 Espero que le hayas dejado tú uno. Hay que ser un buen amigo.", isPresented: $showAlert){
+                Button("Aceptar"){
+                }
+            }
        }
     }
-    
-    func getDateFromString (dateString: String) -> String {
-        let inputdateFormatter = ISO8601DateFormatter()
-        let inputDate = inputdateFormatter.date(from: dateString)
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yyyy"
-
-        if let inputDateUnrawped = inputDate {
-            return dateFormatter.string(from: inputDateUnrawped)
-        }else{
-            return ""
-        }
+    func getDateFormatted(_ date: Date) -> String {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd-MM-yyyy"
+            return formatter.string(from: date)
     }
 }
 
 #Preview {
-    MangaCollectionDetailView(manga: Manga.test)
+    MangaCollectionDetailView(mangaR: Manga.test)
         .environment(MangasVM.test)
         .modelContainer(testModelContainer)
 }
