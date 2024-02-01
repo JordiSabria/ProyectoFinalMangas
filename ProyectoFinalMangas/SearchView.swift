@@ -50,6 +50,13 @@ struct SearchView: View {
                         Label("Búsqueda avançada", systemImage: "magnifyingglass")
                     }
                 }
+//                VStack(alignment: .trailing) {
+//                    Image(.icono2ProyectoFinalMangas!)
+//                        .resizable()
+//                        .scaledToFit()
+//                        .cornerRadius(20)
+//                        .frame(width: 250)
+//                }
             }
             .navigationTitle("Búsqueda")
             .navigationDestination(for: search.self) { search in

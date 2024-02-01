@@ -24,7 +24,6 @@ struct AuthorsView: View {
 //            }
 //        }
         .navigationTitle("Autores")
-        //.searchable(text: $vm.search, prompt: "Buscar un autor")
         .navigationDestination(for: DTOAuthor.self){ author in
             MangasByAuthorView(author: author, path: $path)
                 .environment(vm)

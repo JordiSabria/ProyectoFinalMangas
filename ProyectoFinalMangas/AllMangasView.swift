@@ -20,18 +20,18 @@ struct AllMangasView: View {
     
     var body: some View {
         @Bindable var bVM = vm
-        //Text(String(vm.mangasItemsArray.count))
+        Text(String(vm.mangasItemsArray.count))
         ScrollView {
             LazyVGrid(columns: [item]) {
-                ForEach(vm.getMangasItemsSearchAllMangas()){ mangaItem in
-                    if let mangaTitle = mangaItem.title {
-                        NavigationLink(value: mangaItem) {
-                            MangaView(mangaURL: mangaItem.mainPicture, widthCover: 150, heightCover: 230)
+                ForEach(vm.getMangasItemsSearchAllMangas()){ dtoManga in
+                    if let mangaTitle = dtoManga.title {
+                        NavigationLink(value: dtoManga) {
+                            MangaView(mangaURL: dtoManga.mainPicture, widthCover: 150, heightCover: 230)
                                 .overlay(alignment: .bottom){
                                     BottomTitleView(title: mangaTitle)
                                 }
                                 .overlay(alignment: .topTrailing){
-                                    if mangasCollection.contains(where: {$0.id == mangaItem.id}){
+                                    if mangasCollection.contains(where: {$0.id == dtoManga.id}){
                                         CheckCollectionView()
                                     }
                                 }

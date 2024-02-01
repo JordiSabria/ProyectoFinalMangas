@@ -12,7 +12,8 @@ import SwiftData
 final class MangasVM {
     let network: DataInteractor
     
-    var loading = true
+    var appState: AppState = .intro
+    var estadoPantalla: estadoPantalla = .search
     
     var mangasItemsArray: [MangasItems] = []
     var bestMangasItemsArray: [MangasItems] = []
@@ -25,28 +26,25 @@ final class MangasVM {
     var mangasByGenresSpecific: [String:[MangasItems]] = [:]
     var mangasByThemesSpecific: [String:[MangasItems]] = [:]
     
-    var estadoPantalla: estadoPantalla = .search
-    
     var searchAllMangas = ""
+    var searchMangas = ""
     var searchAuthors = ""
-    
+
     var showAlert = false
     var msg = ""
     var provaToogle = false
     
     init(network: DataInteractor = Network.shared) {
         self.network = network
-//        Task {
-//            await MainActor.run { loading = true }
-//            await getMangasItems()
-//            await MainActor.run { loading = false }
-//        }
     }
     init(network: DataInteractor = Network.shared, estadoPantalla: estadoPantalla) {
         self.network = network
         self.estadoPantalla = estadoPantalla
     }
     
+    //
+    // Funciones de petición a la APIres
+    //
     func getMangasItems() async {
         do{
             mangasItemsArray = []
@@ -142,16 +140,6 @@ final class MangasVM {
             }
         }
     }
-    func getAuthorsSearch() -> [DTOAuthor]{
-        return  authors
-            .filter{
-                if searchAuthors.isEmpty{
-                    true
-                }else {
-                    ($0.firstName+$0.lastName).range(of: searchAuthors, options:[.caseInsensitive,.diacriticInsensitive]) != nil
-                }
-            }
-    }
     func getDemographics() async {
         do{
             demographics = []
@@ -244,6 +232,7 @@ final class MangasVM {
             }
         }
     }
+    
     func getMangasByDemographic(demographic: String) async {
         do{
             // Antes que nada vaciamos el array de mangasItemsByAuthor
@@ -358,6 +347,51 @@ final class MangasVM {
             }
         }
     }
+    // Funciones de busqueda de autores y mangas por el "campo de busqueda"
+    func getAuthorsSearch() -> [DTOAuthor]{
+        return  authors
+            .filter{
+                if searchAuthors.isEmpty{
+                    true
+                }else {
+                    ($0.firstName+$0.lastName).range(of: searchAuthors, options:[.caseInsensitive,.diacriticInsensitive]) != nil
+                }
+            }
+    }
+    func getMangasBySearchField(searchFieldBy: searchFieldMangas, idAuthor: UUID, demographic: String, genre: String, theme: String) -> [DTOMangas]{
+        var arrayTempMangas: [DTOMangas]
+        switch searchFieldBy {
+        case .allMangas:
+            arrayTempMangas = mangasItemsArray.map{ $0.items.map{$0} }.flatMap{$0}
+        case .byAuthor:
+            arrayTempMangas = mangasByAuthorSpecific[idAuthor]?.map{ $0.items.map{$0} }.flatMap{$0} ?? []
+        case .byDemographic:
+            arrayTempMangas = mangasByDemographicSpecific[demographic]?.map{ $0.items.map{$0} }.flatMap{$0} ?? []
+        case .byGenre:
+            arrayTempMangas = mangasByGenresSpecific[genre]?.map{ $0.items.map{$0} }.flatMap{$0} ?? []
+        case .byTheme:
+            arrayTempMangas = mangasByThemesSpecific[theme]?.map{ $0.items.map{$0} }.flatMap{$0} ?? []
+        }
+        if searchMangas.isEmpty{
+            return arrayTempMangas
+                .sorted{
+                    if let titulo1 = $0.title, let titulo2 = $1.title {
+                        titulo1 < titulo2
+                    }else { true }
+                }
+        } else {
+            return arrayTempMangas
+                .filter{
+                    $0.title?.range(of: searchMangas, options:[.caseInsensitive,.diacriticInsensitive]) != nil
+                }
+                .sorted{
+                    if let titulo1 = $0.title, let titulo2 = $1.title {
+                        titulo1 < titulo2
+                    }else { true }
+                }
+        }
+    }
+    // funcion de gestión de fechas.
     func getDateFromString (dateString: String?) -> Date? {
 
         let dateFormatter = ISO8601DateFormatter()
@@ -372,6 +406,7 @@ final class MangasVM {
             return nil
         }
     }
+    // Funciones de DataModel
     func guardarMangaEnMiLibreria(manga: DTOMangas, context: ModelContext){
         let mangaData: Manga = manga.toData
         context.insert(mangaData)

@@ -17,29 +17,32 @@ struct MangasByDemographicView: View {
     @Binding var path: NavigationPath
     
     var body: some View {
+        @Bindable var bVM = vm
         ScrollView {
             LazyVGrid(columns: [item]) {
-                ForEach (vm.mangasByDemographicSpecific[demographic.demographic] ?? []){ mangaItems in
-                    ForEach (mangaItems.items){ mangaItem in
-                        if let mangaTitle = mangaItem.title {
-                            NavigationLink(value: mangaItem) {
-                                MangaView(mangaURL: mangaItem.mainPicture, widthCover: 150, heightCover: 230)
+                //ForEach (vm.mangasByDemographicSpecific[demographic.demographic] ?? []){ mangaItems in
+                ForEach (vm.getMangasBySearchField(searchFieldBy: .byDemographic, idAuthor: UUID(), demographic: demographic.demographic, genre: "", theme: "")){ dtoManga in
+                    //ForEach (mangaItems.items){ mangaItem in
+                        if let mangaTitle = dtoManga.title {
+                            NavigationLink(value: dtoManga) {
+                                MangaView(mangaURL: dtoManga.mainPicture, widthCover: 150, heightCover: 230)
                                     .overlay(alignment: .bottom){
                                         BottomTitleView(title: mangaTitle)
                                     }
                                     .overlay(alignment: .topTrailing){
-                                        if mangasCollection.contains(where: {$0.id == mangaItem.id}){
+                                        if mangasCollection.contains(where: {$0.id == dtoManga.id}){
                                             CheckCollectionView()
                                         }
                                     }
                                   .padding()
                             }
                         }
-                    }
+                    //}
                 }
             }
             .padding()
         }
+        .searchable(text: $bVM.searchMangas, prompt: "Buscar un manga")
         .navigationTitle("Mangas de \(demographic.demographic)")
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(for: DTOMangas.self) { manga in

@@ -19,29 +19,32 @@ struct MangasByThemesView: View {
     @Binding var path: NavigationPath
     
     var body: some View {
+        @Bindable var bVM = vm
         ScrollView {
             LazyVGrid(columns: [item]) {
-                ForEach (vm.mangasByThemesSpecific[theme.theme] ?? []){ mangaItems in
-                    ForEach (mangaItems.items){ mangaItem in
-                        if let mangaTitle = mangaItem.title {
-                            NavigationLink(value: mangaItem) {
-                                MangaView(mangaURL: mangaItem.mainPicture, widthCover: 150, heightCover: 230)
+                //ForEach (vm.mangasByThemesSpecific[theme.theme] ?? []){ mangaItems in
+                ForEach (vm.getMangasBySearchField(searchFieldBy: .byTheme, idAuthor: UUID(), demographic: "", genre: "", theme: theme.theme)){ dtoManga in
+                    //ForEach (mangaItems.items){ mangaItem in
+                        if let mangaTitle = dtoManga.title {
+                            NavigationLink(value: dtoManga) {
+                                MangaView(mangaURL: dtoManga.mainPicture, widthCover: 150, heightCover: 230)
                                     .overlay(alignment: .bottom){
                                         BottomTitleView(title: mangaTitle)
                                     }
                                     .overlay(alignment: .topTrailing){
-                                        if mangasCollection.contains(where: {$0.id == mangaItem.id}){
+                                        if mangasCollection.contains(where: {$0.id == dtoManga.id}){
                                             CheckCollectionView()
                                         }
                                     }
                                   .padding()
                             }
                         }
-                    }
+                    //}
                 }
             }
             .padding()
         }
+        .searchable(text: $bVM.searchMangas, prompt: "Buscar un manga")
         .navigationTitle("Mangas de \(theme.theme)")
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(for: DTOMangas.self) { manga in

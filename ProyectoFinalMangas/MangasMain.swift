@@ -15,7 +15,7 @@ struct MangasMain: View {
             SearchView()
                 .environment(vm)
                 .tabItem{
-                    Label("Busqueda", systemImage: "magnifyingglass")
+                    Label("Búsqueda", systemImage: "magnifyingglass")
                 }
             OwnCollectionView()
                 .environment(vm)

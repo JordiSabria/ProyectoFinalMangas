@@ -8,23 +8,4 @@
 import Foundation
 
 
-enum search {
-    case allMangas
-    case bestMangas
-    case authors
-    case demographics
-    case genres
-    case themes
-    case superSearch
-}
 
-enum estadoPantalla {
-    case search
-    case authors
-    case demographics
-    case genres
-    case themes
-    case mangas
-    case detailManga
-    case advSearch
-}

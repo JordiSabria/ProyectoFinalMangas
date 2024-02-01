@@ -113,13 +113,15 @@ struct MangaDetailView: View {
                         }
                         Divider()
                     }
-                    HStack{
-                        Text("Puntuación")
-                            .bold()
-                        Spacer()
-                        Text(String(manga.score))
+                    if manga.score > 0{
+                        HStack{
+                            Text("Puntuación")
+                                .bold()
+                            Spacer()
+                            Text(String(manga.score))
+                        }
+                        Divider()
                     }
-                    Divider()
                     if manga.authors.count > 0{
                         HStack(alignment:.top){
                             if manga.authors.count == 1{

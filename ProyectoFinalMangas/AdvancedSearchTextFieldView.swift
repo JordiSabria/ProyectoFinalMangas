@@ -14,12 +14,12 @@ struct AdvancedSearchTextFieldView: View {
     var body: some View {
         let localized = NSLocalizedString(label, comment: "The label of the text field")
         VStack(alignment: .leading) {
-        //HStack{
             Text(localized.capitalized)
                 .font(.headline)
                 .padding(.leading, 10)
             HStack {
                 TextField("Introduce el \(localized.lowercased())", text: $text)
+                    .foregroundStyle(.black)
                 Button {
                     text = ""
                 } label: {
