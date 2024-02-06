@@ -55,6 +55,7 @@ struct AdvSearchMangasView: View {
         .navigationTitle("Mangas búsqueda abançada")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear(){
+            vm.stepsView = 1
             switch vm.estadoPantalla{
             case .advSearch:
                 vm.estadoPantalla = .mangas

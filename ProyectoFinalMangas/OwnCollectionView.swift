@@ -37,6 +37,7 @@ struct OwnCollectionView: View {
                         }
                     }
                 }
+                .padding()
             }
             .navigationTitle("Mi Colección")
             .navigationDestination(for: Manga.self) { manga in

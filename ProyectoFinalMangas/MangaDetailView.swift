@@ -22,6 +22,7 @@ struct MangaDetailView: View {
                 HStack(alignment: .top) {
                     Spacer()
                     MangaView(mangaURL: manga.mainPicture, widthCover: 250, heightCover: 350)
+                        .offset(x: 30)
                     Button{
                         if mangasCollection.contains(where: { $0.id == manga.id }){
                             try? vm.eliminarMangaEnMiLibreria(mangaID: manga.id, context: context)
@@ -50,6 +51,8 @@ struct MangaDetailView: View {
                                 }
                         }
                     }
+                    .offset(x: 30)
+                    Spacer()
                 }
                 VStack{
                     if let titleManga = manga.title {
@@ -232,11 +235,13 @@ struct MangaDetailView: View {
             vm.estadoPantalla = .detailManga
         }
         .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button {
-                    path.removeLast()
-                } label: {
-                    Image(systemName: "eraser.line.dashed")
+            if UIDevice.current.userInterfaceIdiom == .phone {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        path.removeLast(vm.stepsView)
+                    } label: {
+                        Image(systemName: "eraser.line.dashed")
+                    }
                 }
             }
         }
@@ -258,7 +263,9 @@ struct MangaDetailView: View {
 }
 
 #Preview {
-    MangaDetailView(manga: .test, path: .constant(NavigationPath()))
-        .environment(MangasVM.test)
-        .modelContainer(testModelContainer)
+    ScrollView{
+        MangaDetailView(manga: .test, path: .constant(NavigationPath()))
+            .environment(MangasVM.test)
+            .modelContainer(testModelContainer)
+    }
 }

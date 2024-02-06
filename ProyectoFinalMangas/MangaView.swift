@@ -27,7 +27,7 @@ struct MangaView: View {
                     Image(systemName: "book.circle.fill")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: widthCover, height: heightCover)
+                        .frame(width: (widthCover - 30), height: (heightCover - 30))
                         .padding()
                         .background {
                             Color(white: 0.9)
@@ -35,6 +35,7 @@ struct MangaView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                         .shadow(color: .black.opacity(0.3), radius: 5, x: 0, y: 5)
                 }
+                //.offset(x: 25)
             }
         }
     }

@@ -24,7 +24,7 @@ struct ScrollOffset: PreferenceKey {
 }
 
 enum search {
-    case allMangas
+    //case allMangas
     case bestMangas
     case authors
     case demographics

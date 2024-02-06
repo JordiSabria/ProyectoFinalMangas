@@ -51,26 +51,60 @@ struct MangasByAuthorView: View {
             MangaDetailView(manga: manga, path: $path)
                 .environment(vm)
         }
+        .refreshable {
+            Task {
+                await vm.getMangasByAuthor(idAuthor:author.id)
+            }
+        }
         .onAppear(){
-            switch vm.estadoPantalla{
+            vm.stepsView = 3
+            #if os(iOS)
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                Task {
+                    await vm.getMangasByAuthor(idAuthor:author.id)
+                }
+            } else {
+                switch vm.estadoPantalla{
                 case .authors:
                     vm.estadoPantalla = .mangas
-                guard (vm.mangasByAuthorSpecific[author.id]?.count) != nil else {
-                    Task {
-                        await vm.getMangasByAuthor(idAuthor:author.id)
+                    guard (vm.mangasByAuthorSpecific[author.id]?.count) != nil else {
+                        Task {
+                            await vm.getMangasByAuthor(idAuthor:author.id)
+                        }
+                        return
                     }
-                    return
-                }
                 default:
                     vm.estadoPantalla = .mangas
                 }
+            }
+            #else
+            Task {
+                await vm.getMangasByAuthor(idAuthor:author.id)
+            }
+            #endif
+        }
+        .onChange(of: author){
+            #if os(iOS)
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                Task {
+                    await vm.getMangasByAuthor(idAuthor:author.id)
+                }
+            }
+            #else
+            Task {
+                await vm.getMangasByAuthor(idAuthor:author.id)
+            }
+            #endif
         }
         .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button {
-                    path.removeLast()
-                } label: {
-                    Image(systemName: "eraser.line.dashed")
+            if UIDevice.current.userInterfaceIdiom == .phone {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        // path.removeLast()
+                        path.removeLast(2)
+                    } label: {
+                        Image(systemName: "eraser.line.dashed")
+                    }
                 }
             }
         }

@@ -51,16 +51,22 @@ struct MangasByGenresView: View {
             MangaDetailView(manga: manga, path: $path)
                 .environment(vm)
         }
+        .refreshable {
+            Task {
+                await vm.getMangasByGenre(genre: genre.genre)
+            }
+        }
         .onAppear(){
+            vm.stepsView = 3
             switch vm.estadoPantalla{
                 case .genres:
                     vm.estadoPantalla = .mangas
-                guard (vm.mangasByGenresSpecific[genre.genre]?.count) != nil else {
-                    Task {
-                        await vm.getMangasByGenre(genre: genre.genre)
+                    guard (vm.mangasByGenresSpecific[genre.genre]?.count) != nil else {
+                        Task {
+                            await vm.getMangasByGenre(genre: genre.genre)
+                        }
+                        return
                     }
-                    return
-                }
                 default:
                     vm.estadoPantalla = .mangas
                 }
@@ -68,7 +74,7 @@ struct MangasByGenresView: View {
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button {
-                    path.removeLast()
+                    path.removeLast(2)
                 } label: {
                     Image(systemName: "eraser.line.dashed")
                 }

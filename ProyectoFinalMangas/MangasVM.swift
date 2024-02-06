@@ -34,6 +34,8 @@ final class MangasVM {
     var msg = ""
     var provaToogle = false
     
+    var stepsView = 2
+    
     init(network: DataInteractor = Network.shared) {
         self.network = network
     }
@@ -364,6 +366,42 @@ final class MangasVM {
         case .allMangas:
             arrayTempMangas = mangasItemsArray.map{ $0.items.map{$0} }.flatMap{$0}
         case .byAuthor:
+            arrayTempMangas = mangasByAuthorSpecific[idAuthor]?.map{ $0.items.map{$0} }.flatMap{$0} ?? []
+        case .byDemographic:
+            arrayTempMangas = mangasByDemographicSpecific[demographic]?.map{ $0.items.map{$0} }.flatMap{$0} ?? []
+        case .byGenre:
+            arrayTempMangas = mangasByGenresSpecific[genre]?.map{ $0.items.map{$0} }.flatMap{$0} ?? []
+        case .byTheme:
+            arrayTempMangas = mangasByThemesSpecific[theme]?.map{ $0.items.map{$0} }.flatMap{$0} ?? []
+        }
+        if searchMangas.isEmpty{
+            return arrayTempMangas
+                .sorted{
+                    if let titulo1 = $0.title, let titulo2 = $1.title {
+                        titulo1 < titulo2
+                    }else { true }
+                }
+        } else {
+            return arrayTempMangas
+                .filter{
+                    $0.title?.range(of: searchMangas, options:[.caseInsensitive,.diacriticInsensitive]) != nil
+                }
+                .sorted{
+                    if let titulo1 = $0.title, let titulo2 = $1.title {
+                        titulo1 < titulo2
+                    }else { true }
+                }
+        }
+    }
+    func getMangasBySearchFieldiPad(searchFieldBy: searchFieldMangas, idAuthor: UUID, demographic: String, genre: String, theme: String) -> [DTOMangas]{
+        var arrayTempMangas: [DTOMangas]
+        switch searchFieldBy {
+        case .allMangas:
+            arrayTempMangas = mangasItemsArray.map{ $0.items.map{$0} }.flatMap{$0}
+        case .byAuthor:
+            Task{
+                await getMangasByAuthor(idAuthor: idAuthor)
+            }
             arrayTempMangas = mangasByAuthorSpecific[idAuthor]?.map{ $0.items.map{$0} }.flatMap{$0} ?? []
         case .byDemographic:
             arrayTempMangas = mangasByDemographicSpecific[demographic]?.map{ $0.items.map{$0} }.flatMap{$0} ?? []

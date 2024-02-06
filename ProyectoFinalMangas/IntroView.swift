@@ -12,33 +12,96 @@ struct IntroView: View {
     
     @State var loading = false
     @State var appear = false
-    @State private var position = 0
+    let anchoPantalla = UIScreen.main.bounds.width
+    let altoPantalla = UIScreen.main.bounds.height
+    @State var positionRelative = Position(x:0, y:0)
+    @State private var positionY: CGFloat = 0
+    @State private var positionX: CGFloat = 0
+    @State private var tamaño: CGFloat = 100
 
     var body: some View {
         ZStack{
             Image(.icono2ProyectoFinalMangas)
                 .resizable()
                 .scaledToFit()
-                .frame(width: 250)
+                .frame(width: tamaño)
                 .cornerRadius(20)
-                .offset(y: CGFloat(position))
+                .offset(x: positionRelative.x, y: positionRelative.y)
         }
-        .animation(.bouncy().speed(0.5), value: position)
+        .animation(.bouncy().speed(0.5), value: positionRelative.x)
+        .animation(.bouncy().speed(0.5), value: positionRelative.y)
         .task {
             Task{
                 await vm.getMangasItems()
             }
             try? await Task.sleep(for: .seconds(1.5))
-            position = -200
+            moveToPosition(posicion: 1)
+            tamaño = 120
             try? await Task.sleep(for: .seconds(1.5))
-            position = 200
+            moveToPosition(posicion: 2)
+            tamaño = 140
             try? await Task.sleep(for: .seconds(1.5))
-            position = 0
+            moveToPosition(posicion: 3)
+            tamaño = 160
+            try? await Task.sleep(for: .seconds(1.5))
+            moveToPosition(posicion: 4)
+            tamaño = 180
+            try? await Task.sleep(for: .seconds(1.5))
+            moveToPosition(posicion: 5)
+            tamaño = 200
             try? await Task.sleep(for: .seconds(1))
             vm.appState = .home
         }
     }
+    func moveToPosition(posicion: CGFloat) {
+        
+        switch posicion {
+        case 1:
+            if (anchoPantalla < altoPantalla){
+                positionRelative.y = -(altoPantalla/2*60/100)
+                positionRelative.x = -(anchoPantalla/2*60/100)
+            } else {
+                positionRelative.y = -(altoPantalla/2*55/100)
+                positionRelative.x = -(anchoPantalla/2*60/100)
+            }
+        case 2:
+            if (anchoPantalla < altoPantalla){
+                positionRelative.y = (altoPantalla/2*60/100)
+                positionRelative.x = -(anchoPantalla/2*55/100)
+            } else {
+                positionRelative.y = (altoPantalla/2*60/100)
+                positionRelative.x = -(anchoPantalla/2*60/100)
+            }
+        case 3:
+            if (anchoPantalla < altoPantalla){
+                positionRelative.y = -(altoPantalla/2*60/100)
+                positionRelative.x = (anchoPantalla/2*50/100)
+            } else {
+                positionRelative.y = -(altoPantalla/2*45/100)
+                positionRelative.x = (anchoPantalla/2*60/100)
+            }
+        case 4:
+            if (anchoPantalla < altoPantalla){
+                positionRelative.y = (altoPantalla/2*60/100)
+                positionRelative.x = (anchoPantalla/2*45/100)
+            } else {
+                positionRelative.y = (altoPantalla/2*50/100)
+                positionRelative.x = (anchoPantalla/2*60/100)
+            }
+        case 5:
+            positionRelative.y = 0
+            positionRelative.x = 0
+        default:
+            positionRelative.y = 0
+            positionRelative.x = 0
+        }
+    }
+    struct Position {
+        var x: CGFloat
+        var y: CGFloat
+    }
 }
+
 
 #Preview {
     IntroView()

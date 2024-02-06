@@ -19,9 +19,21 @@ struct AppStateView: View {
                 IntroView()
                     .environment(vm)
             case .home:
-                MangasMain()
+                #if os(iOS)
+                if UIDevice.current.userInterfaceIdiom == .pad {
+                    MangasMainIpadView()
+                        .environment(vm)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                }else{
+                    MangasMain()
+                        .environment(vm)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                }
+                #else
+                MangasMainIpadView()
                     .environment(vm)
                     .transition(.move(edge: .bottom).combined(with: .opacity))
+                #endif
             case .noInternet:
                 NoConnectionView()
                     .transition(.opacity)

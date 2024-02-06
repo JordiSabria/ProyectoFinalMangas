@@ -18,11 +18,6 @@ struct AuthorsView: View {
                 Text("\(author.firstName) \(author.lastName)")
             }
         }
-//        List(vm.authors){ author in
-//            NavigationLink(value: author){
-//                Text("\(author.firstName) \(author.lastName)")
-//            }
-//        }
         .navigationTitle("Autores")
         .navigationDestination(for: DTOAuthor.self){ author in
             MangasByAuthorView(author: author, path: $path)

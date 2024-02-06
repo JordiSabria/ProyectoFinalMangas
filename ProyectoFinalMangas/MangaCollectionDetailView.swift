@@ -25,10 +25,11 @@ struct MangaCollectionDetailView: View {
     
     var body: some View {
         ScrollView {
-            VStack{
+            VStack (alignment: .center){
                 HStack(alignment: .top) {
                     Spacer()
                     MangaView(mangaURL: manga.mainPicture, widthCover: 250, heightCover: 350)
+                        .offset(x: 30)
                     Button{
                         if mangasCollection.contains(where: { $0.id == manga.id }){
                             try? vm.eliminarMangaEnMiLibreria(mangaID: manga.id, context: context)
@@ -52,6 +53,8 @@ struct MangaCollectionDetailView: View {
                                 .padding(7)
                         }
                     }
+                    .offset(x: 30)
+                    Spacer()
                 }
                 VStack{
                     if let titleManga = manga.title {

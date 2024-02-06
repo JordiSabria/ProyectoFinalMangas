@@ -49,7 +49,13 @@ struct MangasByDemographicView: View {
             MangaDetailView(manga: manga, path: $path)
                 .environment(vm)
         }
+        .refreshable {
+            Task {
+                await vm.getMangasByDemographic(demographic: demographic.demographic)
+            }
+        }
         .onAppear(){
+            vm.stepsView = 3
             switch vm.estadoPantalla{
                 case .demographics:
                     vm.estadoPantalla = .mangas
@@ -66,7 +72,7 @@ struct MangasByDemographicView: View {
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button {
-                    path.removeLast()
+                    path.removeLast(2)
                 } label: {
                     Image(systemName: "eraser.line.dashed")
                 }

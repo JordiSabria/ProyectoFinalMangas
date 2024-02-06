@@ -1,29 +1,28 @@
 //
-//  MangasByThemesView.swift
+//  MangasByAuthoriPadView.swift
 //  ProyectoFinalMangas
 //
-//  Created by Jordi Sabrià Pagès on 18/1/24.
+//  Created by Jordi Sabrià Pagès on 6/2/24.
 //
 
 import SwiftUI
 import SwiftData
 
-struct MangasByThemesView: View {
+struct MangasByAuthoriPadView: View {
     @Environment(MangasVM.self) var vm
     @Environment(\.modelContext) private var context
     @Query var mangasCollection: [Manga]
-
-    let item = GridItem(.adaptive(minimum: 150), alignment: .center)
-    let theme: DTOTheme
     
+    let item = GridItem(.adaptive(minimum: 150), alignment: .center)
+    let author: DTOAuthor
     @Binding var path: NavigationPath
     
     var body: some View {
         @Bindable var bVM = vm
         ScrollView {
             LazyVGrid(columns: [item]) {
-                //ForEach (vm.mangasByThemesSpecific[theme.theme] ?? []){ mangaItems in
-                ForEach (vm.getMangasBySearchField(searchFieldBy: .byTheme, idAuthor: UUID(), demographic: "", genre: "", theme: theme.theme)){ dtoManga in
+                //ForEach (vm.mangasByAuthorSpecific[author.id] ?? []){ mangaItems in
+                ForEach (vm.getMangasBySearchField(searchFieldBy: .byAuthor, idAuthor: author.id, demographic: "", genre: "", theme: "")) { dtoManga in
                     //ForEach (mangaItems.items){ mangaItem in
                         if let mangaTitle = dtoManga.title {
                             NavigationLink(value: dtoManga) {
@@ -39,13 +38,13 @@ struct MangasByThemesView: View {
                                   .padding()
                             }
                         }
-                    //}
-                }
+                    }
+                //}
             }
             .padding()
         }
         .searchable(text: $bVM.searchMangas, prompt: "Buscar un manga")
-        .navigationTitle("Mangas de \(theme.theme)")
+        .navigationTitle("Mangas de \(author.firstName) \(author.lastName)")
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(for: DTOMangas.self) { manga in
             MangaDetailView(manga: manga, path: $path)
@@ -53,39 +52,19 @@ struct MangasByThemesView: View {
         }
         .refreshable {
             Task {
-                await vm.getMangasByTheme(theme: theme.theme)
+                await vm.getMangasByAuthor(idAuthor:author.id)
             }
         }
-        .onAppear(){
-            vm.stepsView = 3
-            switch vm.estadoPantalla{
-                case .themes:
-                    vm.estadoPantalla = .mangas
-                    guard (vm.mangasByThemesSpecific[theme.theme]?.count) != nil else {
-                        Task {
-                            await vm.getMangasByTheme(theme: theme.theme)
-                        }
-                        return
-                    }
-                default:
-                    vm.estadoPantalla = .mangas
-            }
-        }
-        .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button {
-                    path.removeLast(2)
-                } label: {
-                    Image(systemName: "eraser.line.dashed")
-                }
+        .onChange(of: author){
+            Task {
+                await vm.getMangasByAuthor(idAuthor:author.id)
             }
         }
     }
 }
 
 #Preview {
-    NavigationStack {
-        MangasByThemesView(theme: .test, path: .constant(NavigationPath()))
-            .environment(MangasVM.testByThemes)
-    }
+    MangasByAuthoriPadView(author: .test, path: .constant(NavigationPath()))
+        .environment(MangasVM.testByAuthor)
+        //.modelContainer(testModelContainer)
 }

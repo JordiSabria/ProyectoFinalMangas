@@ -1,25 +1,21 @@
 //
-//  SearchView.swift
+//  SearchIPadView.swift
 //  ProyectoFinalMangas
 //
-//  Created by Jordi Sabrià Pagès on 10/1/24.
+//  Created by Jordi Sabrià Pagès on 5/2/24.
 //
 
 import SwiftUI
 
-struct SearchView: View {
+struct SearchIPadView: View {
     @Environment(MangasVM.self) var vm
     @State private var path = NavigationPath()
     //@Environment(\.modelContext) private var context
+    @State var visibility: NavigationSplitViewVisibility = .all
     
     var body: some View {
-        NavigationStack(path: $path){
-            List{
-//                NavigationLink(value: search.allMangas) {
-//                    HStack{
-//                        Label("Todos los Mangas", systemImage: "book")
-//                    }
-//                }
+        NavigationView(){
+            List(selection: "Los mejores Mangas"){
                 NavigationLink(value: search.bestMangas) {
                     HStack{
                         Label("Los mejores Mangas", systemImage: "hand.thumbsup")
@@ -86,8 +82,7 @@ struct SearchView: View {
 }
 
 #Preview {
-    SearchView()
+    SearchIPadView()
         .environment(MangasVM.test)
         .modelContainer(testModelContainer)
-    
 }

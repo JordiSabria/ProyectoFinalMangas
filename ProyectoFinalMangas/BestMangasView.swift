@@ -45,6 +45,7 @@ struct BestMangasView: View {
                 .environment(vm)
         }
         .onAppear(){
+            vm.stepsView = 2
             if vm.bestMangasItemsArray.count == 0{
                 getBestMangas()
             }

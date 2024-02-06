@@ -1,16 +1,16 @@
 //
-//  MangasMain.swift
+//  MangasMainIpadView.swift
 //  ProyectoFinalMangas
 //
-//  Created by Jordi Sabrià Pagès on 10/1/24.
+//  Created by Jordi Sabrià Pagès on 5/2/24.
 //
 
 import SwiftUI
 
-struct MangasMain: View {
+struct MangasMainIpadView: View {
     @Environment(MangasVM.self) var vm
     @Environment(\.modelContext) private var context
-    
+    @State private var path = NavigationPath()
     var body: some View {
         TabView{
             AllMangasView()
@@ -18,10 +18,15 @@ struct MangasMain: View {
                 .tabItem {
                     Label("Mangas", systemImage: "house")
                 }
-            SearchView()
+            BestMangaiPadView()
                 .environment(vm)
                 .tabItem{
-                    Label("Búsqueda", systemImage: "magnifyingglass")
+                    Label("Mejores Mangas", systemImage: "hand.thumbsup")
+                }
+            AuthorsiPadView()
+                .environment(vm)
+                .tabItem{
+                    Label("Autores", systemImage: "person")
                 }
             OwnCollectionView()
                 .environment(vm)
@@ -33,7 +38,7 @@ struct MangasMain: View {
 }
 
 #Preview {
-    MangasMain()
+    MangasMainIpadView()
         .environment(MangasVM.test)
         .modelContainer(testModelContainer)
 }
