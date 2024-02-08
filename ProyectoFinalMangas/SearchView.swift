@@ -80,7 +80,7 @@ struct SearchView: View {
         }
         .onAppear(){
             vm.estadoPantalla = .search
-            print (URL.documentsDirectory)
+            //print (URL.documentsDirectory)
         }
     }
 }

@@ -16,6 +16,7 @@ final class MangasVM {
     var estadoPantalla: estadoPantalla = .search
     
     var mangasItemsArray: [MangasItems] = []
+    var mangasDTOmangasArray: [DTOMangas] = []
     var bestMangasItemsArray: [MangasItems] = []
     var authors: [DTOAuthor] = []
     var demographics: [DTODemographic] = []
@@ -60,10 +61,7 @@ final class MangasVM {
 //                let mangaItemRecovered = try await self.network.getMangas(itemsPorPagina: mangasPorPagina, pagina: pagina)
 //                self.mangasItemsArray.append(mangaItemRecovered)
 //            }
-            // Ahora hemos de añadir los mangas de la primera llamada.
-            await MainActor.run {
-                self.mangasItemsArray.append(mangas)
-            }
+            
             // Tercero, si hay más de un paquete: vamos a crear un grupo de tascas en asyncronia para cada llamada getMangas así vamos a recuperar todos los mangas de la forma más eficiente.
             if paquetes > 1 {
                 try await withThrowingTaskGroup(of: MangasItems.self){ group in
@@ -75,9 +73,15 @@ final class MangasVM {
                     }
                     for try await mangaItem in group.compactMap({$0}){
                         self.mangasItemsArray.append(mangaItem)
+                        //ordenarMagasItemArray()
                     }
                 }
-            } 
+            }
+            // Ahora hemos de añadir los mangas de la primera llamada.
+            //await MainActor.run {
+                self.mangasItemsArray.append(mangas)
+                //ordenarMagasItemArray()
+            //}
         } catch {
             await MainActor.run {
                 self.msg = "\(error)"
@@ -85,26 +89,35 @@ final class MangasVM {
             }
         }
     }
+    func ordenarMagasItemArray(){
+        mangasDTOmangasArray = mangasItemsArray.map{ $0.items.map{$0} }.flatMap{$0}.sorted{
+            if let titulo1 = $0.title, let titulo2 = $1.title {
+                titulo1 < titulo2
+            }else { true }
+        }
+    }
     func getMangasItemsSearchAllMangas() -> [DTOMangas]{
         
-        let arrayTempMangas = mangasItemsArray.map{ $0.items.map{$0} }.flatMap{$0}
+//        let arrayTempMangas = mangasItemsArray.map{ $0.items.map{$0} }.flatMap{$0}
         if searchAllMangas.isEmpty{
-            return arrayTempMangas
-                .sorted{
-                    if let titulo1 = $0.title, let titulo2 = $1.title {
-                        titulo1 < titulo2
-                    }else { true }
-                }
+//            return arrayTempMangas
+//                .sorted{
+//                    if let titulo1 = $0.title, let titulo2 = $1.title {
+//                        titulo1 < titulo2
+//                    }else { true }
+//                }
+            return mangasDTOmangasArray
         } else {
-            return arrayTempMangas
+//            return arrayTempMangas
+            return mangasDTOmangasArray
                 .filter{
                     $0.title?.range(of: searchAllMangas, options:[.caseInsensitive,.diacriticInsensitive]) != nil
                 }
-                .sorted{
-                    if let titulo1 = $0.title, let titulo2 = $1.title {
-                        titulo1 < titulo2
-                    }else { true }
-                }
+//                .sorted{
+//                    if let titulo1 = $0.title, let titulo2 = $1.title {
+//                        titulo1 < titulo2
+//                    }else { true }
+//                }
         }
     }
     func getBestMangasItems() async {
@@ -393,15 +406,11 @@ final class MangasVM {
                 }
         }
     }
-    func getMangasBySearchFieldiPad(searchFieldBy: searchFieldMangas, idAuthor: UUID, demographic: String, genre: String, theme: String) -> [DTOMangas]{
+    // Funciones de busqueda del primer valor de una array desordenada que previamienta ya ha sido "cargada".
+    func getFirstMangaBy(mangasbyToSord: mangasByToSord, idAuthor: UUID, demographic: String, genre: String, theme: String) -> DTOMangas?{
         var arrayTempMangas: [DTOMangas]
-        switch searchFieldBy {
-        case .allMangas:
-            arrayTempMangas = mangasItemsArray.map{ $0.items.map{$0} }.flatMap{$0}
+        switch mangasbyToSord{
         case .byAuthor:
-            Task{
-                await getMangasByAuthor(idAuthor: idAuthor)
-            }
             arrayTempMangas = mangasByAuthorSpecific[idAuthor]?.map{ $0.items.map{$0} }.flatMap{$0} ?? []
         case .byDemographic:
             arrayTempMangas = mangasByDemographicSpecific[demographic]?.map{ $0.items.map{$0} }.flatMap{$0} ?? []
@@ -410,24 +419,12 @@ final class MangasVM {
         case .byTheme:
             arrayTempMangas = mangasByThemesSpecific[theme]?.map{ $0.items.map{$0} }.flatMap{$0} ?? []
         }
-        if searchMangas.isEmpty{
-            return arrayTempMangas
-                .sorted{
-                    if let titulo1 = $0.title, let titulo2 = $1.title {
-                        titulo1 < titulo2
-                    }else { true }
-                }
-        } else {
-            return arrayTempMangas
-                .filter{
-                    $0.title?.range(of: searchMangas, options:[.caseInsensitive,.diacriticInsensitive]) != nil
-                }
-                .sorted{
-                    if let titulo1 = $0.title, let titulo2 = $1.title {
-                        titulo1 < titulo2
-                    }else { true }
-                }
-        }
+        return arrayTempMangas
+            .sorted{
+                if let titulo1 = $0.title, let titulo2 = $1.title {
+                    titulo1 < titulo2
+                }else { true }
+            }.first ?? nil
     }
     // funcion de gestión de fechas.
     func getDateFromString (dateString: String?) -> Date? {

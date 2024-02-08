@@ -28,6 +28,21 @@ struct MangasMainIpadView: View {
                 .tabItem{
                     Label("Autores", systemImage: "person")
                 }
+            DemographicsiPadView()
+                .environment(vm)
+                .tabItem{
+                    Label("Demográficas", systemImage: "person.3")
+                }
+            GenresiPadView()
+                .environment(vm)
+                .tabItem{
+                    Label("Géneros", systemImage: "theatermasks")
+                }
+            ThemesiPadView()
+                .environment(vm)
+                .tabItem{
+                    Label("Temáticas", systemImage: "figure.martial.arts")
+                }
             OwnCollectionView()
                 .environment(vm)
                 .tabItem{

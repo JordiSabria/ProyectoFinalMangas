@@ -53,5 +53,5 @@ struct AppStateView: View {
 
 #Preview {
     AppStateView()
-        .environment(MangasVM())
+        .environment(MangasVM.test)
 }

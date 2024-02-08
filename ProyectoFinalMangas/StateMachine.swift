@@ -50,4 +50,10 @@ enum searchFieldMangas {
     case byGenre
     case byTheme
 }
+enum mangasByToSord {
+    case byAuthor
+    case byDemographic
+    case byGenre
+    case byTheme
+}
 

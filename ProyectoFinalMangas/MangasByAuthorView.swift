@@ -60,8 +60,11 @@ struct MangasByAuthorView: View {
             vm.stepsView = 3
             #if os(iOS)
             if UIDevice.current.userInterfaceIdiom == .pad {
-                Task {
-                    await vm.getMangasByAuthor(idAuthor:author.id)
+                guard (vm.mangasByAuthorSpecific[author.id]?.count) != nil else {
+                    Task {
+                        await vm.getMangasByAuthor(idAuthor:author.id)
+                    }
+                    return
                 }
             } else {
                 switch vm.estadoPantalla{
@@ -100,7 +103,6 @@ struct MangasByAuthorView: View {
             if UIDevice.current.userInterfaceIdiom == .phone {
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
-                        // path.removeLast()
                         path.removeLast(2)
                     } label: {
                         Image(systemName: "eraser.line.dashed")

@@ -58,7 +58,16 @@ struct MangasByGenresView: View {
         }
         .onAppear(){
             vm.stepsView = 3
-            switch vm.estadoPantalla{
+            #if os(iOS)
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                guard (vm.mangasByGenresSpecific[genre.genre]?.count) != nil else {
+                    Task {
+                        await vm.getMangasByGenre(genre: genre.genre)
+                    }
+                    return
+                }
+            } else {
+                switch vm.estadoPantalla{
                 case .genres:
                     vm.estadoPantalla = .mangas
                     guard (vm.mangasByGenresSpecific[genre.genre]?.count) != nil else {
@@ -70,13 +79,34 @@ struct MangasByGenresView: View {
                 default:
                     vm.estadoPantalla = .mangas
                 }
+            }
+            #else
+            Task {
+                await vm.getMangasByGenre(genre: genre.genre)
+            }
+            #endif
+        }
+        .onChange(of: genre){
+            #if os(iOS)
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                Task {
+                    await vm.getMangasByGenre(genre: genre.genre)
+                }
+            }
+            #else
+            Task {
+                await vm.getMangasByGenre(genre: genre.genre)
+            }
+            #endif
         }
         .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button {
-                    path.removeLast(2)
-                } label: {
-                    Image(systemName: "eraser.line.dashed")
+            if UIDevice.current.userInterfaceIdiom == .phone {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        path.removeLast(2)
+                    } label: {
+                        Image(systemName: "eraser.line.dashed")
+                    }
                 }
             }
         }

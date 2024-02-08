@@ -22,7 +22,7 @@ struct MangasByDemographicView: View {
             LazyVGrid(columns: [item]) {
                 //ForEach (vm.mangasByDemographicSpecific[demographic.demographic] ?? []){ mangaItems in
                 ForEach (vm.getMangasBySearchField(searchFieldBy: .byDemographic, idAuthor: UUID(), demographic: demographic.demographic, genre: "", theme: "")){ dtoManga in
-                    //ForEach (mangaItems.items){ mangaItem in
+                    //ForEach (mangaItems.items){ dtoManga in
                         if let mangaTitle = dtoManga.title {
                             NavigationLink(value: dtoManga) {
                                 MangaView(mangaURL: dtoManga.mainPicture, widthCover: 150, heightCover: 230)
@@ -56,7 +56,16 @@ struct MangasByDemographicView: View {
         }
         .onAppear(){
             vm.stepsView = 3
-            switch vm.estadoPantalla{
+            #if os(iOS)
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                guard (vm.mangasByDemographicSpecific[demographic.demographic]?.count) != nil else {
+                    Task {
+                        await vm.getMangasByDemographic(demographic: demographic.demographic)
+                    }
+                    return
+                }
+            }else {
+                switch vm.estadoPantalla{
                 case .demographics:
                     vm.estadoPantalla = .mangas
                     guard (vm.mangasByDemographicSpecific[demographic.demographic]?.count) != nil else {
@@ -68,13 +77,34 @@ struct MangasByDemographicView: View {
                 default:
                     vm.estadoPantalla = .mangas
                 }
+            }
+            #else
+            Task {
+                await vm.getMangasByDemographic(demographic: demographic.demographic)
+            }
+            #endif
+        }
+        .onChange(of: demographic){
+            #if os(iOS)
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                Task {
+                    await vm.getMangasByDemographic(demographic: demographic.demographic)
+                }
+            }
+            #else
+            Task {
+                await vm.getMangasByDemographic(demographic: demographic.demographic)
+            }
+            #endif
         }
         .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button {
-                    path.removeLast(2)
-                } label: {
-                    Image(systemName: "eraser.line.dashed")
+            if UIDevice.current.userInterfaceIdiom == .phone {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        path.removeLast(2)
+                    } label: {
+                        Image(systemName: "eraser.line.dashed")
+                    }
                 }
             }
         }

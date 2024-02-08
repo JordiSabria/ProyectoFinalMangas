@@ -58,7 +58,16 @@ struct MangasByThemesView: View {
         }
         .onAppear(){
             vm.stepsView = 3
-            switch vm.estadoPantalla{
+            #if os(iOS)
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                guard (vm.mangasByThemesSpecific[theme.theme]?.count) != nil else {
+                    Task {
+                        await vm.getMangasByTheme(theme: theme.theme)
+                    }
+                    return
+                }
+            } else {
+                switch vm.estadoPantalla{
                 case .themes:
                     vm.estadoPantalla = .mangas
                     guard (vm.mangasByThemesSpecific[theme.theme]?.count) != nil else {
@@ -69,14 +78,35 @@ struct MangasByThemesView: View {
                     }
                 default:
                     vm.estadoPantalla = .mangas
+                }
             }
+            #else
+            Task {
+                await vm.getMangasByTheme(theme: theme.theme)
+            }
+            #endif
+        }
+        .onChange(of: theme){
+            #if os(iOS)
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                Task {
+                    await vm.getMangasByTheme(theme: theme.theme)
+                }
+            }
+            #else
+            Task {
+                await vm.getMangasByTheme(theme: theme.theme)
+            }
+            #endif
         }
         .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button {
-                    path.removeLast(2)
-                } label: {
-                    Image(systemName: "eraser.line.dashed")
+            if UIDevice.current.userInterfaceIdiom == .phone {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        path.removeLast(2)
+                    } label: {
+                        Image(systemName: "eraser.line.dashed")
+                    }
                 }
             }
         }

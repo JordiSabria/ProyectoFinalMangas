@@ -14,7 +14,7 @@ struct AllMangasView: View {
     @Query var mangasCollection: [Manga]
     @State private var path = NavigationPath()
     
-    @State var searchManga: String = ""
+    //@State var searchManga: String = ""
     
     let item = GridItem(.adaptive(minimum: 150), alignment: .center)
     
@@ -24,7 +24,8 @@ struct AllMangasView: View {
             //Text(String(vm.mangasItemsArray.count))
             ScrollView {
                 LazyVGrid(columns: [item]) {
-                    ForEach(vm.getMangasItemsSearchAllMangas()){ dtoManga in
+                    ForEach(vm.getMangasBySearchField(searchFieldBy: .allMangas, idAuthor: UUID(), demographic: "", genre: "", theme: "")){ dtoManga in
+//                    ForEach(vm.mangasDTOmangasArray){ dtoManga in
                         if let mangaTitle = dtoManga.title {
                             NavigationLink(value: dtoManga) {
                                 MangaView(mangaURL: dtoManga.mainPicture, widthCover: 150, heightCover: 230)
@@ -49,7 +50,7 @@ struct AllMangasView: View {
                     .environment(vm)
             }
         }
-        .searchable(text: $bVM.searchAllMangas, prompt: "Buscar un manga")
+        .searchable(text: $bVM.searchMangas, prompt: "Buscar un manga")
         .refreshable {
             getMangas()
         }
@@ -59,9 +60,6 @@ struct AllMangasView: View {
                 getMangas()
             }
         }
-//        .onChange(of: bVM.searchAllMangas, initial: false){
-//            print(bVM.searchAllMangas)
-//        }
     }
     func getMangas(){
         Task {

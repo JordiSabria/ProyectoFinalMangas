@@ -48,19 +48,19 @@ struct BestMangaiPadView: View {
                 MangaDetailView(manga: manga, path: $path)
                     .environment(vm)
             }
-            .navigationSplitViewColumnWidth(min: 1000, ideal: 1000, max: 1000)
-            .onAppear(){
-                vm.stepsView = 2
-                if vm.bestMangasItemsArray.count == 0{
-                    getBestMangas()
-                }
-            }
+            //.navigationSplitViewColumnWidth(min: 1000, ideal: 1000, max: 1000)
         } detail: {
             if let mangaItemsDetail = vm.bestMangasItemsArray.first{
                 if let mangaDetail=mangaItemsDetail.items.first{
                     MangaDetailView(manga: mangaDetail, path: $path)
                         .environment(vm)
                 }
+            }
+        }
+        .onAppear(){
+            vm.stepsView = 2
+            if vm.bestMangasItemsArray.count == 0{
+                getBestMangas()
             }
         }
     }

@@ -22,7 +22,6 @@ struct AuthorsiPadView: View {
             }
             .navigationTitle("Autores")
             .navigationDestination(for: DTOAuthor.self){ author in
-                //task{await vm.getMangasByAuthor(idAuthor:author.id)}
                 MangasByAuthorView(author: author, path: $path)
                     .environment(vm)
             }
@@ -35,11 +34,13 @@ struct AuthorsiPadView: View {
         } content: {
             if let authorTmp = vm.authors.first{
                 MangasByAuthorView(author: authorTmp, path: $path)
+                    .environment(vm)
             }
         } detail: {
             if let authorTmp = vm.authors.first{
-                if let mangaTmp = vm.mangasByAuthorSpecific[authorTmp.id]?.first?.items.first{
+                if let mangaTmp = vm.getFirstMangaBy(mangasbyToSord: .byAuthor, idAuthor: authorTmp.id, demographic: "", genre: "", theme: ""){
                     MangaDetailView(manga: mangaTmp, path: $path)
+                        .environment(vm)
                 }
             }
         }
@@ -52,11 +53,6 @@ struct AuthorsiPadView: View {
             }
         }
     }
-//    func setMangasByAuthors(author: DTOAuthor){
-//        Task {
-//            await vm.getMangasByAuthor(idAuthor:author.id)
-//        }
-//    }
 }
 
 #Preview {
