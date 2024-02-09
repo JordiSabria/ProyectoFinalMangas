@@ -15,10 +15,17 @@ struct MangasByDemographicView: View {
     let item = GridItem(.adaptive(minimum: 150), alignment: .center)
     var demographic: DTODemographic
     @Binding var path: NavigationPath
+    @State var loading = false
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         @Bindable var bVM = vm
         ScrollView {
+            if loading {
+                ProgressView("Cargando...")
+                    .controlSize(.regular)
+                    .tint(colorScheme == .dark ? .white : .black)
+            }
             LazyVGrid(columns: [item]) {
                 //ForEach (vm.mangasByDemographicSpecific[demographic.demographic] ?? []){ mangaItems in
                 ForEach (vm.getMangasBySearchField(searchFieldBy: .byDemographic, idAuthor: UUID(), demographic: demographic.demographic, genre: "", theme: "")){ dtoManga in
@@ -41,6 +48,7 @@ struct MangasByDemographicView: View {
                 }
             }
             .padding()
+            .opacity(loading ? 0.0 : 1.0)
         }
         .searchable(text: $bVM.searchMangas, prompt: "Buscar un manga")
         .navigationTitle("Mangas de \(demographic.demographic)")
@@ -60,7 +68,9 @@ struct MangasByDemographicView: View {
             if UIDevice.current.userInterfaceIdiom == .pad {
                 guard (vm.mangasByDemographicSpecific[demographic.demographic]?.count) != nil else {
                     Task {
+                        loading = true
                         await vm.getMangasByDemographic(demographic: demographic.demographic)
+                        loading = false
                     }
                     return
                 }
@@ -70,7 +80,9 @@ struct MangasByDemographicView: View {
                     vm.estadoPantalla = .mangas
                     guard (vm.mangasByDemographicSpecific[demographic.demographic]?.count) != nil else {
                         Task {
+                            loading = true
                             await vm.getMangasByDemographic(demographic: demographic.demographic)
+                            loading = false
                         }
                         return
                     }
@@ -80,20 +92,29 @@ struct MangasByDemographicView: View {
             }
             #else
             Task {
+                loading = true
                 await vm.getMangasByDemographic(demographic: demographic.demographic)
+                loading = false
             }
             #endif
         }
         .onChange(of: demographic){
             #if os(iOS)
             if UIDevice.current.userInterfaceIdiom == .pad {
-                Task {
-                    await vm.getMangasByDemographic(demographic: demographic.demographic)
+                guard (vm.mangasByDemographicSpecific[demographic.demographic]?.count) != nil else {
+                    Task {
+                        loading = true
+                        await vm.getMangasByDemographic(demographic: demographic.demographic)
+                        loading = false
+                    }
+                    return
                 }
             }
             #else
             Task {
+                loading = true
                 await vm.getMangasByDemographic(demographic: demographic.demographic)
+                loading = false
             }
             #endif
         }

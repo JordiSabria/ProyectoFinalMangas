@@ -13,11 +13,18 @@ struct BestMangasView: View {
     @Environment(\.modelContext) private var context
     @Query var mangasCollection: [Manga]
     @Binding var path: NavigationPath
+    @State var loading = false
+    @Environment(\.colorScheme) var colorScheme
     
     let item = GridItem(.adaptive(minimum: 150), alignment: .center)
     
     var body: some View {
         ScrollView{
+            if loading {
+                ProgressView("Cargando...")
+                    .controlSize(.regular)
+                    .tint(colorScheme == .dark ? .white : .black)
+            }
             LazyVGrid(columns: [item]){
                 ForEach (vm.bestMangasItemsArray){ mangaItems in
                     ForEach (mangaItems.items){ dtoManga in
@@ -38,6 +45,7 @@ struct BestMangasView: View {
                     }
                 }
             }
+            .opacity(loading ? 0.0 : 1.0)
         }
         .navigationTitle("Los 10 mejores Mangas")
         .navigationDestination(for: DTOMangas.self) { manga in
@@ -47,13 +55,12 @@ struct BestMangasView: View {
         .onAppear(){
             vm.stepsView = 2
             if vm.bestMangasItemsArray.count == 0{
-                getBestMangas()
+                Task {
+                    loading = true
+                    await vm.getBestMangasItems()
+                    loading = false
+                }
             }
-        }
-    }
-    func getBestMangas(){
-        Task {
-            await vm.getBestMangasItems()
         }
     }
 }

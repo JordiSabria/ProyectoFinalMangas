@@ -17,10 +17,17 @@ struct MangasByGenresView: View {
     let genre: DTOGenre
     
     @Binding var path: NavigationPath
+    @State var loading = false
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         @Bindable var bVM = vm
         ScrollView {
+            if loading {
+                ProgressView("Cargando...")
+                    .controlSize(.regular)
+                    .tint(colorScheme == .dark ? .white : .black)
+            }
             LazyVGrid(columns: [item]) {
                 //ForEach (vm.mangasByGenresSpecific[genre.genre] ?? []){ mangaItems in
                 ForEach (vm.getMangasBySearchField(searchFieldBy: .byGenre, idAuthor: UUID(), demographic: "", genre: genre.genre, theme: "")){ dtoManga in
@@ -43,6 +50,7 @@ struct MangasByGenresView: View {
                 }
             }
             .padding()
+            .opacity(loading ? 0.0 : 1.0)
         }
         .searchable(text: $bVM.searchMangas, prompt: "Buscar un manga")
         .navigationTitle("Mangas de \(genre.genre)")
@@ -62,7 +70,9 @@ struct MangasByGenresView: View {
             if UIDevice.current.userInterfaceIdiom == .pad {
                 guard (vm.mangasByGenresSpecific[genre.genre]?.count) != nil else {
                     Task {
+                        loading = true
                         await vm.getMangasByGenre(genre: genre.genre)
+                        loading = false
                     }
                     return
                 }
@@ -72,7 +82,9 @@ struct MangasByGenresView: View {
                     vm.estadoPantalla = .mangas
                     guard (vm.mangasByGenresSpecific[genre.genre]?.count) != nil else {
                         Task {
+                            loading = true
                             await vm.getMangasByGenre(genre: genre.genre)
+                            loading = false
                         }
                         return
                     }
@@ -82,7 +94,9 @@ struct MangasByGenresView: View {
             }
             #else
             Task {
+                loading = true
                 await vm.getMangasByGenre(genre: genre.genre)
+                loading = false
             }
             #endif
         }
@@ -90,12 +104,16 @@ struct MangasByGenresView: View {
             #if os(iOS)
             if UIDevice.current.userInterfaceIdiom == .pad {
                 Task {
+                    loading = true
                     await vm.getMangasByGenre(genre: genre.genre)
+                    loading = false
                 }
             }
             #else
             Task {
+                loading = true
                 await vm.getMangasByGenre(genre: genre.genre)
+                loading = false
             }
             #endif
         }

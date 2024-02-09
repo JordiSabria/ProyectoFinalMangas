@@ -13,14 +13,22 @@ struct BestMangaiPadView: View {
     @Environment(\.modelContext) private var context
     @Query var mangasCollection: [Manga]
     @State private var path = NavigationPath()
-    
     @State var visibility: NavigationSplitViewVisibility = .all
     
     let item = GridItem(.adaptive(minimum: 150), alignment: .center)
     
+    @State var loading = false
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
         NavigationSplitView(columnVisibility: $visibility){
             ScrollView{
+                if loading {
+                    ProgressView("Cargando...")
+                        .controlSize(.regular)
+                        .tint(colorScheme == .dark ? .white : .black)
+                        //.opacity(loading ? 1.0 : 0.0)
+                }
                 LazyVGrid(columns: [item]){
                     ForEach (vm.bestMangasItemsArray){ mangaItems in
                         ForEach (mangaItems.items){ dtoManga in
@@ -41,6 +49,7 @@ struct BestMangaiPadView: View {
                         }
                     }
                 }
+                .opacity(loading ? 0.0 : 1.0)
             }
             .navigationTitle("Los 10 mejores Mangas")
             .navigationBarTitleDisplayMode(.inline)
@@ -60,13 +69,12 @@ struct BestMangaiPadView: View {
         .onAppear(){
             vm.stepsView = 2
             if vm.bestMangasItemsArray.count == 0{
-                getBestMangas()
+                loading = true
+                Task {
+                    await vm.getBestMangasItems()
+                }
+                loading = false
             }
-        }
-    }
-    func getBestMangas(){
-        Task {
-            await vm.getBestMangasItems()
         }
     }
 }

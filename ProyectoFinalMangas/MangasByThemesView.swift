@@ -17,10 +17,17 @@ struct MangasByThemesView: View {
     let theme: DTOTheme
     
     @Binding var path: NavigationPath
+    @State var loading = false
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         @Bindable var bVM = vm
         ScrollView {
+            if loading {
+                ProgressView("Cargando...")
+                    .controlSize(.regular)
+                    .tint(colorScheme == .dark ? .white : .black)
+            }
             LazyVGrid(columns: [item]) {
                 //ForEach (vm.mangasByThemesSpecific[theme.theme] ?? []){ mangaItems in
                 ForEach (vm.getMangasBySearchField(searchFieldBy: .byTheme, idAuthor: UUID(), demographic: "", genre: "", theme: theme.theme)){ dtoManga in
@@ -43,6 +50,7 @@ struct MangasByThemesView: View {
                 }
             }
             .padding()
+            .opacity(loading ? 0.0 : 1.0)
         }
         .searchable(text: $bVM.searchMangas, prompt: "Buscar un manga")
         .navigationTitle("Mangas de \(theme.theme)")
@@ -62,7 +70,9 @@ struct MangasByThemesView: View {
             if UIDevice.current.userInterfaceIdiom == .pad {
                 guard (vm.mangasByThemesSpecific[theme.theme]?.count) != nil else {
                     Task {
+                        loading = true
                         await vm.getMangasByTheme(theme: theme.theme)
+                        loading = false
                     }
                     return
                 }
@@ -72,7 +82,9 @@ struct MangasByThemesView: View {
                     vm.estadoPantalla = .mangas
                     guard (vm.mangasByThemesSpecific[theme.theme]?.count) != nil else {
                         Task {
+                            loading = true
                             await vm.getMangasByTheme(theme: theme.theme)
+                            loading = false
                         }
                         return
                     }
@@ -82,7 +94,9 @@ struct MangasByThemesView: View {
             }
             #else
             Task {
+                loading = true
                 await vm.getMangasByTheme(theme: theme.theme)
+                loading = false
             }
             #endif
         }
@@ -90,12 +104,16 @@ struct MangasByThemesView: View {
             #if os(iOS)
             if UIDevice.current.userInterfaceIdiom == .pad {
                 Task {
+                    loading = true
                     await vm.getMangasByTheme(theme: theme.theme)
+                    loading = false
                 }
             }
             #else
             Task {
+                loading = true
                 await vm.getMangasByTheme(theme: theme.theme)
+                loading = false
             }
             #endif
         }

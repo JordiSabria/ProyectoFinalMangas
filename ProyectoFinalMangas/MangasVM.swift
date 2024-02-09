@@ -250,16 +250,14 @@ final class MangasVM {
     
     func getMangasByDemographic(demographic: String) async {
         do{
-            // Antes que nada vaciamos el array de mangasItemsByAuthor
-            //mangasItemsByDemographic = []
-            // Añadimos el demographic dentro del diccionario por si no está.
+            // Antes que nada vaciamos el array de mangasByDemographicSpecific y a la vez
+            // añadimos el demographic dentro del diccionario por si no está.
             mangasByDemographicSpecific[demographic] = []
-            let mangasPorPagina = 500
+            let mangasPorPagina = 1000
             // Primero recuperamos el primer "paquete" de mangas por autor para poder saber cuantos mangas hay en total
             let mangas = try await network.getMangasItemsByDemographics(demographic: demographic, itemsPorPagina: mangasPorPagina , pagina: 1)
             // Ahora hemos de añadir los mangas de la primera llamada.
             await MainActor.run {
-                //self.mangasItemsByDemographic.append(mangas)
                 self.mangasByDemographicSpecific[demographic]?.append(mangas)
             }
             // Segundo buscamos cuantos "paquetes" salen de dividir el numero de mangas por los mangas por pagina. Y lo redondeamos al alza para no dejarnos ninguno.
@@ -274,7 +272,6 @@ final class MangasVM {
                         }
                     }
                     for try await mangaItem in group.compactMap({$0}){
-                        //self.mangasItemsByDemographic.append(mangaItem)
                         self.mangasByDemographicSpecific[demographic]?.append(mangaItem)
                     }
                 }

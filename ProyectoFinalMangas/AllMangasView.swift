@@ -13,6 +13,8 @@ struct AllMangasView: View {
     @Environment(\.modelContext) private var context
     @Query var mangasCollection: [Manga]
     @State private var path = NavigationPath()
+    @State var loading = false
+    @Environment(\.colorScheme) var colorScheme
     
     //@State var searchManga: String = ""
     
@@ -23,6 +25,11 @@ struct AllMangasView: View {
         NavigationStack (path: $path) {
             //Text(String(vm.mangasItemsArray.count))
             ScrollView {
+                if loading {
+                    ProgressView("Cargando...")
+                        .controlSize(.regular)
+                        .tint(colorScheme == .dark ? .white : .black)
+                }
                 LazyVGrid(columns: [item]) {
                     ForEach(vm.getMangasBySearchField(searchFieldBy: .allMangas, idAuthor: UUID(), demographic: "", genre: "", theme: "")){ dtoManga in
 //                    ForEach(vm.mangasDTOmangasArray){ dtoManga in
@@ -43,6 +50,7 @@ struct AllMangasView: View {
                     }
                 }
                 .padding()
+                .opacity(loading ? 0.0 : 1.0)
             }
             .navigationTitle("Todos los Mangas")
             .navigationDestination(for: DTOMangas.self) { manga in
@@ -56,6 +64,13 @@ struct AllMangasView: View {
         }
         .onAppear(){
             vm.stepsView = 1
+            if vm.mangasItemsArray.count < 40{
+                Task{
+                    loading = true
+                    try? await Task.sleep(for: .seconds(4))
+                    loading = false
+                }
+            }
             if vm.mangasItemsArray.count == 0{
                 getMangas()
             }

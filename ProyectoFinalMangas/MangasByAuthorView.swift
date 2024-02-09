@@ -17,10 +17,17 @@ struct MangasByAuthorView: View {
     let author: DTOAuthor
     
     @Binding var path: NavigationPath
+    @State var loading = false
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         @Bindable var bVM = vm
         ScrollView {
+            if loading {
+                ProgressView("Cargando...")
+                    .controlSize(.regular)
+                    .tint(colorScheme == .dark ? .white : .black)
+            }
             LazyVGrid(columns: [item]) {
                 //ForEach (vm.mangasByAuthorSpecific[author.id] ?? []){ mangaItems in
                 ForEach (vm.getMangasBySearchField(searchFieldBy: .byAuthor, idAuthor: author.id, demographic: "", genre: "", theme: "")) { dtoManga in
@@ -43,6 +50,7 @@ struct MangasByAuthorView: View {
                 //}
             }
             .padding()
+            .opacity(loading ? 0.0 : 1.0)
         }
         .searchable(text: $bVM.searchMangas, prompt: "Buscar un manga")
         .navigationTitle("Mangas de \(author.firstName) \(author.lastName)")
@@ -62,7 +70,9 @@ struct MangasByAuthorView: View {
             if UIDevice.current.userInterfaceIdiom == .pad {
                 guard (vm.mangasByAuthorSpecific[author.id]?.count) != nil else {
                     Task {
+                        loading = true
                         await vm.getMangasByAuthor(idAuthor:author.id)
+                        loading = false
                     }
                     return
                 }
@@ -72,7 +82,9 @@ struct MangasByAuthorView: View {
                     vm.estadoPantalla = .mangas
                     guard (vm.mangasByAuthorSpecific[author.id]?.count) != nil else {
                         Task {
+                            loading = true
                             await vm.getMangasByAuthor(idAuthor:author.id)
+                            loading = false
                         }
                         return
                     }
@@ -82,7 +94,9 @@ struct MangasByAuthorView: View {
             }
             #else
             Task {
+                loading = true
                 await vm.getMangasByAuthor(idAuthor:author.id)
+                loading = false
             }
             #endif
         }
@@ -90,12 +104,16 @@ struct MangasByAuthorView: View {
             #if os(iOS)
             if UIDevice.current.userInterfaceIdiom == .pad {
                 Task {
+                    loading = true
                     await vm.getMangasByAuthor(idAuthor:author.id)
+                    loading = false
                 }
             }
             #else
             Task {
+                loading = true
                 await vm.getMangasByAuthor(idAuthor:author.id)
+                loading = false
             }
             #endif
         }

@@ -11,14 +11,22 @@ struct ThemesiPadView: View {
     @Environment(MangasVM.self) var vm
     @State private var path = NavigationPath()
     @State var visibility: NavigationSplitViewVisibility = .all
+    @State var loading = false
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         NavigationSplitView(columnVisibility: $visibility){
+            if loading {
+                ProgressView()
+                    .controlSize(.regular)
+                    .tint(colorScheme == .dark ? .white : .black)
+            }
             List(vm.themes){ theme in
                 NavigationLink(value: theme){
                     Text(theme.theme)
                 }
             }
+            .opacity(loading ? 0.0 : 1.0)
             .navigationTitle("Temáticas")
             .navigationDestination(for: DTOTheme.self){ theme in
                 MangasByThemesView(theme: theme, path: $path)
@@ -46,7 +54,9 @@ struct ThemesiPadView: View {
             vm.estadoPantalla = .themes
             if vm.themes.count == 0{
                 Task{
+                    loading = true
                     await vm.getThemes()
+                    loading = false
                 }
             }
         }
