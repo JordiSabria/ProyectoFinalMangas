@@ -45,12 +45,14 @@ struct AdvSearchThemesView: View {
             }
         }
         .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button {
-                    path.removeLast()
-                    vm2.cleanAdvSearchMangas()
-                } label: {
-                    Image(systemName: "eraser.line.dashed")
+            if UIDevice.current.userInterfaceIdiom == .phone {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        path.removeLast()
+                        vm2.cleanAdvSearchMangas()
+                    } label: {
+                        Image(systemName: "eraser.line.dashed")
+                    }
                 }
             }
         }

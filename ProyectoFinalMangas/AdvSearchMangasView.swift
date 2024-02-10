@@ -17,11 +17,17 @@ struct AdvSearchMangasView: View {
     @State private var selectedMangaItem: DTOMangas?
     
     @Binding var path: NavigationPath
-    
+    @State var loading = false
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         @Bindable var vmASM = vm2
         ScrollView{
+            if loading {
+                ProgressView("Cargando...")
+                    .controlSize(.regular)
+                    .tint(colorScheme == .dark ? .white : .black)
+            }
             LazyVGrid(columns: [item]){
                 ForEach(vm2.mangasItemsArray){ mangaItems in
                     ForEach(mangaItems.items){ mangaItem in
@@ -45,6 +51,7 @@ struct AdvSearchMangasView: View {
                 }
             }
             .padding()
+            .opacity(loading ? 0.0 : 1.0)
         }
         .navigationDestination(isPresented: $navigateToMangasDetailView){
             if let manga = selectedMangaItem {
@@ -60,19 +67,23 @@ struct AdvSearchMangasView: View {
             case .advSearch:
                 vm.estadoPantalla = .mangas
                 Task {
+                    loading = true
                     await vm2.getAdvSearchMangas(mangasVM: vm)
+                    loading = false
                 }
             default:
                 vm.estadoPantalla = .mangas
             }
         }
         .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button {
-                    path.removeLast()
-                    vm2.cleanAdvSearchMangas()
-                } label: {
-                    Image(systemName: "eraser.line.dashed")
+            if UIDevice.current.userInterfaceIdiom == .phone {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        path.removeLast()
+                        vm2.cleanAdvSearchMangas()
+                    } label: {
+                        Image(systemName: "eraser.line.dashed")
+                    }
                 }
             }
         }

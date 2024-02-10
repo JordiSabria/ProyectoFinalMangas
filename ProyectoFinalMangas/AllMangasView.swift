@@ -16,14 +16,11 @@ struct AllMangasView: View {
     @State var loading = false
     @Environment(\.colorScheme) var colorScheme
     
-    //@State var searchManga: String = ""
-    
     let item = GridItem(.adaptive(minimum: 150), alignment: .center)
     
     var body: some View {
         @Bindable var bVM = vm
         NavigationStack (path: $path) {
-            //Text(String(vm.mangasItemsArray.count))
             ScrollView {
                 if loading {
                     ProgressView("Cargando...")
@@ -32,7 +29,6 @@ struct AllMangasView: View {
                 }
                 LazyVGrid(columns: [item]) {
                     ForEach(vm.getMangasBySearchField(searchFieldBy: .allMangas, idAuthor: UUID(), demographic: "", genre: "", theme: "")){ dtoManga in
-//                    ForEach(vm.mangasDTOmangasArray){ dtoManga in
                         if let mangaTitle = dtoManga.title {
                             NavigationLink(value: dtoManga) {
                                 MangaView(mangaURL: dtoManga.mainPicture, widthCover: 150, heightCover: 230)
@@ -67,7 +63,7 @@ struct AllMangasView: View {
             if vm.mangasItemsArray.count < 40{
                 Task{
                     loading = true
-                    try? await Task.sleep(for: .seconds(4))
+                    try? await Task.sleep(for: .seconds(2))
                     loading = false
                 }
             }

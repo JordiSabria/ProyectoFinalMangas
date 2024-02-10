@@ -43,12 +43,13 @@ struct ThemesiPadView: View {
                     .environment(vm)
             }
         } detail: {
-            if let themeTmp = vm.themes.first{
-                if let mangaTmp = vm.getFirstMangaBy(mangasbyToSord: .byTheme, idAuthor: UUID(), demographic: "", genre: "", theme: themeTmp.theme){
-                    MangaDetailView(manga: mangaTmp, path: $path)
-                        .environment(vm)
-                }
-            }
+            Text("Selecciona un manga")
+//            if let themeTmp = vm.themes.first{
+//                if let mangaTmp = vm.getFirstMangaBy(mangasbyToSord: .byTheme, idAuthor: UUID(), demographic: "", genre: "", theme: themeTmp.theme){
+//                    MangaDetailView(manga: mangaTmp, path: $path)
+//                        .environment(vm)
+//                }
+//            }
         }
         .onAppear(){
             vm.estadoPantalla = .themes

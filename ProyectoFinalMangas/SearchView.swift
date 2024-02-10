@@ -15,11 +15,6 @@ struct SearchView: View {
     var body: some View {
         NavigationStack(path: $path){
             List{
-//                NavigationLink(value: search.allMangas) {
-//                    HStack{
-//                        Label("Todos los Mangas", systemImage: "book")
-//                    }
-//                }
                 NavigationLink(value: search.bestMangas) {
                     HStack{
                         Label("Los mejores Mangas", systemImage: "hand.thumbsup")
@@ -54,9 +49,6 @@ struct SearchView: View {
             .navigationTitle("Búsqueda")
             .navigationDestination(for: search.self) { search in
                 switch search {
-//                case .allMangas:
-//                    AllMangasView(path: $path)
-//                        .environment(vm)
                 case .bestMangas:
                     BestMangasView(path: $path)
                         .environment(vm)
@@ -80,7 +72,6 @@ struct SearchView: View {
         }
         .onAppear(){
             vm.estadoPantalla = .search
-            //print (URL.documentsDirectory)
         }
     }
 }

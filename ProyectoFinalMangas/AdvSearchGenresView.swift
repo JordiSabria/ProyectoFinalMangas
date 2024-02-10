@@ -15,7 +15,6 @@ struct AdvSearchGenresView: View {
     
     var body: some View {
         @Bindable var vmASM = vm2
-        
         VStack {
             List(vm.genres, selection: $vmASM.searchSetGenres){
                 Text("\($0.genre)")
@@ -46,12 +45,14 @@ struct AdvSearchGenresView: View {
             }
         }
         .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button {
-                    path.removeLast()
-                    vm2.cleanAdvSearchMangas()
-                } label: {
-                    Image(systemName: "eraser.line.dashed")
+            if UIDevice.current.userInterfaceIdiom == .phone {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        path.removeLast()
+                        vm2.cleanAdvSearchMangas()
+                    } label: {
+                        Image(systemName: "eraser.line.dashed")
+                    }
                 }
             }
         }
@@ -61,18 +62,6 @@ struct AdvSearchGenresView: View {
             await vm.getGenres()
         }
     }
-    //          NO BORRAR - ES IMPORTANT
-                
-    //
-    //            .environment(\.editMode, .constant(EditMode.active))
-    //            List(vm.themes.map{$0.theme}, id: \.self, selection: $vmASM.searchSetThemes){
-    //                Text("\($0)")
-    //            }
-    //            .environment(\.editMode, .constant(EditMode.active))
-    //            List(vm.demographics.map{$0.demographic}, id: \.self, selection: $vmASM.searchSetDemographics){
-    //                Text("\($0)")
-    //            }
-    //            .environment(\.editMode, .constant(EditMode.active))
 }
 
 #Preview {

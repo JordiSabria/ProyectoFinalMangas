@@ -56,4 +56,8 @@ enum mangasByToSord {
     case byGenre
     case byTheme
 }
+struct Position {
+    var x: CGFloat
+    var y: CGFloat
+}
 

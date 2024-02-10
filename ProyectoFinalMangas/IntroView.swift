@@ -96,12 +96,7 @@ struct IntroView: View {
             positionRelative.x = 0
         }
     }
-    struct Position {
-        var x: CGFloat
-        var y: CGFloat
-    }
 }
-
 
 #Preview {
     IntroView()

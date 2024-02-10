@@ -9,8 +9,8 @@ import SwiftUI
 
 struct MangasMainIpadView: View {
     @Environment(MangasVM.self) var vm
-    @Environment(\.modelContext) private var context
-    @State private var path = NavigationPath()
+    //@Environment(\.modelContext) private var context
+    //@State private var path = NavigationPath()
     var body: some View {
         TabView{
             AllMangasView()
@@ -43,6 +43,11 @@ struct MangasMainIpadView: View {
                 .tabItem{
                     Label("Temáticas", systemImage: "figure.martial.arts")
                 }
+            AdvancedSearchiPadView()
+                .environment(vm)
+                .tabItem{
+                    Label("Búsqueda avançada", systemImage: "magnifyingglass")
+                }
             OwnCollectionView()
                 .environment(vm)
                 .tabItem{
@@ -55,5 +60,5 @@ struct MangasMainIpadView: View {
 #Preview {
     MangasMainIpadView()
         .environment(MangasVM.test)
-        .modelContainer(testModelContainer)
+        //.modelContainer(testModelContainer)
 }

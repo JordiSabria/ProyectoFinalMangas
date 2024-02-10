@@ -9,14 +9,12 @@ import SwiftUI
 
 struct AdvancedSearchView: View {
     @State var vm2 = AdvancedSearchMangasVM()
-    //@Environment(AdvancedSearchMangasVM.self) var vm2
     @Environment(MangasVM.self) var vm
     @State private var navigateToGenresView = false
     @Binding var path: NavigationPath
     
     var body: some View {
         @Bindable var vmASM = vm2
-    
         List {
             Section("Manga"){
                 AdvancedSearchTextFieldView(label: "Título", text: $vmASM.searchTitle)
