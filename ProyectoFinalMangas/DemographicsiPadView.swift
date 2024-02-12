@@ -23,7 +23,6 @@ struct DemographicsiPadView: View {
                     .controlSize(.regular)
                     .tint(colorScheme == .dark ? .white : .black)
             }
-//            List(vm.demographics){ demographic in
             List(selection: $demographicSelected){
                 ForEach(vm.demographics){ demographic in
                     NavigationLink(value: demographic){
@@ -43,15 +42,12 @@ struct DemographicsiPadView: View {
                     await vm.getDemographics()
                 }
             }
-        } content: { 
-//            if let demographicTmp = vm.demographics.first{
+        } content: {
             if let demographicSelected{
                 MangasByDemographicView(demographic: demographicSelected, path: $path)
                     .environment(vm)
             }
         } detail: {
-//            Text("Selecciona un manga")
-//            if let demographicTmp = vm.demographics.first{
             if vm.loadingDemographicByiPad{
                 ProgressView("Cargando...")
                     .controlSize(.regular)

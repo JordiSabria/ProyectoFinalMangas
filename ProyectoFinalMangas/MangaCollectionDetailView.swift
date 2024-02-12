@@ -26,70 +26,20 @@ struct MangaCollectionDetailView: View {
     var body: some View {
         ScrollView {
             VStack (alignment: .center){
-                HStack(alignment: .top) {
-                    Spacer()
-                    MangaView(mangaURL: manga.mainPicture, widthCover: 250, heightCover: 350)
-                        .offset(x: 30)
-                    Button{
-                        if mangasCollection.contains(where: { $0.id == manga.id }){
-                            try? vm.eliminarMangaEnMiLibreria(mangaID: manga.id, context: context)
-                        }else{
-                            try? vm.guardarMangaFromMangaEnMiLibreria(manga: manga, context: context, mangaID: manga.id)
-                        }
-                    }label: {
-                        if mangasCollection.contains(where: { $0.id == manga.id }){
-                            Image(systemName: "books.vertical")
-                                .font(.largeTitle)
-                                .symbolVariant(.circle)
-                                .symbolVariant(.fill)
-                                .foregroundStyle(.white, .blue)
-                                .padding(7)
-                        }else{
-                            Image(systemName: "books.vertical")
-                                .font(.largeTitle)
-                                .symbolVariant(.circle)
-                                .symbolVariant(.fill)
-                                .foregroundStyle(.white, .black)
-                                .padding(7)
-                        }
-                    }
-                    .offset(x: 30)
-                    Spacer()
-                }
+                headerMangaCollectionDetailView(manga: manga)
+                    .environment(vm)
                 VStack{
                     if let titleManga = manga.title {
-                        Text(titleManga)
-                            .lineLimit(2)
-                            .font(.title)
-                            .bold()
-                            .minimumScaleFactor(0.7)
-                            .multilineTextAlignment(.center)
+                        TitleMangaView(titleManga: titleManga)
                     }
-                    if let titleManga = manga.titleJapanese {
-                        Text(titleManga)
-                            .lineLimit(2)
-                            .font(.caption)
-                            .minimumScaleFactor(0.7)
-                            .multilineTextAlignment(.center)
-                            .padding(.bottom, 10)
+                    if let titleJapaneseManga = manga.titleJapanese {
+                        TitleJapaneseView(titleJapaneseManga: titleJapaneseManga)
                     }
                     if let capitulos = manga.chapters{
-                        HStack{
-                            Text("Capítulos")
-                                .bold()
-                            Spacer()
-                            Text(String(capitulos))
-                        }
-                        Divider()
+                        RowInfoView(title: "Capítulos", info: String(capitulos))
                     }
                     if let volumenes = manga.volumes{
-                        HStack{
-                            Text("Volúmenes")
-                                .bold()
-                            Spacer()
-                            Text(String(volumenes))
-                        }
-                        Divider()
+                        RowInfoView(title: "Volúmenes", info: String(volumenes))
                     }
                     if let _ = manga.volumes{
                         Stepper(value: $manga.volumesBuyed, in: 0...(manga.volumes ?? 0)){
@@ -120,149 +70,38 @@ struct MangaCollectionDetailView: View {
                     }
                     .foregroundStyle(.blue)
                     Divider()
-                    HStack{
-                        Text("Puntuación")
-                            .bold()
-                        Spacer()
-                        Text(String(manga.score))
+                    if manga.score > 0{
+                        RowInfoView(title: "Puntuación", info: String(manga.score))
                     }
-                    Divider()
                     if let statusManga = manga.status{
-                        HStack{
-                            Text("Status")
-                                .bold()
-                            Spacer()
-                            Text(statusManga)
-                        }
-                        Divider()
+                        RowInfoView(title: "Status", info: statusManga)
                     }
                     if let startDate = manga.startDate{
-                        HStack{
-                            Text("Fecha de Inicio")
-                                .bold()
-                            Spacer()
-                            Text(getDateFormatted(startDate))
-                        }
-                        Divider()
+                        RowInfoView(title: "Fecha de Inicio", info: getDateFormatted(startDate))
                     }
                     if let endDate = manga.endDate{
-                        HStack{
-                            Text("Fecha de Fin")
-                                .bold()
-                            Spacer()
-                            Text(getDateFormatted(endDate))
-                        }
-                        Divider()
+                        RowInfoView(title: "Fecha de Fin", info: getDateFormatted(endDate))
                     }
-                    if let authors = manga.authors {
-                        if authors.count > 0{
-                            HStack(alignment:.top){
-                                if authors.count == 1{
-                                    Text("Autor")
-                                        .bold()
-                                } else {
-                                    Text("Autores")
-                                        .bold()
-                                }
-                                Spacer()
-                                VStack(alignment: .trailing) {
-                                    ForEach(authors){ author in
-                                        Text("\(author.firstName) "+"\(author.lastName)")
-                                    }
-                                }
-                            }
-                            Divider()
-                        }
+                    MultiLineInfoView(titleSing: "Autor",titlePlur:"Autores", items: manga.authors ?? []) { author in
+                        Text("\(author.firstName) \(author.lastName)")
                     }
-                    if let genres = manga.genres{
-                        if genres.count > 0{
-                            HStack(alignment: .top){
-                                if genres.count == 1 {
-                                    Text("Genero")
-                                        .bold()
-                                } else {
-                                    Text("Generos")
-                                        .bold()
-                                }
-                                Spacer()
-                                VStack(alignment: .trailing){
-                                    ForEach(genres){ genre in
-                                        Text(genre.genre)
-                                    }
-                                }
-                            }
-                            Divider()
-                        }
+                    MultiLineInfoView(titleSing: "Gérero", titlePlur: "Géneros", items: manga.genres ?? []){ genre in
+                        Text(genre.genre)
                     }
-                    if let themes = manga.themes {
-                        if themes.count > 0{
-                            HStack(alignment: .top){
-                                if themes.count == 1 {
-                                    Text("Tema")
-                                        .bold()
-                                } else {
-                                    Text("Temas")
-                                        .bold()
-                                }
-                                Spacer()
-                                VStack(alignment: .trailing){
-                                    ForEach(themes){theme in
-                                        Text(theme.theme)
-                                    }
-                                }
-                            }
-                            Divider()
-                        }
+                    MultiLineInfoView(titleSing: "Tema", titlePlur: "Temas", items: manga.themes ?? []){ theme in
+                        Text(theme.theme)
                     }
-                    if let demographics = manga.demographics {
-                        if demographics.count > 0{
-                            HStack(alignment: .top){
-                                if demographics.count == 1 {
-                                    Text("Demográfic")
-                                        .bold()
-                                } else {
-                                    Text("Demográficas")
-                                        .bold()
-                                }
-                                Spacer()
-                                VStack(alignment: .trailing){
-                                    ForEach(demographics){ demographic in
-                                        Text(demographic.demographic)
-                                    }
-                                }
-                            }
-                            Divider()
-                        }
+                    MultiLineInfoView(titleSing: "Demográfic", titlePlur: "Demográficas", items: manga.demographics ?? []){ demographic in
+                        Text(demographic.demographic)
                     }
                     if let synopsis = manga.sypnosis{
-                        HStack(alignment: .top){
-                            Text("Sinopsis ")
-                                .bold()
-                            Spacer()
-                            Text(synopsis)
-                                .multilineTextAlignment(.trailing)
-                        }
-                        Divider()
+                        RowMultiLineInfoView(title: "Sinopsis", info: synopsis)
                     }
                     if let background = manga.background{
-                        HStack(alignment: .top){
-                            Text("Background ")
-                                .bold()
-                            Spacer()
-                            Text(background)
-                                .multilineTextAlignment(.trailing)
-                        }
-                        Divider()
+                        RowMultiLineInfoView(title: "Background", info: background)
                     }
                     if let url = manga.url{
-                        let urlRetocada = url.trimmingCharacters(in: CharacterSet(charactersIn: "\""))
-                        HStack(alignment: .top){
-                            Text("Link")
-                                .bold()
-                            Spacer()
-                            Link(urlRetocada, destination: URL(string: urlRetocada) ?? URL(string: "https://myanimelist.net")!)
-                        }
-                        Divider()
+                        RowURLView(url: url)
                     }
                 }
                 .padding(.horizontal, 20.0)
@@ -280,6 +119,23 @@ struct MangaCollectionDetailView: View {
             let formatter = DateFormatter()
             formatter.dateFormat = "dd-MM-yyyy"
             return formatter.string(from: date)
+    }
+    func MultiLineInfoView<T: Identifiable, Content: View>(titleSing: String, titlePlur: String, items: [T], @ViewBuilder content: @escaping (T) -> Content) -> some View {
+        Group { // Usamos Group como un contenedor neutral
+            if items.count > 0 {
+                HStack(alignment: .top) {
+                    Text(items.count == 1 ? titleSing : titlePlur)
+                        .bold()
+                    Spacer()
+                    VStack(alignment: .trailing) {
+                        ForEach(items) { item in
+                            content(item)
+                        }
+                    }
+                }
+                Divider()
+            }
+        }
     }
 }
 

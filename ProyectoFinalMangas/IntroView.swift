@@ -31,9 +31,9 @@ struct IntroView: View {
         .animation(.bouncy().speed(0.5), value: positionRelative.x)
         .animation(.bouncy().speed(0.5), value: positionRelative.y)
         .task {
-//            Task{
-//                await vm.getMangasItems()
-//            }
+            Task{
+                await vm.getMangasItems()
+            }
             try? await Task.sleep(for: .seconds(1.5))
             moveToPosition(posicion: 1)
             tamaño = 120

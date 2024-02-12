@@ -12,7 +12,7 @@ import SwiftData
 final class MangasVM {
     let network: DataInteractor
     
-    var appState: AppState = .home
+    var appState: AppState = .intro
     var estadoPantalla: estadoPantalla = .search
     
     var mangasItemsArray: [MangasItems] = []

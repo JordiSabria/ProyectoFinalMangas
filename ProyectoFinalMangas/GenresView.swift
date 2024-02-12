@@ -44,15 +44,6 @@ struct GenresView: View {
                     loading = false
                 }
             }
-//            switch vm.estadoPantalla{
-//                case .search:
-//                    vm.estadoPantalla = .genres
-//                    Task{
-//                        await vm.getGenres()
-//                    }
-//                default:
-//                    vm.estadoPantalla = .genres
-//                }
         }
     }
 }

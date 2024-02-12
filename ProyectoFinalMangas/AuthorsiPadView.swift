@@ -45,13 +45,11 @@ struct AuthorsiPadView: View {
                 }
             }
         } content: {
-            //if let authorTmp = vm.authors.first{
             if let authorSelected{
                 MangasByAuthorView(author: authorSelected, path: $path)
                     .environment(vm)
             }
         } detail: {
-//            Text("Selecciona un manga")
             if vm.loadingAuthorByiPad{
                 ProgressView("Cargando...")
                     .controlSize(.regular)

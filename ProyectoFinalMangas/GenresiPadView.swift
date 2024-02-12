@@ -22,7 +22,6 @@ struct GenresiPadView: View {
                     .controlSize(.regular)
                     .tint(colorScheme == .dark ? .white : .black)
             }
-//            List(vm.genres){ genre in
             List(selection: $genreSelected){
                 ForEach(vm.genres){ genre in
                     NavigationLink(value: genre){
@@ -43,14 +42,11 @@ struct GenresiPadView: View {
                 }
             }
         } content: {
-//            if let genresTmp = vm.genres.first{
             if let genreSelected {
                 MangasByGenresView(genre: genreSelected, path: $path)
                     .environment(vm)
             }
         } detail: {
-//            Text("Selecciona un manga")
-//            if let genresTmp = vm.genres.first{
             if vm.loadingGenresByiPad{
                 ProgressView("Cargando...")
                     .controlSize(.regular)

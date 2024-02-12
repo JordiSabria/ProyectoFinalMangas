@@ -27,7 +27,6 @@ struct BestMangaiPadView: View {
                     ProgressView("Cargando...")
                         .controlSize(.regular)
                         .tint(colorScheme == .dark ? .white : .black)
-                        //.opacity(loading ? 1.0 : 0.0)
                 }
                 LazyVGrid(columns: [item]){
                     ForEach (vm.bestMangasItemsArray){ mangaItems in
@@ -57,7 +56,6 @@ struct BestMangaiPadView: View {
                 MangaDetailView(manga: manga, path: $path)
                     .environment(vm)
             }
-            //.navigationSplitViewColumnWidth(min: 1000, ideal: 1000, max: 1000)
         } detail: {
             if let mangaItemsDetail = vm.bestMangasItemsArray.first{
                 if let mangaDetail=mangaItemsDetail.items.first{
@@ -66,6 +64,7 @@ struct BestMangaiPadView: View {
                 }
             }
         }
+        .navigationSplitViewStyle(.balanced)
         .onAppear(){
             vm.stepsView = 2
             if vm.bestMangasItemsArray.count == 0{

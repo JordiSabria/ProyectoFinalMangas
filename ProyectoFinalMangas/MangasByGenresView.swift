@@ -17,7 +17,6 @@ struct MangasByGenresView: View {
     let genre: DTOGenre
     
     @Binding var path: NavigationPath
-    //@State var loading = false
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
@@ -29,9 +28,7 @@ struct MangasByGenresView: View {
                     .tint(colorScheme == .dark ? .white : .black)
             }
             LazyVGrid(columns: [item]) {
-                //ForEach (vm.mangasByGenresSpecific[genre.genre] ?? []){ mangaItems in
                 ForEach (vm.getMangasBySearchField(searchFieldBy: .byGenre, idAuthor: UUID(), demographic: "", genre: genre.genre, theme: "")){ dtoManga in
-                    //ForEach (mangaItems.items){ mangaItem in
                         if let mangaTitle = dtoManga.title {
                             NavigationLink(value: dtoManga) {
                                 MangaView(mangaURL: dtoManga.mainPicture, widthCover: 150, heightCover: 230)
@@ -46,7 +43,6 @@ struct MangasByGenresView: View {
                                   .padding()
                             }
                         }
-                   // }
                 }
             }
             .padding()

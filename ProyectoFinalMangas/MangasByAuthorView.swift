@@ -29,9 +29,7 @@ struct MangasByAuthorView: View {
                     .tint(colorScheme == .dark ? .white : .black)
             }
             LazyVGrid(columns: [item]) {
-                //ForEach (vm.mangasByAuthorSpecific[author.id] ?? []){ mangaItems in
                 ForEach (vm.getMangasBySearchField(searchFieldBy: .byAuthor, idAuthor: author.id, demographic: "", genre: "", theme: "")) { dtoManga in
-                    //ForEach (mangaItems.items){ mangaItem in
                         if let mangaTitle = dtoManga.title {
                             NavigationLink(value: dtoManga) {
                                 MangaView(mangaURL: dtoManga.mainPicture, widthCover: 150, heightCover: 230)
@@ -47,7 +45,6 @@ struct MangasByAuthorView: View {
                             }
                         }
                     }
-                //}
             }
             .padding()
             .opacity(vm.loadingAuthorByiPad ? 0.0 : 1.0)

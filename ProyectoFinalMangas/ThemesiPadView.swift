@@ -22,7 +22,6 @@ struct ThemesiPadView: View {
                     .controlSize(.regular)
                     .tint(colorScheme == .dark ? .white : .black)
             }
-//            List(vm.themes){ theme in
             List(selection: $themeSelected){
                 ForEach(vm.themes){ theme in
                     NavigationLink(value: theme){
@@ -43,19 +42,16 @@ struct ThemesiPadView: View {
                 }
             }
         } content: {
-            //if let themeTmp = vm.themes.first{
             if let themeSelected{
                 MangasByThemesView(theme: themeSelected, path: $path)
                     .environment(vm)
             }
         } detail: {
-//            Text("Selecciona un manga")
             if vm.loadingThemesByiPad{
                 ProgressView("Cargando...")
                     .controlSize(.regular)
                     .tint(colorScheme == .dark ? .white : .black)
             }else{
-//                if let themeTmp = vm.themes.first{
                 if let themeSelected{
                     if let mangaTmp = vm.getFirstMangaBy(mangasbyToSord: .byTheme, idAuthor: UUID(), demographic: "", genre: "", theme: themeSelected.theme){
                         MangaDetailView(manga: mangaTmp, path: $path)

@@ -44,15 +44,6 @@ struct ThemesView: View {
                     loading = false
                 }
             }
-//            switch vm.estadoPantalla{
-//                case .search:
-//                    vm.estadoPantalla = .themes
-//                    Task{
-//                        await vm.getThemes()
-//                    }
-//                default:
-//                    vm.estadoPantalla = .themes
-//                }
         }
     }
 }

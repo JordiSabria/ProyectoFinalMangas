@@ -44,15 +44,6 @@ struct DemographicsView: View {
                     loading = false
                 }
             }
-//            switch vm.estadoPantalla{
-//                case .search:
-//                    vm.estadoPantalla = .demographics
-//                    Task{
-//                        await vm.getDemographics()
-//                    }
-//                default:
-//                    vm.estadoPantalla = .demographics
-//                }
         }
     }
 }

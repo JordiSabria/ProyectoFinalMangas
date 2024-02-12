@@ -12,10 +12,11 @@ struct MangasByDemographicView: View {
     @Environment(MangasVM.self) var vm
     @Environment(\.modelContext) private var context
     @Query var mangasCollection: [Manga]
+    
     let item = GridItem(.adaptive(minimum: 150), alignment: .center)
     var demographic: DTODemographic
+    
     @Binding var path: NavigationPath
-    //@State var loading = false
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
@@ -27,9 +28,7 @@ struct MangasByDemographicView: View {
                     .tint(colorScheme == .dark ? .white : .black)
             }
             LazyVGrid(columns: [item]) {
-                //ForEach (vm.mangasByDemographicSpecific[demographic.demographic] ?? []){ mangaItems in
                 ForEach (vm.getMangasBySearchField(searchFieldBy: .byDemographic, idAuthor: UUID(), demographic: demographic.demographic, genre: "", theme: "")){ dtoManga in
-                    //ForEach (mangaItems.items){ dtoManga in
                         if let mangaTitle = dtoManga.title {
                             NavigationLink(value: dtoManga) {
                                 MangaView(mangaURL: dtoManga.mainPicture, widthCover: 150, heightCover: 230)
@@ -44,7 +43,6 @@ struct MangasByDemographicView: View {
                                   .padding()
                             }
                         }
-                    //}
                 }
             }
             .padding()
