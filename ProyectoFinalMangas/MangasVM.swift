@@ -12,7 +12,7 @@ import SwiftData
 final class MangasVM {
     let network: DataInteractor
     
-    var appState: AppState = .intro
+    var appState: AppState = .home
     var estadoPantalla: estadoPantalla = .search
     
     var mangasItemsArray: [MangasItems] = []
@@ -34,6 +34,11 @@ final class MangasVM {
     var showAlert = false
     var msg = ""
     var provaToogle = false
+    
+    var loadingAuthorByiPad = false
+    var loadingDemographicByiPad = false
+    var loadingGenresByiPad = false
+    var loadingThemesByiPad = false
     
     var stepsView = 2
     

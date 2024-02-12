@@ -17,13 +17,13 @@ struct MangasByAuthorView: View {
     let author: DTOAuthor
     
     @Binding var path: NavigationPath
-    @State var loading = false
+    //@State var loading = false
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         @Bindable var bVM = vm
         ScrollView {
-            if loading {
+            if vm.loadingAuthorByiPad {
                 ProgressView("Cargando...")
                     .controlSize(.regular)
                     .tint(colorScheme == .dark ? .white : .black)
@@ -50,7 +50,7 @@ struct MangasByAuthorView: View {
                 //}
             }
             .padding()
-            .opacity(loading ? 0.0 : 1.0)
+            .opacity(vm.loadingAuthorByiPad ? 0.0 : 1.0)
         }
         .searchable(text: $bVM.searchMangas, prompt: "Buscar un manga")
         .navigationTitle("Mangas de \(author.firstName) \(author.lastName)")
@@ -69,11 +69,7 @@ struct MangasByAuthorView: View {
             #if os(iOS)
             if UIDevice.current.userInterfaceIdiom == .pad {
                 guard (vm.mangasByAuthorSpecific[author.id]?.count) != nil else {
-                    Task {
-                        loading = true
-                        await vm.getMangasByAuthor(idAuthor:author.id)
-                        loading = false
-                    }
+                    getMangasByAuthor()
                     return
                 }
             } else {
@@ -81,11 +77,7 @@ struct MangasByAuthorView: View {
                 case .authors:
                     vm.estadoPantalla = .mangas
                     guard (vm.mangasByAuthorSpecific[author.id]?.count) != nil else {
-                        Task {
-                            loading = true
-                            await vm.getMangasByAuthor(idAuthor:author.id)
-                            loading = false
-                        }
+                        getMangasByAuthor()
                         return
                     }
                 default:
@@ -93,28 +85,16 @@ struct MangasByAuthorView: View {
                 }
             }
             #else
-            Task {
-                loading = true
-                await vm.getMangasByAuthor(idAuthor:author.id)
-                loading = false
-            }
+            getMangasByAuthor()
             #endif
         }
         .onChange(of: author){
             #if os(iOS)
             if UIDevice.current.userInterfaceIdiom == .pad {
-                Task {
-                    loading = true
-                    await vm.getMangasByAuthor(idAuthor:author.id)
-                    loading = false
-                }
+                getMangasByAuthor()
             }
             #else
-            Task {
-                loading = true
-                await vm.getMangasByAuthor(idAuthor:author.id)
-                loading = false
-            }
+            getMangasByAuthor()
             #endif
         }
         .toolbar {
@@ -126,6 +106,15 @@ struct MangasByAuthorView: View {
                         Image(systemName: "eraser.line.dashed")
                     }
                 }
+            }
+        }
+    }
+    func getMangasByAuthor(){
+        Task {
+            vm.loadingAuthorByiPad = true
+            await vm.getMangasByAuthor(idAuthor:author.id)
+            await MainActor.run{
+                vm.loadingAuthorByiPad = false
             }
         }
     }

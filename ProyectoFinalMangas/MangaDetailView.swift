@@ -39,58 +39,64 @@ struct MangaDetailView: View {
                             .padding(.bottom, 10)
                     }
                     if let statusManga = manga.status{
-                        HStack{
-                            Text("Status")
-                                .bold()
-                            Spacer()
-                            Text(statusManga)
-                        }
-                        Divider()
+//                        HStack{
+//                            Text("Status")
+//                                .bold()
+//                            Spacer()
+//                            Text(statusManga)
+//                        }
+//                        Divider()
+                        RowInfoView(title: "Status", info: statusManga)
                     }
                     if let startDate = manga.startDate{
-                        HStack{
-                            Text("Fecha de Inicio")
-                                .bold()
-                            Spacer()
-                            Text(getDateFromString(dateString: startDate))
-                        }
-                        Divider()
+//                        HStack{
+//                            Text("Fecha de Inicio")
+//                                .bold()
+//                            Spacer()
+//                            Text(getDateFromString(dateString: startDate))
+//                        }
+//                        Divider()
+                        RowInfoView(title: "Fecha de Inicio", info: getDateFromString(dateString: startDate))
                     }
                     if let endDate = manga.endDate{
-                        HStack{
-                            Text("Fecha de Fin")
-                                .bold()
-                            Spacer()
-                            Text(getDateFromString(dateString: endDate))
-                        }
-                        Divider()
+//                        HStack{
+//                            Text("Fecha de Fin")
+//                                .bold()
+//                            Spacer()
+//                            Text(getDateFromString(dateString: endDate))
+//                        }
+//                        Divider()
+                        RowInfoView(title: "Fecha de Fin", info: getDateFromString(dateString: endDate))
                     }
                     if let capitulos = manga.chapters{
-                        HStack{
-                            Text("Capítulos")
-                                .bold()
-                            Spacer()
-                            Text(String(capitulos))
-                        }
-                        Divider()
+//                        HStack{
+//                            Text("Capítulos")
+//                                .bold()
+//                            Spacer()
+//                            Text(String(capitulos))
+//                        }
+//                        Divider()
+                        RowInfoView(title: "Capítulos", info: String(capitulos))
                     }
                     if let volumenes = manga.volumes{
-                        HStack{
-                            Text("Volúmenes")
-                                .bold()
-                            Spacer()
-                            Text(String(volumenes))
-                        }
-                        Divider()
+//                        HStack{
+//                            Text("Volúmenes")
+//                                .bold()
+//                            Spacer()
+//                            Text(String(volumenes))
+//                        }
+//                        Divider()
+                        RowInfoView(title: "Volúmenes", info: String(volumenes))
                     }
                     if manga.score > 0{
-                        HStack{
-                            Text("Puntuación")
-                                .bold()
-                            Spacer()
-                            Text(String(manga.score))
-                        }
-                        Divider()
+//                        HStack{
+//                            Text("Puntuación")
+//                                .bold()
+//                            Spacer()
+//                            Text(String(manga.score))
+//                        }
+//                        Divider()
+                        RowInfoView(title: "Puntuación", info: String(manga.score))
                     }
                     if manga.authors.count > 0{
                         HStack(alignment:.top){
@@ -165,24 +171,26 @@ struct MangaDetailView: View {
                         Divider()
                     }
                     if let synopsis = manga.sypnosis{
-                        HStack(alignment: .top){
-                            Text("Sinopsis")
-                                .bold()
-                            Spacer()
-                            Text(synopsis)
-                                .multilineTextAlignment(.trailing)
-                        }
-                        Divider()
+//                        HStack(alignment: .top){
+//                            Text("Sinopsis")
+//                                .bold()
+//                            Spacer()
+//                            Text(synopsis)
+//                                .multilineTextAlignment(.trailing)
+//                        }
+//                        Divider()
+                        RowMultiLineInfoView(title: "Sinopsis", info: synopsis)
                     }
                     if let background = manga.background{
-                        HStack(alignment: .top){
-                            Text("Background")
-                                .bold()
-                            Spacer()
-                            Text(background)
-                                .multilineTextAlignment(.trailing)
-                        }
-                        Divider()
+//                        HStack(alignment: .top){
+//                            Text("Background")
+//                                .bold()
+//                            Spacer()
+//                            Text(background)
+//                                .multilineTextAlignment(.trailing)
+//                        }
+//                        Divider()
+                        RowMultiLineInfoView(title: "Background", info: background)
                     }
                     if let url = manga.url{
                         let urlRetocada = url.trimmingCharacters(in: CharacterSet(charactersIn: "\""))

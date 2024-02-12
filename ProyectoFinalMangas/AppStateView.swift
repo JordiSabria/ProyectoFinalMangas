@@ -10,7 +10,7 @@ import SwiftUI
 struct AppStateView: View {
     @Environment(MangasVM.self) var vm
     @State var networkStatus = NetworkStatus()
-    @State var lastState: AppState = .intro
+    @State var lastState: AppState = .home
     
     var body: some View {
         Group{

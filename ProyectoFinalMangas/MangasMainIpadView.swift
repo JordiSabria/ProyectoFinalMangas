@@ -13,11 +13,11 @@ struct MangasMainIpadView: View {
     //@State private var path = NavigationPath()
     var body: some View {
         TabView{
-            AllMangasView()
-                .environment(vm)
-                .tabItem {
-                    Label("Mangas", systemImage: "house")
-                }
+//            AllMangasView()
+//                .environment(vm)
+//                .tabItem {
+//                    Label("Mangas", systemImage: "house")
+//                }
             BestMangaiPadView()
                 .environment(vm)
                 .tabItem{

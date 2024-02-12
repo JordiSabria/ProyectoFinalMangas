@@ -13,6 +13,7 @@ struct GenresiPadView: View {
     @State var visibility: NavigationSplitViewVisibility = .all
     @State var loading = false
     @Environment(\.colorScheme) var colorScheme
+    @State var genreSelected: DTOGenre?
     
     var body: some View {
         NavigationSplitView(columnVisibility: $visibility){
@@ -21,9 +22,13 @@ struct GenresiPadView: View {
                     .controlSize(.regular)
                     .tint(colorScheme == .dark ? .white : .black)
             }
-            List(vm.genres){ genre in
-                NavigationLink(value: genre){
-                    Text(genre.genre)
+//            List(vm.genres){ genre in
+            List(selection: $genreSelected){
+                ForEach(vm.genres){ genre in
+                    NavigationLink(value: genre){
+                        Text(genre.genre)
+                    }
+                    .tag(genre)
                 }
             }
             .opacity(loading ? 0.0 : 1.0)
@@ -38,19 +43,28 @@ struct GenresiPadView: View {
                 }
             }
         } content: {
-            if let genresTmp = vm.genres.first{
-                MangasByGenresView(genre: genresTmp, path: $path)
+//            if let genresTmp = vm.genres.first{
+            if let genreSelected {
+                MangasByGenresView(genre: genreSelected, path: $path)
                     .environment(vm)
             }
         } detail: {
-            Text("Selecciona un manga")
+//            Text("Selecciona un manga")
 //            if let genresTmp = vm.genres.first{
-//                if let mangaTmp = vm.getFirstMangaBy(mangasbyToSord: .byGenre, idAuthor: UUID(), demographic: "", genre: genresTmp.genre, theme: ""){
-//                    MangaDetailView(manga: mangaTmp, path: $path)
-//                        .environment(vm)
-//                }
-//            }
+            if vm.loadingGenresByiPad{
+                ProgressView("Cargando...")
+                    .controlSize(.regular)
+                    .tint(colorScheme == .dark ? .white : .black)
+            }else{
+                if let genreSelected {
+                    if let mangaTmp = vm.getFirstMangaBy(mangasbyToSord: .byGenre, idAuthor: UUID(), demographic: "", genre: genreSelected.genre, theme: ""){
+                        MangaDetailView(manga: mangaTmp, path: $path)
+                            .environment(vm)
+                    }
+                }
+            }
         }
+        .navigationSplitViewStyle(.balanced)
         .onAppear(){
             vm.estadoPantalla = .genres
             if vm.genres.count == 0{
@@ -58,6 +72,9 @@ struct GenresiPadView: View {
                     loading = true
                     await vm.getGenres()
                     loading = false
+                    if genreSelected == nil {
+                        genreSelected = vm.genres.first
+                    }
                 }
             }
         }

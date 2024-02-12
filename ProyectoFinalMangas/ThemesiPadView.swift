@@ -13,6 +13,7 @@ struct ThemesiPadView: View {
     @State var visibility: NavigationSplitViewVisibility = .all
     @State var loading = false
     @Environment(\.colorScheme) var colorScheme
+    @State var themeSelected: DTOTheme?
     
     var body: some View {
         NavigationSplitView(columnVisibility: $visibility){
@@ -21,9 +22,13 @@ struct ThemesiPadView: View {
                     .controlSize(.regular)
                     .tint(colorScheme == .dark ? .white : .black)
             }
-            List(vm.themes){ theme in
-                NavigationLink(value: theme){
-                    Text(theme.theme)
+//            List(vm.themes){ theme in
+            List(selection: $themeSelected){
+                ForEach(vm.themes){ theme in
+                    NavigationLink(value: theme){
+                        Text(theme.theme)
+                    }
+                    .tag(theme)
                 }
             }
             .opacity(loading ? 0.0 : 1.0)
@@ -38,19 +43,28 @@ struct ThemesiPadView: View {
                 }
             }
         } content: {
-            if let themeTmp = vm.themes.first{
-                MangasByThemesView(theme: themeTmp, path: $path)
+            //if let themeTmp = vm.themes.first{
+            if let themeSelected{
+                MangasByThemesView(theme: themeSelected, path: $path)
                     .environment(vm)
             }
         } detail: {
-            Text("Selecciona un manga")
-//            if let themeTmp = vm.themes.first{
-//                if let mangaTmp = vm.getFirstMangaBy(mangasbyToSord: .byTheme, idAuthor: UUID(), demographic: "", genre: "", theme: themeTmp.theme){
-//                    MangaDetailView(manga: mangaTmp, path: $path)
-//                        .environment(vm)
-//                }
-//            }
+//            Text("Selecciona un manga")
+            if vm.loadingThemesByiPad{
+                ProgressView("Cargando...")
+                    .controlSize(.regular)
+                    .tint(colorScheme == .dark ? .white : .black)
+            }else{
+//                if let themeTmp = vm.themes.first{
+                if let themeSelected{
+                    if let mangaTmp = vm.getFirstMangaBy(mangasbyToSord: .byTheme, idAuthor: UUID(), demographic: "", genre: "", theme: themeSelected.theme){
+                        MangaDetailView(manga: mangaTmp, path: $path)
+                            .environment(vm)
+                    }
+                }
+            }
         }
+        .navigationSplitViewStyle(.balanced)
         .onAppear(){
             vm.estadoPantalla = .themes
             if vm.themes.count == 0{
@@ -58,6 +72,9 @@ struct ThemesiPadView: View {
                     loading = true
                     await vm.getThemes()
                     loading = false
+                    if themeSelected == nil {
+                        themeSelected = vm.themes.first
+                    }
                 }
             }
         }

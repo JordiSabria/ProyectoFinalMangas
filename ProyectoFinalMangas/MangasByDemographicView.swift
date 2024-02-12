@@ -15,13 +15,13 @@ struct MangasByDemographicView: View {
     let item = GridItem(.adaptive(minimum: 150), alignment: .center)
     var demographic: DTODemographic
     @Binding var path: NavigationPath
-    @State var loading = false
+    //@State var loading = false
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         @Bindable var bVM = vm
         ScrollView {
-            if loading {
+            if vm.loadingDemographicByiPad {
                 ProgressView("Cargando...")
                     .controlSize(.regular)
                     .tint(colorScheme == .dark ? .white : .black)
@@ -48,7 +48,7 @@ struct MangasByDemographicView: View {
                 }
             }
             .padding()
-            .opacity(loading ? 0.0 : 1.0)
+            .opacity(vm.loadingDemographicByiPad ? 0.0 : 1.0)
         }
         .searchable(text: $bVM.searchMangas, prompt: "Buscar un manga")
         .navigationTitle("Mangas de \(demographic.demographic)")
@@ -67,11 +67,7 @@ struct MangasByDemographicView: View {
             #if os(iOS)
             if UIDevice.current.userInterfaceIdiom == .pad {
                 guard (vm.mangasByDemographicSpecific[demographic.demographic]?.count) != nil else {
-                    Task {
-                        loading = true
-                        await vm.getMangasByDemographic(demographic: demographic.demographic)
-                        loading = false
-                    }
+                    getMangasByDemographic()
                     return
                 }
             }else {
@@ -79,11 +75,7 @@ struct MangasByDemographicView: View {
                 case .demographics:
                     vm.estadoPantalla = .mangas
                     guard (vm.mangasByDemographicSpecific[demographic.demographic]?.count) != nil else {
-                        Task {
-                            loading = true
-                            await vm.getMangasByDemographic(demographic: demographic.demographic)
-                            loading = false
-                        }
+                        getMangasByDemographic()
                         return
                     }
                 default:
@@ -91,31 +83,19 @@ struct MangasByDemographicView: View {
                 }
             }
             #else
-            Task {
-                loading = true
-                await vm.getMangasByDemographic(demographic: demographic.demographic)
-                loading = false
-            }
+            getMangasByDemographic()
             #endif
         }
         .onChange(of: demographic){
             #if os(iOS)
             if UIDevice.current.userInterfaceIdiom == .pad {
                 guard (vm.mangasByDemographicSpecific[demographic.demographic]?.count) != nil else {
-                    Task {
-                        loading = true
-                        await vm.getMangasByDemographic(demographic: demographic.demographic)
-                        loading = false
-                    }
+                    getMangasByDemographic()
                     return
                 }
             }
             #else
-            Task {
-                loading = true
-                await vm.getMangasByDemographic(demographic: demographic.demographic)
-                loading = false
-            }
+            getMangasByDemographic()
             #endif
         }
         .toolbar {
@@ -127,6 +107,15 @@ struct MangasByDemographicView: View {
                         Image(systemName: "eraser.line.dashed")
                     }
                 }
+            }
+        }
+    }
+    func getMangasByDemographic(){
+        Task {
+            vm.loadingDemographicByiPad = true
+            await vm.getMangasByDemographic(demographic: demographic.demographic)
+            await MainActor.run{
+                vm.loadingDemographicByiPad = false
             }
         }
     }

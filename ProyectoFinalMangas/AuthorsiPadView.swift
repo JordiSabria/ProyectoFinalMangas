@@ -13,6 +13,7 @@ struct AuthorsiPadView: View {
     @State var visibility: NavigationSplitViewVisibility = .all
     @State var loading = false
     @Environment(\.colorScheme) var colorScheme
+    @State var authorSelected: DTOAuthor?
     
     var body: some View {
         @Bindable var bVM = vm
@@ -22,9 +23,13 @@ struct AuthorsiPadView: View {
                     .controlSize(.regular)
                     .tint(colorScheme == .dark ? .white : .black)
             }
-            List(vm.getAuthorsSearch()){ author in
-                NavigationLink(value: author){
-                    Text("\(author.firstName) \(author.lastName)")
+            //List(vm.getAuthorsSearch()){ author in
+            List(selection: $authorSelected){
+                ForEach(vm.getAuthorsSearch()){ author in
+                    NavigationLink(value: author){
+                        Text("\(author.firstName) \(author.lastName)")
+                    }
+                    .tag(author)
                 }
             }
             .opacity(loading ? 0.0 : 1.0)
@@ -40,19 +45,27 @@ struct AuthorsiPadView: View {
                 }
             }
         } content: {
-            if let authorTmp = vm.authors.first{
-                MangasByAuthorView(author: authorTmp, path: $path)
+            //if let authorTmp = vm.authors.first{
+            if let authorSelected{
+                MangasByAuthorView(author: authorSelected, path: $path)
                     .environment(vm)
             }
         } detail: {
-            Text("Selecciona un manga")
-//            if let authorTmp = vm.authors.first{
-//                if let mangaTmp = vm.getFirstMangaBy(mangasbyToSord: .byAuthor, idAuthor: authorTmp.id, demographic: "", genre: "", theme: ""){
-//                    MangaDetailView(manga: mangaTmp, path: $path)
-//                        .environment(vm)
-//                }
-//            }
+//            Text("Selecciona un manga")
+            if vm.loadingAuthorByiPad{
+                ProgressView("Cargando...")
+                    .controlSize(.regular)
+                    .tint(colorScheme == .dark ? .white : .black)
+            }else{
+                if let authorSelected{
+                    if let mangaTmp = vm.getFirstMangaBy(mangasbyToSord: .byAuthor, idAuthor: authorSelected.id, demographic: "", genre: "", theme: ""){
+                        MangaDetailView(manga: mangaTmp, path: $path)
+                            .environment(vm)
+                    }
+                }
+            }
         }
+        .navigationSplitViewStyle(.balanced)
         .onAppear(){
             vm.estadoPantalla = .authors
             if vm.authors.count == 0{
@@ -60,6 +73,9 @@ struct AuthorsiPadView: View {
                     loading = true
                     await vm.getAuthors()
                     loading = false
+                    if authorSelected == nil{
+                        authorSelected = vm.authors.first
+                    }
                 }
             }
         }

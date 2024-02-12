@@ -17,13 +17,13 @@ struct MangasByGenresView: View {
     let genre: DTOGenre
     
     @Binding var path: NavigationPath
-    @State var loading = false
+    //@State var loading = false
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         @Bindable var bVM = vm
         ScrollView {
-            if loading {
+            if vm.loadingGenresByiPad {
                 ProgressView("Cargando...")
                     .controlSize(.regular)
                     .tint(colorScheme == .dark ? .white : .black)
@@ -50,7 +50,7 @@ struct MangasByGenresView: View {
                 }
             }
             .padding()
-            .opacity(loading ? 0.0 : 1.0)
+            .opacity(vm.loadingGenresByiPad ? 0.0 : 1.0)
         }
         .searchable(text: $bVM.searchMangas, prompt: "Buscar un manga")
         .navigationTitle("Mangas de \(genre.genre)")
@@ -69,11 +69,7 @@ struct MangasByGenresView: View {
             #if os(iOS)
             if UIDevice.current.userInterfaceIdiom == .pad {
                 guard (vm.mangasByGenresSpecific[genre.genre]?.count) != nil else {
-                    Task {
-                        loading = true
-                        await vm.getMangasByGenre(genre: genre.genre)
-                        loading = false
-                    }
+                    getMangasByGenre()
                     return
                 }
             } else {
@@ -81,11 +77,7 @@ struct MangasByGenresView: View {
                 case .genres:
                     vm.estadoPantalla = .mangas
                     guard (vm.mangasByGenresSpecific[genre.genre]?.count) != nil else {
-                        Task {
-                            loading = true
-                            await vm.getMangasByGenre(genre: genre.genre)
-                            loading = false
-                        }
+                        getMangasByGenre()
                         return
                     }
                 default:
@@ -93,28 +85,16 @@ struct MangasByGenresView: View {
                 }
             }
             #else
-            Task {
-                loading = true
-                await vm.getMangasByGenre(genre: genre.genre)
-                loading = false
-            }
+            getMangasByGenre()
             #endif
         }
         .onChange(of: genre){
             #if os(iOS)
             if UIDevice.current.userInterfaceIdiom == .pad {
-                Task {
-                    loading = true
-                    await vm.getMangasByGenre(genre: genre.genre)
-                    loading = false
-                }
+                getMangasByGenre()
             }
             #else
-            Task {
-                loading = true
-                await vm.getMangasByGenre(genre: genre.genre)
-                loading = false
-            }
+            getMangasByGenre()
             #endif
         }
         .toolbar {
@@ -126,6 +106,15 @@ struct MangasByGenresView: View {
                         Image(systemName: "eraser.line.dashed")
                     }
                 }
+            }
+        }
+    }
+    func getMangasByGenre(){
+        Task {
+            vm.loadingGenresByiPad = true
+            await vm.getMangasByGenre(genre: genre.genre)
+            await MainActor.run{
+                vm.loadingGenresByiPad = false
             }
         }
     }

@@ -17,13 +17,13 @@ struct MangasByThemesView: View {
     let theme: DTOTheme
     
     @Binding var path: NavigationPath
-    @State var loading = false
+    //@State var loading = false
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         @Bindable var bVM = vm
         ScrollView {
-            if loading {
+            if vm.loadingThemesByiPad {
                 ProgressView("Cargando...")
                     .controlSize(.regular)
                     .tint(colorScheme == .dark ? .white : .black)
@@ -50,7 +50,7 @@ struct MangasByThemesView: View {
                 }
             }
             .padding()
-            .opacity(loading ? 0.0 : 1.0)
+            .opacity(vm.loadingThemesByiPad ? 0.0 : 1.0)
         }
         .searchable(text: $bVM.searchMangas, prompt: "Buscar un manga")
         .navigationTitle("Mangas de \(theme.theme)")
@@ -69,11 +69,7 @@ struct MangasByThemesView: View {
             #if os(iOS)
             if UIDevice.current.userInterfaceIdiom == .pad {
                 guard (vm.mangasByThemesSpecific[theme.theme]?.count) != nil else {
-                    Task {
-                        loading = true
-                        await vm.getMangasByTheme(theme: theme.theme)
-                        loading = false
-                    }
+                    getMangasByTheme()
                     return
                 }
             } else {
@@ -81,11 +77,7 @@ struct MangasByThemesView: View {
                 case .themes:
                     vm.estadoPantalla = .mangas
                     guard (vm.mangasByThemesSpecific[theme.theme]?.count) != nil else {
-                        Task {
-                            loading = true
-                            await vm.getMangasByTheme(theme: theme.theme)
-                            loading = false
-                        }
+                        getMangasByTheme()
                         return
                     }
                 default:
@@ -93,28 +85,16 @@ struct MangasByThemesView: View {
                 }
             }
             #else
-            Task {
-                loading = true
-                await vm.getMangasByTheme(theme: theme.theme)
-                loading = false
-            }
+            getMangasByTheme()
             #endif
         }
         .onChange(of: theme){
             #if os(iOS)
             if UIDevice.current.userInterfaceIdiom == .pad {
-                Task {
-                    loading = true
-                    await vm.getMangasByTheme(theme: theme.theme)
-                    loading = false
-                }
+                getMangasByTheme()
             }
             #else
-            Task {
-                loading = true
-                await vm.getMangasByTheme(theme: theme.theme)
-                loading = false
-            }
+            getMangasByTheme()
             #endif
         }
         .toolbar {
@@ -126,6 +106,15 @@ struct MangasByThemesView: View {
                         Image(systemName: "eraser.line.dashed")
                     }
                 }
+            }
+        }
+    }
+    func getMangasByTheme(){
+        Task {
+            vm.loadingThemesByiPad = true
+            await vm.getMangasByTheme(theme: theme.theme)
+            await MainActor.run{
+                vm.loadingThemesByiPad = false
             }
         }
     }

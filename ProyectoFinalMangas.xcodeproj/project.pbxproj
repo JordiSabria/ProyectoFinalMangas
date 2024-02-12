@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB11DE6A2B7A25FD0009FA43 /* RowInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB11DE692B7A25FD0009FA43 /* RowInfoView.swift */; };
+		AB11DE6C2B7A27570009FA43 /* RowMultiLineInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB11DE6B2B7A27570009FA43 /* RowMultiLineInfoView.swift */; };
 		AB19ADE42B4E9C7700CAD89D /* MangasMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB19ADE32B4E9C7700CAD89D /* MangasMain.swift */; };
 		AB19ADE82B4EBD4200CAD89D /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB19ADE72B4EBD4200CAD89D /* SearchView.swift */; };
 		AB19ADEC2B4EEFE100CAD89D /* MangaDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB19ADEB2B4EEFE100CAD89D /* MangaDetailView.swift */; };
@@ -63,6 +65,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AB11DE692B7A25FD0009FA43 /* RowInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowInfoView.swift; sourceTree = "<group>"; };
+		AB11DE6B2B7A27570009FA43 /* RowMultiLineInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowMultiLineInfoView.swift; sourceTree = "<group>"; };
 		AB19ADE32B4E9C7700CAD89D /* MangasMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangasMain.swift; sourceTree = "<group>"; };
 		AB19ADE72B4EBD4200CAD89D /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		AB19ADEB2B4EEFE100CAD89D /* MangaDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaDetailView.swift; sourceTree = "<group>"; };
@@ -251,6 +255,8 @@
 				AB8CA7092B5E578800DECE97 /* AdvancedSearchTextFieldView.swift */,
 				AB8CA72D2B627EE400DECE97 /* CheckCollectionView.swift */,
 				ABB4F5712B77C942007687E9 /* headerMangaDetailView.swift */,
+				AB11DE692B7A25FD0009FA43 /* RowInfoView.swift */,
+				AB11DE6B2B7A27570009FA43 /* RowMultiLineInfoView.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -411,10 +417,12 @@
 				AB19ADF52B51B78F00CAD89D /* Extensions.swift in Sources */,
 				ABA80A482B5694860081C404 /* DemographicsView.swift in Sources */,
 				ABCE4AE82B4C0BE300516621 /* DataTest.swift in Sources */,
+				AB11DE6A2B7A25FD0009FA43 /* RowInfoView.swift in Sources */,
 				AB4724062B6D456000458FF5 /* AllMangasView.swift in Sources */,
 				ABCE4AD82B45415700516621 /* URL.swift in Sources */,
 				AB37354A2B59941B00FFB825 /* MangasByThemesView.swift in Sources */,
 				ABCE4ADC2B45601800516621 /* URLRequest.swift in Sources */,
+				AB11DE6C2B7A27570009FA43 /* RowMultiLineInfoView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
