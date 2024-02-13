@@ -28,6 +28,7 @@ struct ThemesiPadView: View {
                         Text(theme.theme)
                     }
                     .tag(theme)
+                    .hoverEffect()
                 }
             }
             .opacity(loading ? 0.0 : 1.0)

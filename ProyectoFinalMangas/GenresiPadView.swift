@@ -28,6 +28,7 @@ struct GenresiPadView: View {
                         Text(genre.genre)
                     }
                     .tag(genre)
+                    .hoverEffect()
                 }
             }
             .opacity(loading ? 0.0 : 1.0)

@@ -44,6 +44,8 @@ struct BestMangaiPadView: View {
                                         }
                                         .padding()
                                 }
+                                .tag(dtoManga)
+                                .hoverEffect()
                             }
                         }
                     }

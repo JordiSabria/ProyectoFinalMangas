@@ -29,6 +29,7 @@ struct DemographicsiPadView: View {
                         Text(demographic.demographic)
                     }
                     .tag(demographic)
+                    .hoverEffect()
                 }
             }
             .opacity(loading ? 0.0 : 1.0)

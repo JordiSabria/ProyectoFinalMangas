@@ -20,7 +20,7 @@ struct AppStateView: View {
                     .environment(vm)
             case .home:
                 #if os(iOS)
-                if UIDevice.current.userInterfaceIdiom == .pad {
+                if UIDevice.current.userInterfaceIdiom == .pad{
                     MangasMainIpadView()
                         .environment(vm)
                         .transition(.move(edge: .bottom).combined(with: .opacity))

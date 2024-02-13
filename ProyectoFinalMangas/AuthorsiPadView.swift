@@ -23,13 +23,13 @@ struct AuthorsiPadView: View {
                     .controlSize(.regular)
                     .tint(colorScheme == .dark ? .white : .black)
             }
-            //List(vm.getAuthorsSearch()){ author in
             List(selection: $authorSelected){
                 ForEach(vm.getAuthorsSearch()){ author in
                     NavigationLink(value: author){
                         Text("\(author.firstName) \(author.lastName)")
                     }
                     .tag(author)
+                    .hoverEffect()
                 }
             }
             .opacity(loading ? 0.0 : 1.0)

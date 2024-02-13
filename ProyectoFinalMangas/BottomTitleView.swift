@@ -14,6 +14,7 @@ struct BottomTitleView: View {
         Rectangle()
             .fill(.white.opacity(0.7))
             .frame(height: 50)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
             .overlay(alignment: .center) {
                 VStack {
                     Text(title)

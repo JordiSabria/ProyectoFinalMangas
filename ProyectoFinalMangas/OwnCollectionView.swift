@@ -34,6 +34,8 @@ struct OwnCollectionView: View {
                                     }
                                     .padding()
                             }
+                            .tag(manga)
+                            .hoverEffect()
                         }
                     }
                 }

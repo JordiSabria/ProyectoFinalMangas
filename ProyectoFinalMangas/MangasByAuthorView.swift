@@ -43,6 +43,8 @@ struct MangasByAuthorView: View {
                                     }
                                   .padding()
                             }
+                            .tag(dtoManga)
+                            .hoverEffect()
                         }
                     }
             }

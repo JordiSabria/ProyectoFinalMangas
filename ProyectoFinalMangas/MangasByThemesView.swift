@@ -42,6 +42,8 @@ struct MangasByThemesView: View {
                                     }
                                   .padding()
                             }
+                            .tag(dtoManga)
+                            .hoverEffect()
                         }
                 }
             }

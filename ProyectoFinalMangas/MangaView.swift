@@ -35,7 +35,6 @@ struct MangaView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                         .shadow(color: .black.opacity(0.3), radius: 5, x: 0, y: 5)
                 }
-                //.offset(x: 25)
             }
         }
     }

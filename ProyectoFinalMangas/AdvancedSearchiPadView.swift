@@ -21,14 +21,17 @@ struct AdvancedSearchiPadView: View {
                     AdvancedSearchTextFieldView(label: "Título", text: $vmASM.searchTitle)
                         .textContentType(.name)
                         .textInputAutocapitalization(.words)
+                        .hoverEffect()
                 }
                 Section("Autor") {
                     AdvancedSearchTextFieldView(label: "Nombre", text: $vmASM.searchAuthorFirstName)
                         .textContentType(.name)
                         .textInputAutocapitalization(.words)
+                        .hoverEffect()
                     AdvancedSearchTextFieldView(label: "Apellido", text: $vmASM.searchAuthorLastName)
                         .textContentType(.name)
                         .textInputAutocapitalization(.words)
+                        .hoverEffect()
                 }
                 Section {
                     HStack {
@@ -40,6 +43,7 @@ struct AdvancedSearchiPadView: View {
                         .background(Color.blue)//.opacity(0.3))
                         .foregroundColor(.white)
                         .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .hoverEffect()
                         Spacer()
                     }
                 }

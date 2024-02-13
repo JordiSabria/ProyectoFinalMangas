@@ -42,6 +42,8 @@ struct MangasByDemographicView: View {
                                     }
                                   .padding()
                             }
+                            .tag(dtoManga)
+                            .hoverEffect()
                         }
                 }
             }

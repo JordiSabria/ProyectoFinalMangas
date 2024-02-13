@@ -12,8 +12,10 @@ struct IntroView: View {
     
     @State var loading = false
     @State var appear = false
+#if os(iOS)
     let anchoPantalla = UIScreen.main.bounds.width
     let altoPantalla = UIScreen.main.bounds.height
+#endif
     @State var positionRelative = Position(x:0, y:0)
     @State private var positionY: CGFloat = 0
     @State private var positionX: CGFloat = 0
@@ -34,6 +36,7 @@ struct IntroView: View {
             Task{
                 await vm.getMangasItems()
             }
+#if os(iOS)
             try? await Task.sleep(for: .seconds(1.5))
             moveToPosition(posicion: 1)
             tamaño = 120
@@ -50,11 +53,12 @@ struct IntroView: View {
             moveToPosition(posicion: 5)
             tamaño = 200
             try? await Task.sleep(for: .seconds(1))
+#endif
             vm.appState = .home
         }
     }
     func moveToPosition(posicion: CGFloat) {
-        
+#if os(iOS)
         switch posicion {
         case 1:
             if (anchoPantalla < altoPantalla){
@@ -95,6 +99,7 @@ struct IntroView: View {
             positionRelative.y = 0
             positionRelative.x = 0
         }
+#endif
     }
 }
 
